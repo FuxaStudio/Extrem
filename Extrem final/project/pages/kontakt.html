@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="cs">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="../assets/Images/logo.png" />
+  <title>Kontakt — Svídnický Extrém</title>
+  <link rel="stylesheet" href="../assets/shared.css?v=1776862203011" />
+  <style>
+    .page-header--hero {
+      background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 100%),
+        url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    }
+
+    .contact {
+      padding: 96px 0 120px;
+    }
+
+    .ct-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .ct-left h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(48px, 6vw, 88px);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+    }
+
+    .ct-left p {
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--ink-80);
+      margin-top: 24px;
+      max-width: 48ch;
+    }
+
+    .contacts-list {
+      display: flex;
+      flex-direction: column;
+      margin-top: 56px;
+    }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: 160px 1fr auto;
+      gap: 32px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      align-items: center;
+    }
+
+    .contact-row:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .contact-row .k {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+    }
+
+    .contact-row .v {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+
+    .contact-row .v .sub {
+      display: block;
+      font-family: var(--body);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink-60);
+      text-transform: none;
+      letter-spacing: 0;
+      margin-top: 4px;
+    }
+
+
+    .ct-right {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 48px;
+      border-radius: 2px;
+      position: sticky;
+      top: 96px;
+    }
+
+    .ct-right h3 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 32px;
+      text-transform: uppercase;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+    }
+
+    .ct-right .eyebrow {
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .ct-right p {
+      color: rgba(245, 243, 238, 0.75);
+      margin: 20px 0 32px;
+      line-height: 1.55;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .form .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form label {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(245, 243, 238, 0.65);
+    }
+
+    .form input,
+    .form select,
+    .form textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(245, 243, 238, 0.3);
+      padding: 10px 0;
+      color: var(--paper);
+      outline: none;
+      font-family: var(--body);
+      font-size: 15px;
+      transition: border-color .2s;
+    }
+
+    .form input:focus,
+    .form select:focus,
+    .form textarea:focus {
+      border-bottom-color: var(--accent);
+    }
+
+    .form textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form select option {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .form button {
+      margin-top: 12px;
+      align-self: center;
+    }
+
+    .contact-row .v,
+    .reg-contact-item .v,
+    .treninky-contact-item .v,
+    .akce-contact-item .v {
+      overflow-wrap: break-word;
+      word-break: break-all;
+      min-width: 0;
+    }
+
+    @media (max-width: 1050px) {
+      .ct-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ct-right {
+        position: static;
+      }
+
+      .contact-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .contact-row .copy {
+        justify-self: start;
+      }
+
+      .ct-left h2 br {
+        display: none;
+      }
+    }
+
+    #kontakt-formular {
+      scroll-margin-top: 96px;
+    }
+
+    @media (max-width: 600px) {
+      .contact {
+        padding: 60px 0 72px;
+      }
+
+      .form .row {
+        grid-template-columns: 1fr;
+      }
+
+      .ct-right {
+        padding: 28px 20px;
+      }
+
+      .contact-row .v {
+        font-size: 17px;
+      }
+    }
+
+    /* ===== REGISTRACE NA ZÁVOD ===== */
+    .reg-section {
+      padding: 96px 0;
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .reg-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .reg-left h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(52px, 7vw, 100px);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .reg-left h2 span {
+      color: var(--accent);
+    }
+
+    .reg-left p {
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(245, 243, 238, 0.7);
+      margin-top: 24px;
+      max-width: 44ch;
+    }
+
+    .reg-right {
+      border-left: 1px solid rgba(245, 243, 238, 0.12);
+      padding-left: 80px;
+    }
+
+    .reg-contact-item {
+      padding: 28px 0;
+      border-top: 1px solid rgba(245, 243, 238, 0.1);
+    }
+
+    .reg-contact-item:first-of-type {
+      border-top: none;
+    }
+
+    .reg-contact-item:last-of-type {
+      border-bottom: 1px solid rgba(245, 243, 238, 0.1);
+    }
+
+    .reg-contact-item .k {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .reg-contact-item .v {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 26px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+
+    .reg-contact-item .sub {
+      display: block;
+      font-family: var(--body);
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: rgba(245, 243, 238, 0.5);
+      margin-top: 4px;
+    }
+
+    .reg-note {
+      font-size: 13px;
+      color: rgba(245, 243, 238, 0.45);
+      margin-top: 28px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .reg-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .reg-right {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid rgba(245, 243, 238, 0.12);
+        padding-top: 48px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .reg-section {
+        padding: 60px 0;
+      }
+
+      .reg-contact-item .v {
+        font-size: 19px;
+      }
+    }
+
+    /* ===== TRÉNINKY ===== */
+    .treninky-section {
+      padding: 96px 0;
+      background: var(--paper-2);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .treninky-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .treninky-left h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(52px, 7vw, 100px);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .treninky-left h2 span {
+      color: var(--accent);
+    }
+
+    .treninky-left p {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--ink-80);
+      margin-top: 24px;
+      max-width: 44ch;
+    }
+
+    .treninky-invite {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+      padding: 20px 28px;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-radius: 2px;
+    }
+
+    .treninky-invite .dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .treninky-right {
+      border-left: 1px solid var(--line);
+      padding-left: 80px;
+    }
+
+    .treninky-contact-item {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .treninky-contact-item:first-of-type {
+      border-top: none;
+    }
+
+    .treninky-contact-item:last-of-type {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .treninky-contact-item .k {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+      margin-bottom: 8px;
+    }
+
+    .treninky-contact-item .v {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 26px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .treninky-contact-item .sub {
+      display: block;
+      font-family: var(--body);
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--ink-60);
+      margin-top: 4px;
+    }
+
+    .treninky-note {
+      font-size: 13px;
+      color: var(--ink-60);
+      margin-top: 28px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .treninky-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .treninky-right {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid var(--line);
+        padding-top: 48px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .treninky-section {
+        padding: 60px 0;
+      }
+
+      .treninky-invite {
+        font-size: 15px;
+        padding: 16px 20px;
+      }
+
+      .treninky-contact-item .v {
+        font-size: 19px;
+      }
+    }
+
+    /* ===== OSTATNÍ AKCE ===== */
+    .akce-section {
+      padding: 96px 0;
+      background: var(--paper-2);
+      border-top: 1px solid var(--line);
+    }
+
+    .akce-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .akce-left h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(52px, 7vw, 100px);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .akce-left h2 span {
+      color: var(--accent);
+    }
+
+    .akce-left p {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--ink-80);
+      margin-top: 24px;
+      max-width: 44ch;
+    }
+
+    .akce-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .akce-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border: 1.5px solid var(--ink-40);
+      color: var(--ink-80);
+      background: var(--paper);
+    }
+
+    .akce-right {
+      border-left: 1px solid var(--line);
+      padding-left: 80px;
+    }
+
+    .akce-contact-item {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .akce-contact-item:first-of-type {
+      border-top: none;
+    }
+
+    .akce-contact-item:last-of-type {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .akce-contact-item .k {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+      margin-bottom: 8px;
+    }
+
+    .akce-contact-item .v {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 26px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .akce-contact-item .sub {
+      display: block;
+      font-family: var(--body);
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--ink-60);
+      margin-top: 4px;
+    }
+
+    .akce-note {
+      font-size: 13px;
+      color: var(--ink-60);
+      margin-top: 28px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .akce-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .akce-right {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid var(--line);
+        padding-top: 48px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .akce-section {
+        padding: 60px 0;
+      }
+
+      .akce-contact-item .v {
+        font-size: 19px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div id="nav-mount"></div>
+
+  <section class="page-header page-header--hero">
+    <div class="container">
+      <h1>Kontakt.</h1>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="container">
+      <div class="ct-grid">
+        <div class="ct-left">
+          <div class="accent-rule"></div>
+          <h2>Napište, volejte,<br> přijďte.</h2>
+          <div class="contacts-list">
+            <div class="contact-row">
+              <div class="k">E-mail</div>
+              <div class="v">info@svidnicky-extrem.cz<span class="sub">Obecné dotazy, přihlášky</span></div>
+            </div>
+            <div class="contact-row">
+              <div class="k">Telefon</div>
+              <div class="v">+420 777 000 000<span class="sub">Pavel Novák · vedoucí oddílu</span></div>
+            </div>
+            <div class="contact-row">
+              <div class="k">Adresa</div>
+              <div class="v">Svídnice 40, 538 24 Svídnice<span class="sub">Stará škola</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-right" id="kontakt-formular">
+          <div class="eyebrow">Zpráva</div>
+          <h3>Nebo nám rovnou napište.</h3>
+          <p>Ozveme se do 24 hodin.</p>
+          <form class="form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Odesláno ✓'">
+            <div class="row">
+              <label>Jméno<input type="text" placeholder="Jan Novák" required /></label>
+              <label>E-mail<input type="email" placeholder="jan@email.cz" required /></label>
+            </div>
+            <label>Zajímá mě
+              <select id="contact-topic">
+                <option>Trénink dětí</option>
+                <option>Trénink dospělých</option>
+                <option>Závod</option>
+                <option>Tábor</option>
+                <option>Spolupráce / partnerství</option>
+                <option>Ostatní</option>
+              </select>
+            </label>
+            <label>Zpráva<textarea id="contact-message"
+                placeholder="Kolik let je dítěti, od kdy byste chtěli chodit, atd."></textarea></label>
+            <button type="submit" class="btn btn-primary">Odeslat <span class="arr">→</span></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="treninky-section">
+    <div class="container">
+      <div class="treninky-inner">
+
+        <div class="treninky-left">
+          <div class="eyebrow">Přihlášení na tréninky</div>
+          <h2>Tréninky<br><span>s námi.</span></h2>
+          <p>Trénujeme každý týden — děti i dospělí, začátečníci i zkušení. Stačí zavolat nebo napsat, o zbytek se
+            postaráme. A pokud chcete rovnou přijít a podívat se, jste vítáni.</p>
+        </div>
+
+        <div class="treninky-right">
+          <div class="treninky-contact-item">
+            <div class="k">Telefon</div>
+            <div class="v">+420 777 000 000<span class="sub">Pavel Novák · vedoucí oddílu</span></div>
+          </div>
+          <div class="treninky-contact-item">
+            <div class="k">E-mail</div>
+            <div class="v">info@svidnicky-extrem.cz<span class="sub">Odpovídáme do 24 hodin</span></div>
+          </div>
+          <p class="treninky-note">Tréninky jsou zdarma. Napište nám jméno, věk a jestli jde o dítě nebo dospělého —
+            zbytek domluvíme na místě.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="reg-section">
+    <div class="container">
+      <div class="reg-inner">
+
+        <div class="reg-left">
+          <div class="eyebrow" style="color:var(--accent)">Přihlášení na závod</div>
+          <h2>Svídnický<br><span>Extrém.</span></h2>
+          <p>Chcete se přihlásit na závod? Stačí nám zavolat nebo napsat — přihlášení vyřídíme společně během chvilky.
+          </p>
+        </div>
+
+        <div class="reg-right">
+          <div class="reg-contact-item">
+            <div class="k">Telefon</div>
+            <div class="v">+420 777 000 000<span class="sub">Pavel Novák · vedoucí oddílu</span></div>
+          </div>
+          <div class="reg-contact-item">
+            <div class="k">E-mail</div>
+            <div class="v">info@svidnicky-extrem.cz<span class="sub">Odpovídáme do 24 hodin</span></div>
+          </div>
+          <p class="reg-note">Do zprávy uveďte jméno, věk a o jakou trasu máte zájem. Zbytek domluvíme.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="akce-section">
+    <div class="container">
+      <div class="akce-inner">
+
+        <div class="akce-left">
+          <div class="eyebrow">Dotazy a přihlášky</div>
+          <h2>Ostatní<br><span>akce.</span></h2>
+          <p>Pořádáme příměstské tábory, výlety do přírody a další akce během roku. Pokud vás cokoliv zajímá nebo se
+            chcete přihlásit, napište nebo zavolejte.</p>
+          <div class="akce-tags">
+            <span class="akce-tag">Příměstský tábor</span>
+            <span class="akce-tag">Výlety</span>
+            <span class="akce-tag">Soustředění</span>
+            <span class="akce-tag">Další akce</span>
+          </div>
+        </div>
+
+        <div class="akce-right">
+          <div class="akce-contact-item">
+            <div class="k">Telefon</div>
+            <div class="v">+420 777 000 000<span class="sub">Pavel Novák · vedoucí oddílu</span></div>
+          </div>
+          <div class="akce-contact-item">
+            <div class="k">E-mail</div>
+            <div class="v">info@svidnicky-extrem.cz<span class="sub">Odpovídáme do 24 hodin</span></div>
+          </div>
+          <p class="akce-note">Termíny akcí průběžně zveřejňujeme na stránce Akcí. Neváhejte se ozvat kdykoliv — rádi
+            zodpovíme všechny dotazy.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+  <script src="../assets/shared.js?v=1776861924530"></script>
+  <script>
+    SE.mount('contact');
+
+    const messagePlaceholders = {
+      'Trénink dětí': 'Kolik let je dítěti, od kdy byste chtěli chodit, atd.',
+      'Trénink dospělých': 'Jaká je vaše úroveň, od kdy byste chtěli začít, atd.',
+      'Závod': 'O jakou trasu máte zájem, jméno závodníka, věk, atd.',
+      'Tábor': 'Věk dítěte, o jaký termín máte zájem, případné dotazy, atd.',
+      'Spolupráce / partnerství': 'Popište vaši firmu nebo projekt a co navrhujete za spolupráci, atd.',
+      'Ostatní': 'Napište nám cokoliv, rádi se ozveme.',
+    };
+    const topicEl = document.getElementById('contact-topic');
+    const messageEl = document.getElementById('contact-message');
+    topicEl.addEventListener('change', () => {
+      messageEl.placeholder = messagePlaceholders[topicEl.value] || '';
+    });
+
+    const temaMap = { zavod: 'Závod', ostatni: 'Ostatní', 'trenink-deti': 'Trénink dětí', tabor: 'Tábor' };
+    const urlTema = temaMap[new URLSearchParams(window.location.search).get('tema')];
+    if (urlTema) {
+      topicEl.value = urlTema;
+      messageEl.placeholder = messagePlaceholders[urlTema] || '';
+    }
+
+  </script>
+</body>
+
+</html>

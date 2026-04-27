@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="icon" type="image/png" href="../assets/Images/logo.png"/>
+<title>Závod — Svídnický Extrém</title>
+<link rel="stylesheet" href="../assets/shared.css?v=1776862203011"/>
+<style>
+
+
+  /* ===== FULL-SCREEN RACE HERO ===== */
+  .race-hero-full {
+    position: relative;
+    min-height: calc(100vh - 72px);
+    display: flex; align-items: center;
+    overflow: hidden; color: var(--paper);
+  }
+  .rhf-bg { position: absolute; inset: 0; z-index: 0; }
+  .rhf-bg img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 35%;
+    transition: transform 10s ease;
+  }
+  .race-hero-full .rhf-bg img { transform: scale(1.04); }
+  .rhf-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      105deg,
+      rgba(10,10,10,0.90) 0%,
+      rgba(10,10,10,0.68) 45%,
+      rgba(10,10,10,0.30) 100%
+    );
+  }
+  .rhf-inner {
+    position: relative; z-index: 1;
+    padding-top: 80px; padding-bottom: 80px; width: 100%;
+  }
+  .rhf-content { max-width: 840px; }
+  .rhf-eyebrow {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .rhf-eyebrow::before {
+    content: ''; display: block;
+    width: 40px; height: 2px; background: var(--accent); flex-shrink: 0;
+  }
+  .rhf-title {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(72px, 12vw, 180px);
+    line-height: 1.0; text-transform: uppercase;
+    letter-spacing: -0.02em; color: var(--paper); margin-bottom: 28px;
+  }
+  .rhf-title span { color: var(--accent); }
+  .rhf-lede {
+    font-size: 17px; line-height: 1.6;
+    color: rgba(245,243,238,0.72);
+    max-width: 50ch; margin-bottom: 32px;
+  }
+  .rhf-meta {
+    display: flex; gap: 40px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(245,243,238,0.5); margin-bottom: 36px;
+  }
+  .rhf-meta strong { color: var(--paper); font-weight: 500; }
+
+  .rhf-countdown {
+    display: flex; gap: 40px; flex-wrap: wrap;
+    padding-top: 28px; margin-bottom: 44px;
+    border-top: 1px solid rgba(245,243,238,0.2);
+  }
+  .rhf-countdown .unit .v {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(44px, 5.5vw, 72px); line-height: 1;
+    font-variant-numeric: tabular-nums; color: var(--paper);
+  }
+  .rhf-countdown .unit .l {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(245,243,238,0.45); margin-top: 8px;
+  }
+  .rhf-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .rhf-actions .btn-primary {
+    color: var(--ink); font-weight: 800;
+    transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+  }
+  .rhf-actions .btn-primary::before { display: none; }
+  .rhf-actions .btn-primary:hover {
+    color: var(--ink);
+    transform: translateY(-2px);
+    filter: brightness(1.12);
+    box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45);
+  }
+  .btn-ghost-light {
+    background: transparent; color: var(--paper);
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+  }
+  .btn-ghost-light:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--paper);
+  }
+
+  /* scroll indicator */
+  .rhf-scroll {
+    position: absolute; bottom: 32px; right: 48px; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 9px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245,243,238,0.35); writing-mode: vertical-rl;
+  }
+  .rhf-scroll-line {
+    width: 1px; height: 48px;
+    background: rgba(245,243,238,0.2);
+    position: relative; overflow: hidden;
+  }
+  .rhf-scroll-line::after {
+    content: ''; position: absolute;
+    top: -100%; left: 0; width: 100%; height: 100%;
+    background: var(--accent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0% { top: -100%; } 100% { top: 100%; } }
+
+  @media (max-width: 900px) {
+    .rhf-countdown { gap: 24px; }
+    .rhf-scroll { display: none; }
+  }
+  @media (max-width: 480px) {
+    .rhf-meta { gap: 20px; }
+    .rhf-countdown { gap: 16px; }
+  }
+
+  /* ===== FACTS ROW ===== */
+  .facts-row { padding: 80px 0; background: var(--paper-2); border-block: 1px solid var(--line); }
+  .facts-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .fact { padding: 32px; background: var(--paper); border: 1px solid var(--line); border-radius: 2px; }
+  .fact .n { font-family: var(--display); font-weight: 800; font-size: clamp(44px, 5vw, 64px); line-height: 1; letter-spacing: -0.01em; }
+  .fact .n span { color: var(--accent); }
+  .fact .l { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-60); margin-top: 12px; }
+  .fact .d { font-size: 14px; color: var(--ink-80); line-height: 1.5; margin-top: 10px; }
+  @media (max-width: 900px){ .facts-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px){
+    .facts-grid { grid-template-columns: 1fr; }
+    .sch-head .mono-hide-mobile { display: none; }
+    .fact { padding: 24px; }
+  }
+
+  /* ===== REGISTRATION ===== */
+  .reg-section { padding: 120px 0; }
+  .reg-grid { display:grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: stretch; }
+  .reg-grid h2 { font-family: var(--display); font-weight: 800; font-size: clamp(48px, 6vw, 88px); line-height: 1.05; text-transform: uppercase; letter-spacing: -0.015em; }
+  .reg-grid .lede { font-size: 17px; line-height: 1.6; color: var(--ink-80); margin-top: 24px; max-width: 52ch; }
+
+  .price-card {
+    background: var(--ink); color: var(--paper);
+    padding: 48px; border-radius: 2px;
+    display: flex; flex-direction: column; gap: 32px; justify-content: space-between;
+  }
+  .price-card .amt-row { display:flex; align-items: baseline; gap: 12px; }
+  .price-card .amt { font-family: var(--display); font-weight: 800; font-size: 96px; line-height: 1; letter-spacing: -0.02em; }
+  .price-card .cur { font-family: var(--display); font-weight: 700; font-size: 32px; color: var(--accent); }
+  .price-card .sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(245,243,238,0.5); }
+  .price-card .rows { display:flex; flex-direction: column; }
+  .price-card .rows .r { display:flex; justify-content: space-between; padding: 14px 0; border-top: 1px solid rgba(245,243,238,0.15); font-family: var(--display); text-transform: uppercase; letter-spacing: 0.02em; font-size: 15px; font-weight: 500; }
+  .price-card .rows .r span:first-child { color: rgba(245,243,238,0.55); font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; font-weight: 500; }
+
+  .reg-grid .btn-primary {
+    transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+  }
+  .reg-grid .btn-primary::before { display: none; }
+  .reg-grid .btn-primary:hover {
+    color: var(--ink);
+    transform: translateY(-2px);
+    filter: brightness(1.12);
+    box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45);
+  }
+
+  @media (max-width: 900px){
+    .reg-grid { grid-template-columns: 1fr; }
+    .price-card { padding: 36px; }
+    .price-card .amt { font-size: 72px; }
+  }
+  @media (max-width: 600px){
+    .reg-section { padding: 80px 0; }
+    .price-card { padding: 28px; gap: 24px; }
+    .price-card .amt { font-size: 56px; }
+    .price-card .cur { font-size: 24px; }
+    .price-card .rows .r { font-size: 14px; }
+    .price-card .rows .r span:first-child { font-size: 9px; }
+  }
+
+  /* ===== PHOTOS ===== */
+  .race-photos { padding: 120px 0; background: var(--paper-2); border-top: 1px solid var(--line); }
+
+  @media (max-width: 640px) {
+    .race-photos .sch-head { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .race-photos .sch-head h2 { line-height: 1.15; letter-spacing: 0; }
+  }
+
+</style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<!-- ================= FULL-SCREEN HERO ================= -->
+<section class="race-hero-full">
+  <div class="rhf-bg">
+    <img
+      src="https://images.unsplash.com/photo-1530143311094-34d807799e8f?auto=format&fit=crop&w=2400&q=80"
+      alt="Závodníci na Svídnickém Extrému"
+    />
+    <div class="rhf-overlay"></div>
+  </div>
+
+  <div class="container rhf-inner">
+    <div class="rhf-content reveal">
+      <h1 class="rhf-title">Svídnický<br><span>Extrém.</span></h1>
+      <p class="rhf-lede">Jeden závod, jeden den v roce, jedna parta. Překážky z dubových klád, bláto ze svídnických luk, finiš na hřišti.</p>
+
+      <div class="rhf-countdown" data-countdown="2026-06-15T10:00:00">
+        <div class="unit"><div class="v" data-d>00</div><div class="l">Dnů</div></div>
+        <div class="unit"><div class="v" data-h>00</div><div class="l">Hodin</div></div>
+        <div class="unit"><div class="v" data-m>00</div><div class="l">Minut</div></div>
+        <div class="unit"><div class="v" data-s>00</div><div class="l">Sekund</div></div>
+      </div>
+
+      <div class="rhf-actions">
+        <a href="kontakt.html?tema=zavod#kontakt-formular" class="btn btn-primary">Přihlásit se <span class="arr">→</span></a>
+        <a href="kontakt.html?tema=ostatni#kontakt-formular" class="btn btn-ghost-light">Mám otázku</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="rhf-scroll">
+    <div class="rhf-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ================= FACTS ================= -->
+<section class="facts-row">
+  <div class="container">
+    <div class="sch-head" style="margin-bottom: 48px;">
+      <div>
+        <div class="eyebrow">01 / O závodě</div>
+        <h2>Trasa, překážky,<br>bláto.</h2>
+      </div>
+      <div class="mono mono-hide-mobile" style="color: var(--ink-60);">Jednou do roka · každý červen</div>
+    </div>
+    <div class="facts-grid reveal">
+      <div class="fact">
+        <div class="n">7<span> km</span></div>
+        <div class="l">Délka trasy</div>
+        <div class="d">Okruh kolem Svídnice přes les, pole a potok.</div>
+      </div>
+      <div class="fact">
+        <div class="n">24</div>
+        <div class="l">Překážek</div>
+        <div class="d">Lano, zeď, monkey bars, tunely, blátivý crawl.</div>
+      </div>
+      <div class="fact">
+        <div class="n">2</div>
+        <div class="l">Kategorie</div>
+        <div class="d">Hobby (pro každého) a Elite (s časomírou).</div>
+      </div>
+      <div class="fact">
+        <div class="n">≈300</div>
+        <div class="l">Závodníků ročně</div>
+        <div class="d">Omezený počet míst — registrujte se včas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REGISTRATION / PRICE ================= -->
+<section class="reg-section">
+  <div class="container">
+    <div class="reg-grid">
+      <div>
+        <div class="eyebrow">02 / Registrace</div>
+        <h2>Jedno startovné,<br>vše v ceně.</h2>
+        <p class="lede">V ceně je startovní číslo, chip, tričko, medaile do cíle, občerstvení na trati, teplý oběd po závodě a kilo bláta zdarma. Registrujte se předem, na místě kapacita nezaručená.</p>
+        <p class="lede" style="margin-top: 16px;">Děti do 15 let běží v rámci Dětského Extrému zdarma (v doprovodu rodiče).</p>
+        <div style="margin-top: 40px; display:flex; gap: 16px; flex-wrap: wrap;">
+          <a href="kontakt.html?tema=zavod#kontakt-formular" class="btn btn-primary">Přihlásit se <span class="arr">→</span></a>
+          <a href="kontakt.html?tema=ostatni#kontakt-formular" class="btn btn-ghost">Mám otázku</a>
+        </div>
+      </div>
+      <div class="price-card reveal">
+        <div>
+          <div class="amt-row">
+            <div class="amt">800</div>
+            <div class="cur">Kč</div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="r"><span>V ceně</span><span>Tričko + medaile</span></div>
+          <div class="r"><span>Občerstvení</span><span>Na trati + v cíli</span></div>
+          <div class="r"><span>Chip</span><span>Elektronická časomíra</span></div>
+          <div class="r"><span>Děti do 15 let</span><span>Zdarma</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PHOTOS ================= -->
+<section class="race-photos">
+  <div class="container">
+    <div class="sch-head">
+      <div>
+        <div class="eyebrow">03 / Z minulých ročníků</div>
+        <h2>Bláto, pot,<br>úsměvy v cíli.</h2>
+      </div>
+      <a href="galerie.html" class="btn btn-ghost">Celá galerie <span class="arr">→</span></a>
+    </div>
+
+    <div class="gp-grid reveal">
+      <a class="g" href="galerie.html">
+        <span class="cat-tag">Závod</span>
+        <div class="date-stamp">15. 6. 2025</div>
+        <div class="meta"><span class="t">Finiš na hlavní trati</span></div>
+        <img src="https://images.unsplash.com/photo-1530143311094-34d807799e8f?auto=format&fit=crop&w=1200&q=70" alt="" />
+      </a>
+      <a class="g" href="galerie.html">
+        <span class="cat-tag">Závod</span>
+        <div class="date-stamp">15. 6. 2025</div>
+        <div class="meta"><span class="t">Lezecká stěna</span></div>
+        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=900&q=70" alt="" />
+      </a>
+      <a class="g" href="galerie.html">
+        <span class="cat-tag">Závod</span>
+        <div class="date-stamp">15. 6. 2025</div>
+        <div class="meta"><span class="t">Start závodu</span></div>
+        <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=900&q=70" alt="" />
+      </a>
+      <a class="g" href="galerie.html">
+        <span class="cat-tag">Závod</span>
+        <div class="date-stamp">15. 6. 2025</div>
+        <div class="meta"><span class="t">Blátivý crawl</span></div>
+        <img src="https://images.unsplash.com/photo-1533681904393-9ab6eee7e408?auto=format&fit=crop&w=900&q=70" alt="" />
+      </a>
+      <a class="g" href="galerie.html">
+        <span class="cat-tag">Závod</span>
+        <div class="date-stamp">15. 6. 2025</div>
+        <div class="meta"><span class="t">Medaile a oslavy</span></div>
+        <img src="https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=900&q=70" alt="" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+<script src="../assets/shared.js?v=1776861924530"></script>
+<script>SE.mount('races');</script>
+</body>
+</html>

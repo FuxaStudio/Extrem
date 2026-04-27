@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="icon" type="image/png" href="../assets/Images/logo.png"/>
+<title>Tréninky — Svídnický Extrém</title>
+<link rel="stylesheet" href="../assets/shared.css?v=1776862203011"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  .intro { padding: 96px 0; border-bottom: 1px solid var(--line); }
+  .intro-grid { display:grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start; }
+  .intro h2 { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 5vw, 72px); line-height: 0.9; text-transform: uppercase; letter-spacing: -0.01em; }
+  .intro p { font-size: 18px; line-height: 1.55; color: var(--ink-80); margin-top: 24px; max-width: 48ch; }
+  .intro .meta-list { display:flex; flex-direction:column; gap: 20px; }
+  .intro .meta-list .row { display:flex; justify-content:space-between; padding: 20px 0; border-top: 1px solid var(--line); }
+  .intro .meta-list .row:last-child { border-bottom: 1px solid var(--line); }
+  .intro .meta-list .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-60); }
+  .intro .meta-list .v { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; font-size: 20px; text-align: right; }
+
+  /* HERO OVERRIDE */
+  .page-header-tr { padding: 0; border-bottom: 1px solid var(--line); }
+  .ph-hero {
+    position: relative;
+    height: calc(100vh - 72px);
+    min-height: 560px;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .ph-bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(60%) contrast(1.05) brightness(0.85);
+    z-index: 0;
+  }
+  .ph-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(15,15,15,0.35) 0%, rgba(15,15,15,0.55) 55%, rgba(15,15,15,0.92) 100%);
+    z-index: 1;
+  }
+  .ph-sticker {
+    font-size: 22px;
+  }
+
+  .ph-h1-wrap {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .page-header-tr h1 {
+    display: flex; flex-direction: column; align-items: center;
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(72px, 12vw, 180px);
+    line-height: 0.88;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: center;
+  }
+  .page-header-tr h1 .l1 {
+    color: var(--paper);
+    font-size: 1em;
+  }
+  .page-header-tr h1 .l2 {
+    color: var(--accent);
+    font-size: 0.5em;
+    margin-top: 8px;
+    letter-spacing: -0.015em;
+  }
+  .page-header-tr h1 .l3 {
+    font-weight: 400;
+    font-family: var(--body); text-transform: none;
+    font-style: italic;
+    letter-spacing: 0.01em;
+    font-size: 0.24em;
+    color: rgba(245,243,238,0.55);
+    margin-top: 14px;
+  }
+  .ph-footer-row {
+    display: flex; justify-content: space-between; align-items: end;
+    gap: 32px; flex-wrap: wrap;
+    margin-top: 32px;
+  }
+  .ph-times { display: flex; gap: 32px; }
+  .pt { display: flex; gap: 16px; align-items: center; }
+  .pt-day {
+    font-family: var(--display); font-weight: 800;
+    font-size: 64px; line-height: 0.9;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .pt-info { display: flex; flex-direction: column; }
+  .pt-info strong {
+    font-family: var(--display); font-weight: 700;
+    font-size: 22px; letter-spacing: 0.02em;
+    color: var(--paper);
+  }
+  .pt-info span {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(245,243,238,0.6);
+    margin-top: 2px;
+  }
+  @media (max-width: 900px) {
+    .ph-sticker { font-size: 16px; }
+  }
+
+  /* SCHEDULE */
+  .schedule { padding: 120px 0; background: var(--paper-2); border-bottom: 1px solid var(--line); }
+  .section-head { display:flex; justify-content: space-between; align-items:end; margin-bottom: 48px; border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+  .days { display:grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--line); border: 1px solid var(--line); }
+  .day { background: var(--paper); padding: 48px; min-height: 440px; display:flex; flex-direction:column; justify-content: space-between; }
+  .day.today { background: var(--ink); color: var(--paper); }
+  .day.today.kids-day { background: #e0ddd4; color: var(--ink); border: none; }
+  .day.today.kids-day .d-sub { color: var(--ink-60); }
+  .day.today.kids-day .session .l { color: var(--ink-60); }
+  .day.today.kids-day .session .g.kids { color: var(--accent); border-color: var(--accent); }
+  .day.today .tag-today { display:inline-block; background: var(--accent); color: var(--ink); padding: 4px 10px; font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 16px; }
+  .day .d-name { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 48px; line-height: 0.9; letter-spacing: -0.01em; }
+  .day .d-sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-60); margin-top: 8px; }
+  .day.today .d-sub { color: rgba(245,243,238,0.85); }
+  .day .sessions { display:flex; flex-direction:column; gap: 16px; margin-top: 32px; }
+  .day .session { display:flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 16px; align-items: start; }
+  .day.today .session { border-top-color: rgba(245,243,238,0.35); }
+  .day .session .t { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
+  .day .session .l { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-60); margin-top: 6px; }
+  .day.today .session .l { color: rgba(245,243,238,0.85); }
+  .day .session .g { font-family: var(--display); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 10px; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
+  .day .session .g.kids { color: var(--accent); border-color: var(--accent); }
+
+  .schedule .btn-primary::before { display: none; }
+  .schedule .btn-primary {
+    transition: transform .2s ease, color .2s ease, box-shadow .2s ease, filter .2s ease;
+  }
+  .schedule .btn-primary:hover {
+    color: var(--ink);
+    transform: translateY(-2px);
+    filter: brightness(1.12);
+    box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45);
+  }
+
+  @media (max-width: 900px){
+    .days { grid-template-columns: 1fr; }
+    .day { min-height: 320px; padding: 32px; }
+    .day .session { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .intro-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  /* GROUPS */
+  .groups { padding: 120px 0; background: var(--paper); border-block: 1px solid var(--line); }
+  .grp-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+  .grp { background: var(--paper); padding: 40px; border: 1px solid var(--line); border-radius: 2px; display:flex; flex-direction:column; gap: 24px; }
+  .grp h3 { font-family: var(--display); font-weight: 800; font-size: 48px; text-transform: uppercase; line-height: 0.9; letter-spacing: -0.01em; }
+  .grp .ages { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .grp ul { list-style: none; display:flex; flex-direction:column; gap: 12px; }
+  .grp li { font-size: 15px; color: var(--ink-80); padding-left: 24px; position:relative; line-height: 1.45; }
+  .grp li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  .grp .price { display:flex; justify-content: space-between; align-items:end; padding-top: 24px; border-top: 1px solid var(--line); }
+  .grp .price .amt { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 1; }
+  .grp .price .per { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-60); margin-top: 4px; }
+  @media (max-width: 900px){ .grp-grid { grid-template-columns: 1fr; } }
+
+  /* LOCATION */
+  .location { padding: 120px 0; background: var(--paper); }
+  .loc-grid { display:grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: stretch; }
+  .loc-info { display:flex; flex-direction:column; justify-content: space-between; }
+  .loc-info h2 { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 5vw, 72px); line-height: 0.9; text-transform: uppercase; }
+  .loc-info .addr { font-family: var(--display); font-size: 26px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.2; margin-top: 32px; }
+  .loc-info .features { display:flex; flex-direction:column; gap: 12px; margin-top: 32px; }
+  .loc-info .features .f { display:flex; gap: 16px; align-items:center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .loc-info .features .f span:first-child { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-60); min-width: 120px; font-weight: 700; }
+  .loc-info .features .f span:last-child { font-family: var(--display); font-size: 16px; font-weight: 600; text-transform: uppercase; }
+  .loc-map { border-radius: 2px; overflow: hidden; isolation: isolate; }
+  #training-map { width: 100%; height: 560px; background: #151515; }
+  .loc-map .leaflet-tile { filter: brightness(1.3) contrast(1.05); }
+  /* Leaflet overrides — dark editorial style */
+  .loc-map .leaflet-container { background: #151515 !important; font-family: var(--mono); }
+  .loc-map .leaflet-control-zoom { border: none !important; display: flex; flex-direction: column; gap: 2px; }
+  .loc-map .leaflet-control-zoom a {
+    background: var(--ink) !important; color: var(--paper) !important;
+    border: 1px solid rgba(245,243,238,0.15) !important; border-radius: 2px !important;
+    font-weight: 700; width: 28px !important; height: 28px !important; line-height: 26px !important;
+    font-size: 16px !important; transition: background .15s, color .15s, border-color .15s;
+  }
+  .loc-map .leaflet-control-zoom a:hover { background: var(--accent) !important; color: var(--ink) !important; border-color: var(--accent) !important; }
+  .loc-map .leaflet-control-attribution {
+    background: rgba(15,15,15,0.72) !important; color: rgba(245,243,238,0.28) !important;
+    font-size: 9px !important; letter-spacing: 0.06em; border-radius: 2px 0 0 0 !important;
+  }
+  .loc-map .leaflet-control-attribution a { color: rgba(245,243,238,0.4) !important; }
+  .loc-map .leaflet-popup-content-wrapper {
+    background: var(--ink); color: var(--paper); border-radius: 2px;
+    font-family: var(--display); font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; font-size: 13px; box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+  }
+  .loc-map .leaflet-popup-tip-container { display: none; }
+  .loc-map .leaflet-popup-content { margin: 10px 14px; line-height: 1.5; }
+  .loc-map .leaflet-popup-close-button { color: rgba(245,243,238,0.45) !important; top: 6px !important; right: 8px !important; }
+  /* Custom pulsing marker */
+  .map-marker { background: transparent !important; border: none !important; }
+  .map-pin {
+    width: 16px; height: 16px; background: var(--accent); border-radius: 50%;
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 0 rgba(255,77,31,.7);
+    animation: map-ping 2.2s ease-out infinite;
+  }
+  @keyframes map-ping {
+    0%   { box-shadow: 0 0 0 0 rgba(255,77,31,.7); }
+    70%  { box-shadow: 0 0 0 18px rgba(255,77,31,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,77,31,0); }
+  }
+  @media (max-width: 1100px) {
+    .loc-grid { grid-template-columns: 1fr; gap: 32px; }
+    #training-map { height: 420px; }
+    .loc-map-mobile { display: flex; }
+  }
+  @media (min-width: 1101px) {
+    .loc-map-mobile { display: none; }
+  }
+  @media (max-width: 600px) {
+    #training-map { height: 300px; }
+    .location { padding: 80px 0; }
+  }
+
+  .loc-map-mobile {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 32px 24px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: 1px solid rgba(245,243,238,0.15);
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .loc-map-mobile:hover {
+    background: var(--accent);
+    color: var(--ink);
+    border-color: var(--accent);
+  }
+  .loc-map-mobile .lmm-icon {
+    font-size: 32px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .loc-map-mobile .lmm-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .loc-map-mobile .lmm-label {
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.22em;
+  }
+  .loc-map-mobile:hover .lmm-label { color: var(--ink); }
+
+  .maps-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    align-self: flex-start;
+    transition: color 0.2s ease, border-color 0.2s ease, letter-spacing 0.2s ease, gap 0.2s ease;
+  }
+  .maps-link:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+    letter-spacing: 0.22em;
+    gap: 14px;
+  }
+
+  .gallery-preview { padding: 120px 0; border-top: 1px solid var(--line); background: var(--paper-2); }
+
+  @media (max-width: 640px) {
+    .gallery-preview .section-head { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .gallery-preview .section-head h2 { line-height: 1.15; letter-spacing: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<!-- HEADER -->
+<section class="page-header page-header-tr">
+  <div class="ph-hero">
+    <img class="ph-bg" src="https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=2000&q=70" alt=""/>
+    <div class="ph-overlay"></div>
+    <div class="ph-sticker">Zdarma</div>
+    <div class="container">
+      <div class="ph-content">
+        <div class="ph-h1-wrap">
+          <h1>
+            <span class="l1">Tréninky</span>
+            <span class="l2">Dvakrát týdně.</span>
+            <span class="l3">Za každého počasí.</span>
+          </h1>
+        </div>
+        <div class="ph-meta-bottom">
+          <div class="pmb-item">
+            <span class="pmb-k">Dospělí</span>
+            <span class="pmb-v">Pondělí · 17:00</span>
+          </div>
+          <div class="pmb-item">
+            <span class="pmb-k">Děti 6+</span>
+            <span class="pmb-v">Středa · 17:00</span>
+          </div>
+          <div class="pmb-item">
+            <span class="pmb-k">Místo</span>
+            <span class="pmb-v">Stará škola · Svídnice</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="container">
+    <div class="intro-grid">
+      <div>
+        <div class="accent-rule"></div>
+        <h2>Za každého počasí.</h2>
+        <p>Tréninky vedeme v přírodním areálu za obcí. Kombinujeme překážkový trénink, běžecké tempo a silovou přípravu s vlastní vahou. Žádná tělocvična, žádné výmluvy — jen les, lano a pár překážek z dubových klád.</p>
+        <p>Dvakrát týdně — v <strong>pondělí od 17:00</strong> pro dospělé a ve <strong>středu od 17:00</strong> pro děti od 6 let. První lekce vždy zdarma.</p>
+      </div>
+      <div class="meta-list">
+        <div class="row"><div class="k"><strong>Sraz</strong></div><div class="v">17:00 · Stará škola</div></div>
+        <div class="row"><div class="k"><strong>Délka</strong></div><div class="v">60–90 minut</div></div>
+        <div class="row"><div class="k"><strong>S sebou</strong></div><div class="v">Boty do terénu</div></div>
+        <div class="row"><div class="k"><strong>Cena</strong></div><div class="v" style="color: var(--accent);">Zdarma</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule">
+  <div class="container">
+    <div class="sch-head">
+      <div>
+        <div class="eyebrow">01 / Rozvrh</div>
+        <h2>Tréninky pro všechny.</h2>
+      </div>
+    </div>
+
+    <div class="days">
+      <div class="day today" style="background-image: linear-gradient(rgba(15,15,15,0.45) 0%, rgba(15,15,15,0.88) 100%), url('https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=900&q=70'); background-size: cover; background-position: center;">
+        <div class="d-top">
+          <div class="d-name">Po</div>
+          <div class="d-sub">Pondělí</div>
+        </div>
+        <div class="sessions">
+          <div class="session">
+            <div>
+              <div class="t">17:00 — 18:30</div>
+              <div class="l">Silový trénink + běh + překážky</div>
+            </div>
+            <div class="g" style="color: #f5f3ee; border-color: rgba(245,243,238,0.4);">Dospělí 18+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day today" style="background-image: linear-gradient(rgba(15,15,15,0.45) 0%, rgba(15,15,15,0.88) 100%), url('https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?auto=format&fit=crop&w=900&q=70'); background-size: cover; background-position: center;">
+        <div class="d-top">
+          <div class="d-name">St</div>
+          <div class="d-sub">Středa</div>
+        </div>
+        <div class="sessions">
+          <div class="session">
+            <div>
+              <div class="t">17:00 — 18:00</div>
+              <div class="l">Hravý překážkový trénink</div>
+            </div>
+            <div class="g kids">Děti 6+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px; display: flex; justify-content: center;">
+      <a href="kontakt.html?tema=trenink-deti#kontakt-formular" class="btn btn-primary">Přijít na trénink <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location">
+  <div class="container">
+    <div class="loc-grid">
+      <div class="loc-info">
+        <div>
+          <div class="eyebrow">02 / Kde to žije</div>
+          <h2>Stará škola.</h2>
+          <p style="font-size: 17px; line-height: 1.6; color: var(--ink-80); margin-top: 28px; max-width: 38ch;">
+            Scházíme se u Staré školy ve Svídnici. Odtud vyrážíme do lesa, na louky a k potoku — terén máme hned za rohem.
+          </p>
+          <a href="https://www.google.com/maps/place/Star%C3%A1+%C5%A1kola/@49.8818273,15.807123,17z" target="_blank" rel="noopener" class="maps-link">Otevřít v Google Maps →</a>
+        </div>
+        <div class="features">
+          <div class="f"><span>Parkování</span><span>U školy</span></div>
+          <div class="f"><span>MHD</span><span>Autobus</span></div>
+          <div class="f"><span>Zázemí</span><span>Šatna · WC · pitná voda</span></div>
+          <div class="f"><span>Povrch</span><span>Les · louka · bláto</span></div>
+        </div>
+      </div>
+      <div class="loc-map">
+        <div id="training-map"></div>
+      </div>
+      <a href="https://www.google.com/maps/place/Star%C3%A1+%C5%A1kola/@49.8818273,15.807123,17z" target="_blank" rel="noopener" class="loc-map-mobile">
+        <span class="lmm-icon">📍</span>
+        <span class="lmm-text">
+          <span class="lmm-label">Místo tréninku</span>
+          <span>Stará škola · Svídnice</span>
+        </span>
+        <span style="margin-left: auto; opacity: 0.5; font-size: 16px;">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTOS -->
+<section class="gallery-preview">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">03 / Jak to vypadá</div>
+        <h2>Z tréninků.</h2>
+      </div>
+      <a href="galerie.html" class="btn btn-ghost">Více v galerii <span class="arr">→</span></a>
+    </div>
+
+    <div class="gp-grid reveal">
+      <a class="g" href="galerie.html">
+        <span class="cat-tag">Trénink</span>
+        <div class="date-stamp">7. 4. 2026</div>
+        <div class="meta"><span class="t">Překážkový trénink</span></div>
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=70" alt="" />
+      </a>
+      <a class="g" href="galerie.html">
+        <span class="cat-tag">Trénink</span>
+        <div class="date-stamp">18. 3. 2026</div>
+        <div class="meta"><span class="t">Běžecká příprava</span></div>
+        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=70" alt="" />
+      </a>
+      <a class="g" href="galerie.html">
+        <span class="cat-tag">Děti</span>
+        <div class="date-stamp">5. 3. 2026</div>
+        <div class="meta"><span class="t">Děti na laně</span></div>
+        <img src="https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=900&q=70" alt="" />
+      </a>
+      <a class="g" href="galerie.html">
+        <span class="cat-tag">Trénink</span>
+        <div class="date-stamp">14. 1. 2026</div>
+        <div class="meta"><span class="t">Hravý trénink</span></div>
+        <img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?auto=format&fit=crop&w=900&q=70" alt="" />
+      </a>
+      <a class="g" href="galerie.html">
+        <span class="cat-tag">Děti</span>
+        <div class="date-stamp">10. 12. 2025</div>
+        <div class="meta"><span class="t">Zimní trénink</span></div>
+        <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=900&q=70" alt="" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+<script src="../assets/shared.js?v=1776861924530"></script>
+<script>SE.mount('trainings');</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+window.addEventListener('load', function () {
+  var el = document.getElementById('training-map');
+  if (!el || typeof L === 'undefined') return;
+
+  var map = L.map('training-map', {
+    center: [49.8818239, 15.8096979],
+    zoom: 16,
+    zoomControl: true,
+    scrollWheelZoom: false,
+    attributionControl: true
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  var icon = L.divIcon({
+    className: 'map-marker',
+    html: '<div class="map-pin"></div>',
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+    popupAnchor: [0, -14]
+  });
+
+  L.marker([49.8818239, 15.8096979], { icon: icon })
+    .addTo(map)
+    .bindPopup('Stará škola<br><span style="font-weight:400;font-family:var(--mono);font-size:10px;letter-spacing:.12em;opacity:.6;">Svídnice</span>');
+
+  setTimeout(function () { map.invalidateSize(); }, 400);
+
+  el.addEventListener('click', function () { map.scrollWheelZoom.enable(); });
+  el.addEventListener('mouseleave', function () { map.scrollWheelZoom.disable(); });
+});
+</script>
+</body>
+</html>

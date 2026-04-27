@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="cs">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="../assets/Images/logo.png" />
+  <title>Svídnický Extrém — Překážkový sport pro všechny</title>
+  <link rel="stylesheet" href="../assets/shared.css?v=1776862203011" />
+  <style>
+    /* =========== HERO =========== */
+    .hero {
+      position: relative;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .hero-stage {
+      position: relative;
+      width: 100%;
+      min-height: min(78vh, 820px);
+      overflow: hidden;
+      background: var(--ink);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero-stage::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=2400&q=75');
+      background-size: cover;
+      background-position: center 30%;
+      filter: grayscale(0.15) contrast(1.05);
+      transform: scale(1.02);
+      transition: transform 1.4s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .hero-stage:hover::before {
+      transform: scale(1.06);
+    }
+
+    .hero-stage::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(15, 15, 15, 0.55) 0%, rgba(15, 15, 15, 0.2) 28%, rgba(15, 15, 15, 0.55) 62%, rgba(15, 15, 15, 0.95) 100%),
+        linear-gradient(90deg, rgba(15, 15, 15, 0.6) 0%, rgba(15, 15, 15, 0) 55%);
+    }
+
+    .hero-stage>.container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding-top: 56px;
+      padding-bottom: 56px;
+      min-height: inherit;
+      color: var(--paper);
+    }
+
+
+
+    .hero h1 {
+      font-family: var(--display);
+      font-weight: 800;
+      color: var(--paper);
+      margin: 0;
+      font-size: clamp(72px, 16vw, 280px);
+      line-height: 0.84;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 .slash {
+      color: var(--accent);
+      display: inline-block;
+      transform: translateY(-0.05em);
+    }
+
+    .hero h1 .outline {
+      -webkit-text-stroke: 2px var(--paper);
+      color: transparent;
+    }
+
+
+
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 48px;
+      align-items: end;
+      margin-top: 24px;
+    }
+
+
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .hero-ctas .btn-primary {
+      color: var(--ink);
+      font-weight: 800;
+      transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+    }
+    .hero-ctas .btn-primary::before { display: none; }
+    .hero-ctas .btn-primary:hover {
+      color: var(--ink);
+      transform: translateY(-2px);
+      filter: brightness(1.12);
+      box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45);
+    }
+
+    .hero-ctas .btn-ghost {
+      color: var(--paper);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .hero-ctas .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--paper);
+    }
+
+
+
+    @media (max-width: 900px) {
+      .hero-stage {
+        min-height: 80vh;
+      }
+
+      .hero-stage>.container {
+        justify-content: center;
+        padding-top: 80px;
+      }
+
+      .hero-bottom {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .hero h1 {
+        font-size: clamp(64px, 20vw, 120px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-stage {
+        min-height: 88vh;
+      }
+
+      .hero h1 {
+        font-size: clamp(60px, 23vw, 90px);
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .hero-ctas .btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .hero-stage>.container {
+        padding-bottom: 40px;
+      }
+    }
+
+    /* =========== MARQUEE =========== */
+    .marquee {
+      border-block: 1px solid var(--line);
+      padding: 28px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      background: var(--paper);
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      gap: 64px;
+      align-items: center;
+      animation: scroll 40s linear infinite;
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(28px, 3.5vw, 48px);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+
+    .marquee-track span {
+      display: inline-flex;
+      align-items: center;
+      gap: 64px;
+    }
+
+    .marquee-track .dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .marquee-track .out {
+      -webkit-text-stroke: 1.5px var(--ink);
+      color: transparent;
+    }
+
+    @keyframes scroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* =========== COUNTDOWNS =========== */
+    .countdowns {
+      padding: 120px 0;
+      background: var(--paper-2);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 24px;
+    }
+
+    .section-head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(40px, 6vw, 80px);
+      line-height: 0.9;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+    }
+
+    .section-head .index {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+    }
+
+    .count-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .count-card {
+      position: relative;
+      padding: 40px;
+      background: var(--ink);
+      color: var(--paper);
+      overflow: hidden;
+      border-radius: 2px;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .count-card.light {
+      background: var(--paper-2);
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .count-card .bg-img {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.35;
+      background-size: cover;
+      background-position: center;
+      mix-blend-mode: luminosity;
+    }
+
+    .count-card.light .bg-img {
+      opacity: 1;
+      mix-blend-mode: normal;
+    }
+
+    .count-card.light::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(180deg, rgba(15, 15, 15, 0.25) 0%, rgba(15, 15, 15, 0.55) 60%, rgba(15, 15, 15, 0.85) 100%);
+      pointer-events: none;
+    }
+
+    .count-card.light {
+      color: var(--paper);
+      background: #1a1a1a;
+    }
+
+    .count-card.light .kind,
+    .count-card.light .date-line,
+    .count-card.light .cta-row .mono {
+      color: rgba(245, 243, 238, 0.8) !important;
+    }
+
+    .count-card.light h3 {
+      color: var(--paper);
+    }
+
+    .count-card.light .countdown {
+      border-top-color: rgba(245, 243, 238, 0.2);
+    }
+
+    .count-card.light .countdown .v {
+      color: var(--paper);
+    }
+
+    .count-card.light .countdown .l {
+      color: rgba(245, 243, 238, 0.55);
+    }
+
+    .count-card>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .count-card .kind {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+
+    .count-card h3 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(36px, 4.5vw, 64px);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      max-width: 14ch;
+    }
+
+    .count-card .date-line {
+      font-family: var(--display);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 18px;
+      margin-top: 16px;
+      opacity: 0.85;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 32px;
+      border-top: 1px solid rgba(245, 243, 238, 0.18);
+      padding-top: 24px;
+    }
+
+    .count-card.light .countdown {
+      border-top-color: var(--line);
+    }
+
+    .countdown .unit {
+      text-align: left;
+    }
+
+    .countdown .v {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(42px, 5.5vw, 72px);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .countdown .l {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-top: 6px;
+    }
+
+    .count-card .cta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+    }
+
+    .count-card .reg {
+      font-family: var(--display);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 10px 20px;
+      font-size: 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      text-align: center;
+      transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+    }
+
+    .count-card .reg:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.12);
+      box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45);
+    }
+
+    @media (max-width: 900px) {
+      .count-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .count-card {
+        min-height: 300px;
+        padding: 28px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .countdowns .section-head .index,
+      .overview .section-head .index {
+        display: none;
+      }
+
+      .gallery-preview .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .gallery-preview .section-head h2 {
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+    }
+
+    /* =========== OVERVIEW CARDS =========== */
+    .overview {
+      padding: 120px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .ov-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .ov-card {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--ink);
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .ov-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1s cubic-bezier(.2, .7, .2, 1), filter .6s ease;
+      filter: grayscale(60%) brightness(0.75);
+    }
+
+    .ov-card:hover img {
+      transform: scale(1.08);
+      filter: grayscale(0%) brightness(0.85);
+    }
+
+    .ov-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(15, 15, 15, 0.8) 100%);
+    }
+
+    .ov-card .num {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--paper);
+      opacity: 0.7;
+    }
+
+    .ov-card .arr {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--paper);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transform: rotate(-30deg);
+      transition: transform .3s ease, background .3s ease;
+    }
+
+    .ov-card:hover .arr {
+      transform: rotate(0deg);
+      background: var(--accent);
+    }
+
+    .ov-card .foot {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      z-index: 2;
+      color: var(--paper);
+    }
+
+    .ov-card .foot h3 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 0.9;
+      text-transform: uppercase;
+    }
+
+    .ov-card .foot p {
+      font-family: var(--body);
+      font-size: 13px;
+      margin-top: 10px;
+      opacity: 0.8;
+      line-height: 1.4;
+      max-width: 28ch;
+    }
+
+    @media (max-width: 900px) {
+      .ov-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .ov-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ov-card {
+        aspect-ratio: 4/3;
+      }
+    }
+
+    /* =========== GALLERY PREVIEW =========== */
+    .gallery-preview {
+      padding: 120px 0;
+      border-top: 1px solid var(--line);
+      background: var(--paper-2);
+    }
+
+    @media (max-width: 640px) {
+      .gallery-preview .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .gallery-preview .section-head h2 {
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+    }
+
+
+  </style>
+</head>
+
+<body>
+
+  <div id="nav-mount"></div>
+
+  <!-- =============== HERO =============== -->
+  <section class="hero">
+    <div class="hero-stage">
+      <div class="container">
+        <h1 class="display">
+          Překážky<br>
+          <span class="outline">nejsou</span> <span class="slash">/</span><br>
+          výmluvy.
+        </h1>
+
+        <div class="hero-bottom">
+          <div>
+            <div class="hero-ctas">
+              <a href="zavody.html" class="btn btn-primary">Svídnický Extrém</a>
+              <a href="treninky.html" class="btn btn-ghost">Tréninky</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== MARQUEE =============== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Překážky</span><span class="dot"></span>
+      <span class="out">Běh</span><span class="dot"></span>
+      <span>Síla</span><span class="dot"></span>
+      <span class="out">Tábory</span><span class="dot"></span>
+      <span>Svídnice</span><span class="dot"></span>
+      <span class="out">Děti 6+</span><span class="dot"></span>
+      <span>Extrém</span><span class="dot"></span>
+      <span class="out">Bláto</span><span class="dot"></span>
+      <!-- duplicate for loop -->
+      <span>Překážky</span><span class="dot"></span>
+      <span class="out">Běh</span><span class="dot"></span>
+      <span>Síla</span><span class="dot"></span>
+      <span class="out">Tábory</span><span class="dot"></span>
+      <span>Svídnice</span><span class="dot"></span>
+      <span class="out">Děti 6+</span><span class="dot"></span>
+      <span>Extrém</span><span class="dot"></span>
+      <span class="out">Bláto</span><span class="dot"></span>
+    </div>
+  </div>
+
+  <!-- =============== COUNTDOWNS =============== -->
+  <section class="countdowns">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">01 / Nejbližší akce</div>
+          <h2>Odpočet do startu.</h2>
+        </div>
+        <div class="index">02 akce · jaro + léto 2026</div>
+      </div>
+
+      <div class="count-grid">
+        <article class="count-card reveal">
+          <div class="bg-img"
+            style="background-image:url('https://images.unsplash.com/photo-1530143311094-34d807799e8f?auto=format&fit=crop&w=1400&q=60')">
+          </div>
+          <div>
+            <div class="kind">Závod · 8. ročník</div>
+            <h3>Svídnický<br>Extrém<br><span style="color:var(--accent)">2026</span></h3>
+            <div class="date-line">15. června 2026 · 10:00</div>
+          </div>
+          <div>
+            <div class="countdown" data-countdown="2026-06-15T10:00:00">
+              <div class="unit">
+                <div class="v" data-d>00</div>
+                <div class="l">Dnů</div>
+              </div>
+              <div class="unit">
+                <div class="v" data-h>00</div>
+                <div class="l">Hodin</div>
+              </div>
+              <div class="unit">
+                <div class="v" data-m>00</div>
+                <div class="l">Minut</div>
+              </div>
+              <div class="unit">
+                <div class="v" data-s>00</div>
+                <div class="l">Sekund</div>
+              </div>
+            </div>
+            <div class="cta-row">
+              <div class="mono" style="color: rgba(245,243,238,0.6);">Trasa 7 km · 24 překážek</div>
+              <a href="zavody.html" class="reg">Podrobnosti</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="count-card light reveal">
+          <div class="bg-img"
+            style="background-image:url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1400&q=60')">
+          </div>
+          <div>
+            <div class="kind" style="color:var(--ink-60);">Letní akce pro celou ves</div>
+            <h3>Vítání<br>prázdnin</h3>
+            <div class="date-line" style="color:var(--ink-80)">29. června 2026 · 14:00</div>
+          </div>
+          <div>
+            <div class="countdown" data-countdown="2026-06-29T14:00:00">
+              <div class="unit">
+                <div class="v" data-d>00</div>
+                <div class="l">Dnů</div>
+              </div>
+              <div class="unit">
+                <div class="v" data-h>00</div>
+                <div class="l">Hodin</div>
+              </div>
+              <div class="unit">
+                <div class="v" data-m>00</div>
+                <div class="l">Minut</div>
+              </div>
+              <div class="unit">
+                <div class="v" data-s>00</div>
+                <div class="l">Sekund</div>
+              </div>
+            </div>
+            <div class="cta-row">
+              <div class="mono" style="color: var(--ink-60);">Hřiště Svídnice · zdarma</div>
+              <a href="akce.html" class="reg">Podrobnosti</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== OVERVIEW =============== -->
+  <section class="overview">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">02 / Co u nás děláme</div>
+          <h2>Čtyři pilíře.</h2>
+        </div>
+        <div class="index">Tréninky · Závody · Akce · Tábory</div>
+      </div>
+
+      <div class="ov-grid">
+        <a class="ov-card reveal" href="treninky.html">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=70"
+            alt="Tréninky" />
+          <div class="num">01 / Tréninky</div>
+          <div class="arr">↗</div>
+          <div class="foot">
+            <h3>Tréninky</h3>
+            <p>Po / St / Pá. Děti i dospělí, všechny úrovně.</p>
+          </div>
+        </a>
+        <a class="ov-card reveal" href="zavody.html">
+          <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=900&q=70"
+            alt="Závody" />
+          <div class="num">02 / Závody</div>
+          <div class="arr">↗</div>
+          <div class="foot">
+            <h3>Závody</h3>
+            <p>Šest startů v sezoně. Terén, překážky, bláto.</p>
+          </div>
+        </a>
+        <a class="ov-card reveal" href="akce.html">
+          <img src="https://images.unsplash.com/photo-1533162507191-d90c625b2640?auto=format&fit=crop&w=900&q=70"
+            alt="Akce" />
+          <div class="num">03 / Akce</div>
+          <div class="arr">↗</div>
+          <div class="foot">
+            <h3>Akce</h3>
+            <p>Vítání prázdnin, výlety, komunitní dny.</p>
+          </div>
+        </a>
+        <a class="ov-card reveal" href="pages/akce.html#tabory">
+          <img src="https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?auto=format&fit=crop&w=900&q=70"
+            alt="Tábory" />
+          <div class="num">04 / Tábory</div>
+          <div class="arr">↗</div>
+          <div class="foot">
+            <h3>Tábory</h3>
+            <p>Letní příměstské i pobytové. Turnusy 7–14 dní.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== GALLERY PREVIEW =============== -->
+  <section class="gallery-preview">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">03 / Z posledních akcí</div>
+          <h2>Bláto, pot a úsměvy.</h2>
+        </div>
+        <a href="galerie.html" class="btn btn-ghost">Celá galerie <span class="arr">→</span></a>
+      </div>
+
+      <div class="gp-grid reveal">
+        <a class="g" href="galerie-detail.html">
+          <span class="cat-tag">Závod</span>
+          <div class="date-stamp">15. 6. 2025</div>
+          <div class="meta"><span class="t">Svídnický Extrém 2025</span></div>
+          <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=1200&q=70"
+            alt="" />
+        </a>
+        <a class="g" href="galerie-detail.html">
+          <span class="cat-tag">Trénink - Děti</span>
+          <div class="date-stamp">18. 3. 2026</div>
+          <div class="meta"><span class="t">Děti na laně</span></div>
+          <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=70"
+            alt="" />
+        </a>
+        <a class="g" href="galerie-detail.html">
+          <span class="cat-tag">Akce</span>
+          <div class="date-stamp">10. 7. 2025</div>
+          <div class="meta"><span class="t">Tábor Chýnice</span></div>
+          <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=900&q=70"
+            alt="" />
+        </a>
+        <a class="g" href="galerie-detail.html">
+          <span class="cat-tag">Akce</span>
+          <div class="date-stamp">29. 6. 2025</div>
+          <div class="meta"><span class="t">Vítání prázdnin</span></div>
+          <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=900&q=70" alt="" />
+        </a>
+        <a class="g" href="galerie-detail.html">
+          <span class="cat-tag">Trénink - Děti</span>
+          <div class="date-stamp">14. 1. 2026</div>
+          <div class="meta"><span class="t">Hravý trénink</span></div>
+          <img src="https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=900&q=70"
+            alt="" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+
+  <script src="../assets/shared.js?v=1776861924530"></script>
+  <script>SE.mount('home');</script>
+
+</body>
+
+</html>
