@@ -22,7 +22,7 @@
     <nav class="nav" id="site-nav">
       <div class="container nav-inner">
         <a class="nav-logo" href="index.html">
-          <img class="se-logo" src="../assets/Images/logo.png" alt="Svídnický Extrém" style="height: 90px; width: auto; max-width: 350px; display: block; object-fit: contain; flex-shrink: 0; margin: -16px 0;">
+          <img class="se-logo" src="assets/Images/logo.png" alt="Svídnický Extrém" style="height: 90px; width: auto; max-width: 350px; display: block; object-fit: contain; flex-shrink: 0; margin: -16px 0;">
           <span class="wordmark">Svídnický Extrém</span>
         </a>
         <div class="nav-links">
