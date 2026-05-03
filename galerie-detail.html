@@ -134,6 +134,8 @@
     text-transform: uppercase; color: rgba(255,255,255,0.4);
   }
 
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   @media (max-width: 900px) {
     .foto-grid { grid-template-columns: repeat(2, 1fr); }
   }
@@ -185,47 +187,80 @@ SE.mount('gallery');
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw_0fUi-nEI9Na_B3E9aW2pGrt9GZk4L1Hb_pFsApWzqRLPA6o3w0yLYSKVHYbM82B3/exec';
 
 const BATCH = 40;
+const CACHE_KEY = 'vitani-ids';
+const CACHE_TTL = 24 * 60 * 60 * 1000;
+
+function getCached() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const { ts, ids } = JSON.parse(raw);
+    if (Date.now() - ts > CACHE_TTL) return null;
+    return ids;
+  } catch { return null; }
+}
+
+function setCached(ids) {
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), ids })); } catch {}
+}
+
+function renderPhotos(ids) {
+  const grid = document.getElementById('foto-grid');
+  const total = ids.length;
+  document.getElementById('photo-count').textContent = total + ' fotografií';
+
+  const thumbs = ids.map(id => `https://drive.google.com/thumbnail?id=${id}&sz=w600`);
+  const fulls  = ids.map(id => `https://drive.google.com/thumbnail?id=${id}&sz=w2000`);
+
+  let loaded = 0;
+  function renderBatch() {
+    const end = Math.min(loaded + BATCH, total);
+    const frag = document.createDocumentFragment();
+    for (let i = loaded; i < end; i++) {
+      const div = document.createElement('div');
+      div.className = 'f';
+      div.dataset.idx = i;
+      div.innerHTML = `<img src="${thumbs[i]}" alt="Vítání prázdnin 2025 — foto ${i+1}" loading="lazy"/>`;
+      frag.appendChild(div);
+    }
+    grid.appendChild(frag);
+    loaded = end;
+  }
+
+  renderBatch();
+  setupLightbox(fulls, total);
+
+  const sentinel = document.createElement('div');
+  grid.after(sentinel);
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && loaded < total) {
+      renderBatch();
+      if (loaded >= total) obs.disconnect();
+    }
+  }, { rootMargin: '400px' });
+  obs.observe(sentinel);
+}
 
 async function loadPhotos() {
   const grid = document.getElementById('foto-grid');
+
+  const cached = getCached();
+  if (cached) {
+    renderPhotos(cached);
+    return;
+  }
+
+  grid.innerHTML = `<div style="grid-column:1/-1;display:flex;justify-content:center;padding:60px 0;">
+    <div style="width:40px;height:40px;border:3px solid rgba(245,243,238,0.15);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;"></div>
+  </div>`;
+
   try {
     const res = await fetch(SCRIPT_URL);
     if (!res.ok) throw new Error('Script error');
     const ids = await res.json();
-    const total = ids.length;
-    document.getElementById('photo-count').textContent = total + ' fotografií';
-
-    const thumbs = ids.map(id => `https://drive.google.com/thumbnail?id=${id}&sz=w600`);
-    const fulls  = ids.map(id => `https://drive.google.com/thumbnail?id=${id}&sz=w2000`);
-
-    let loaded = 0;
-    function renderBatch() {
-      const end = Math.min(loaded + BATCH, total);
-      const frag = document.createDocumentFragment();
-      for (let i = loaded; i < end; i++) {
-        const div = document.createElement('div');
-        div.className = 'f';
-        div.dataset.idx = i;
-        div.innerHTML = `<img src="${thumbs[i]}" alt="Vítání prázdnin 2025 — foto ${i+1}" loading="lazy"/>`;
-        frag.appendChild(div);
-      }
-      grid.appendChild(frag);
-      loaded = end;
-    }
-
-    renderBatch();
-    setupLightbox(fulls, total);
-
-    const sentinel = document.createElement('div');
-    grid.after(sentinel);
-    const obs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && loaded < total) {
-        renderBatch();
-        if (loaded >= total) obs.disconnect();
-      }
-    }, { rootMargin: '400px' });
-    obs.observe(sentinel);
-
+    setCached(ids);
+    grid.innerHTML = '';
+    renderPhotos(ids);
   } catch(e) {
     grid.innerHTML = `<p style="color:rgba(245,243,238,0.5);font-family:var(--mono);grid-column:1/-1;text-align:center;padding:40px 0;">Fotografie se nepodařilo načíst.</p>`;
   }
