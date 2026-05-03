@@ -186,14 +186,14 @@ const GD = id => `https://drive.google.com/thumbnail?id=${id}&sz=w2000`;
 const GV = id => `https://drive.google.com/file/d/${id}/preview`;
 
 const ITEMS = [
+  {type:'local', src:'assets/Images/hero-galerie.jpg', cat:'akce', title:'Vítání prázdnin 2025', date:'22. 6. 2025', link:'galerie-detail.html', tag:'Vítání prázdnin', eager:true},
+  {type:'local', src:'assets/Images/hero-treninky.jpg', cat:'trenink', title:'Tréninky', date:'', link:'galerie-trenink.html', tag:'Tréninky', eager:true},
   {type:'video', driveId:'1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD', poster:GD('1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD'), cat:'zavody', title:'Svídnický Extrém 2025', date:'2025', tag:'Svídnický Extrém'},
   {type:'video', driveId:'19EdnI1ToHe4tZUi8ASXjCZ-SEecgA3Xt', poster:GD('19EdnI1ToHe4tZUi8ASXjCZ-SEecgA3Xt'), cat:'zavody', title:'Extrém 2024', date:'2024', tag:'Svídnický Extrém'},
   {type:'video', driveId:'1Pari3VR6KzaO-ABjy7e_DhR-YPmGZMzI', poster:GD('1Pari3VR6KzaO-ABjy7e_DhR-YPmGZMzI'), cat:'zavody', title:'Svídnický Extrém 2022', date:'2022', tag:'Svídnický Extrém'},
   {type:'video', driveId:'1EwBdbDuBMzB_0uMIcF9bIEP2I5COiJsq', poster:GD('1ZghbFcNtw4h0mBDCaU2wbzlZ3823IcpB'), cat:'zavody', title:'Závod — záběry 2025', date:'2025', tag:'Svídnický Extrém'},
-  {type:'local', src:GD('1SigHJA1tE2He5eztIRgBWbxPYJ4xY78g'), cat:'akce', title:'Vítání prázdnin 2025', date:'22. 6. 2025', link:'galerie-detail.html', tag:'Vítání prázdnin'},
   {type:'video', driveId:'1846MJYDjJLj6IMlHAoN-CSC5X14sjosX', poster:GD('1846MJYDjJLj6IMlHAoN-CSC5X14sjosX'), cat:'akce', title:'Vánoční běh 2025', date:'2025', tag:'Vánoční běh'},
   {type:'local', src:GD('1FxJwqDDXluwSnJ3hiXyPPwYUNGewyPCi'), cat:'akce', title:'Tábor', date:'', link:'galerie-tabor.html', tag:'Tábor'},
-  {type:'local', src:GD('1A1ZD8qOEprySjGJ30J6MSkvtb_xd0VX7'), cat:'trenink', title:'Tréninky', date:'', link:'galerie-trenink.html', tag:'Tréninky'},
   {type:'local', src:GD('1JA19b6dlUbpLOtoAMs4pwetFjjNsTP2y'), cat:'deti', title:'Děti — Extrém', date:'', link:'galerie-deti.html', tag:'Děti — Extrém'},
 ];
 
@@ -201,7 +201,7 @@ const CATS = {all:'Vše', 'trenink-dospeli':'Trénink - Dospělí', 'trenink-det
 
 function renderItem(im) {
   if (im.type === 'video') {
-    const inner = `<img src="${im.poster}" alt="${im.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;"/>
+    const inner = `<img src="${im.poster}" alt="${im.title}" ${im.eager ? 'fetchpriority="high"' : 'loading="lazy"'} style="width:100%;height:100%;object-fit:cover;"/>
       <div class="g-play">
         <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
           <circle cx="26" cy="26" r="26" fill="rgba(245,243,238,0.18)"/>
@@ -219,14 +219,14 @@ function renderItem(im) {
   const imgSrc = im.src;
   if (im.link) {
     return `<a class="g ${im.size||''}" data-cat="${im.cat}" href="${im.link}">
-      <img src="${imgSrc}" alt="${im.title}" loading="lazy"/>
+      <img src="${imgSrc}" alt="${im.title}" ${im.eager ? 'fetchpriority="high"' : 'loading="lazy"'}/>
       <div class="cat-tag">${CATS[im.cat]}</div>
       ${im.date ? `<div class="date-stamp">${im.date}</div>` : ''}
       <div class="meta"><span class="t">${im.tag || im.title}</span></div>
     </a>`;
   }
   return `<div class="g ${im.size||''}" data-cat="${im.cat}">
-    <img src="${imgSrc}" alt="${im.title}" loading="lazy"/>
+    <img src="${imgSrc}" alt="${im.title}" ${im.eager ? 'fetchpriority="high"' : 'loading="lazy"'}/>
     <div class="cat-tag">${CATS[im.cat]}</div>
     <div class="date-stamp">${im.date}</div>
     <div class="meta"><span class="t">${im.tag || im.title}</span></div>
