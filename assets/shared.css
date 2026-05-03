@@ -363,7 +363,7 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase; letter-spacing: 0.06em; color: var(--paper);
   transition: background .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease;
 }
-.footer-fb:hover {
+.footer .footer-fb:hover {
   background: #1877f2; border-color: #1877f2; color: #fff;
   box-shadow: 0 6px 20px rgba(24,119,242,0.4);
 }
