@@ -19,7 +19,7 @@
   .detail-hero::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: url('https://drive.google.com/uc?export=view&id=1SigHJA1tE2He5eztIRgBWbxPYJ4xY78g');
+    background-image: url('https://drive.google.com/thumbnail?id=1SigHJA1tE2He5eztIRgBWbxPYJ4xY78g&sz=w2000');
     background-size: cover; background-position: center 35%;
     filter: grayscale(0.15) contrast(1.05);
     transform: scale(1.02);
@@ -193,7 +193,7 @@ async function loadPhotos() {
     const total = ids.length;
     document.getElementById('photo-count').textContent = total + ' fotografií';
 
-    const srcs = ids.map(id => `https://drive.google.com/uc?export=view&id=${id}`);
+    const srcs = ids.map(id => `https://drive.google.com/thumbnail?id=&sz=w2000&${id}`);
     grid.innerHTML = srcs.map((src, idx) =>
       `<div class="f" data-idx="${idx}"><img src="${src}" alt="Vítání prázdnin 2025 — foto ${idx+1}" loading="lazy"/></div>`
     ).join('');

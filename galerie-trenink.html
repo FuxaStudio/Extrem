@@ -19,7 +19,7 @@
   .detail-hero::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: url('https://drive.google.com/uc?export=view&id=1Y8HwUj91u65jLOh3fCrOh698Eml1pScX');
+    background-image: url('https://drive.google.com/thumbnail?id=1Y8HwUj91u65jLOh3fCrOh698Eml1pScX&sz=w2000');
     background-size: cover; background-position: center 40%;
     filter: grayscale(0.15) contrast(1.05);
     transform: scale(1.02);
@@ -182,7 +182,7 @@
 <script>
 SE.mount('gallery');
 
-const GD = id => `https://drive.google.com/uc?export=view&id=${id}`;
+const GD = id => `https://drive.google.com/thumbnail?id=&sz=w2000&${id}`;
 
 const PHOTOS = [
   GD('1A1ZD8qOEprySjGJ30J6MSkvtb_xd0VX7'),
