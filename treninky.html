@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<link rel="icon" type="image/png" href="assets/Images/logo.png"/>
+  <meta name="description" content="Tréninky Svídnický Extrém — pravidelné překážkové tréninky každé pondělí a středu ve Svídnici. Přidej se k nám!" />
+<link rel="icon" type="image/png" href="assets/Images/logo2.jpeg"/>
 <title>Tréninky — Svídnický Extrém</title>
-<link rel="stylesheet" href="assets/shared.css?v=1776862203011"/>
+<link rel="stylesheet" href="assets/shared.css"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
   .intro { padding: 96px 0; border-bottom: 1px solid var(--line); }
@@ -116,7 +117,7 @@
   .day.today.kids-day .d-sub { color: var(--ink-60); }
   .day.today.kids-day .session .l { color: var(--ink-60); }
   .day.today.kids-day .session .g.kids { color: var(--accent); border-color: var(--accent); }
-  .day.today .tag-today { display:inline-block; background: var(--accent); color: var(--ink); padding: 4px 10px; font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 16px; }
+  .day.today .tag-today { display:inline-block; background: var(--accent); color: #fff; padding: 4px 10px; font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; margin-bottom: 16px; }
   .day .d-name { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 48px; line-height: 0.9; letter-spacing: -0.01em; }
   .day .d-sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-60); margin-top: 8px; }
   .day.today .d-sub { color: rgba(245,243,238,0.85); }
@@ -286,12 +287,6 @@
     gap: 14px;
   }
 
-  .gallery-preview { padding: 120px 0; border-top: 1px solid var(--line); background: var(--paper-2); }
-
-  @media (max-width: 640px) {
-    .gallery-preview .section-head { flex-direction: column; align-items: flex-start; gap: 20px; }
-    .gallery-preview .section-head h2 { line-height: 1.15; letter-spacing: 0; }
-  }
 </style>
 </head>
 <body>
@@ -301,7 +296,7 @@
 <!-- HEADER -->
 <section class="page-header page-header-tr">
   <div class="ph-hero">
-    <img class="ph-bg" src="https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=2000&q=70" alt=""/>
+    <img class="ph-bg" src="https://drive.google.com/uc?export=view&id=1A1ZD8qOEprySjGJ30J6MSkvtb_xd0VX7" alt=""/>
     <div class="ph-overlay"></div>
     <div class="ph-sticker">Zdarma</div>
     <div class="container">
@@ -363,7 +358,7 @@
     </div>
 
     <div class="days">
-      <div class="day today" style="background-image: linear-gradient(rgba(15,15,15,0.45) 0%, rgba(15,15,15,0.88) 100%), url('https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=900&q=70'); background-size: cover; background-position: center;">
+      <div class="day today" style="background-image: linear-gradient(rgba(15,15,15,0.45) 0%, rgba(15,15,15,0.88) 100%), url('https://drive.google.com/uc?export=view&id=1n8jJ-rhE6-j1oics9qznvNGWfJql_Bb2'); background-size: cover; background-position: center;">
         <div class="d-top">
           <div class="d-name">Po</div>
           <div class="d-sub">Pondělí</div>
@@ -379,7 +374,7 @@
         </div>
       </div>
 
-      <div class="day today" style="background-image: linear-gradient(rgba(15,15,15,0.45) 0%, rgba(15,15,15,0.88) 100%), url('https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?auto=format&fit=crop&w=900&q=70'); background-size: cover; background-position: center;">
+      <div class="day today" style="background-image: linear-gradient(rgba(15,15,15,0.45) 0%, rgba(15,15,15,0.88) 100%), url('https://drive.google.com/uc?export=view&id=1JA19b6dlUbpLOtoAMs4pwetFjjNsTP2y'); background-size: cover; background-position: center;">
         <div class="d-top">
           <div class="d-name">St</div>
           <div class="d-sub">Středa</div>
@@ -397,7 +392,7 @@
     </div>
 
     <div style="margin-top: 48px; display: flex; justify-content: center;">
-      <a href="kontakt.html?tema=trenink-deti#kontakt-formular" class="btn btn-primary">Přijít na trénink <span class="arr">→</span></a>
+      <a href="kontakt.html#trenink" class="btn btn-primary">Přijít na trénink <span class="arr">→</span></a>
     </div>
   </div>
 </section>
@@ -413,7 +408,7 @@
           <p style="font-size: 17px; line-height: 1.6; color: var(--ink-80); margin-top: 28px; max-width: 38ch;">
             Scházíme se u Staré školy ve Svídnici. Odtud vyrážíme do lesa, na louky a k potoku — terén máme hned za rohem.
           </p>
-          <a href="https://www.google.com/maps/place/Star%C3%A1+%C5%A1kola/@49.8818273,15.807123,17z" target="_blank" rel="noopener" class="maps-link">Otevřít v Google Maps →</a>
+          <a href="https://www.google.com/maps/place/Star%C3%A1+%C5%A1kola/@49.8818273,15.807123,17z/data=!4m6!3m5!1s0x470db7b5a3d156a7:0xddd435e5a5bfd9dd!8m2!3d49.8818239!4d15.8096979!16s%2Fg%2F11p028jxcp?entry=ttu&g_ep=EgoyMDI2MDQyOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="maps-link">Otevřít v Google Maps →</a>
         </div>
         <div class="features">
           <div class="f"><span>Parkování</span><span>U školy</span></div>
@@ -425,7 +420,7 @@
       <div class="loc-map">
         <div id="training-map"></div>
       </div>
-      <a href="https://www.google.com/maps/place/Star%C3%A1+%C5%A1kola/@49.8818273,15.807123,17z" target="_blank" rel="noopener" class="loc-map-mobile">
+      <a href="https://www.google.com/maps/place/Star%C3%A1+%C5%A1kola/@49.8818273,15.807123,17z/data=!4m6!3m5!1s0x470db7b5a3d156a7:0xddd435e5a5bfd9dd!8m2!3d49.8818239!4d15.8096979!16s%2Fg%2F11p028jxcp?entry=ttu&g_ep=EgoyMDI2MDQyOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="loc-map-mobile">
         <span class="lmm-icon">📍</span>
         <span class="lmm-text">
           <span class="lmm-label">Místo tréninku</span>
@@ -437,54 +432,9 @@
   </div>
 </section>
 
-<!-- PHOTOS -->
-<section class="gallery-preview">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <div class="eyebrow">03 / Jak to vypadá</div>
-        <h2>Z tréninků.</h2>
-      </div>
-      <a href="galerie.html" class="btn btn-ghost">Více v galerii <span class="arr">→</span></a>
-    </div>
-
-    <div class="gp-grid reveal">
-      <a class="g" href="galerie.html">
-        <span class="cat-tag">Trénink</span>
-        <div class="date-stamp">7. 4. 2026</div>
-        <div class="meta"><span class="t">Překážkový trénink</span></div>
-        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=70" alt="" />
-      </a>
-      <a class="g" href="galerie.html">
-        <span class="cat-tag">Trénink</span>
-        <div class="date-stamp">18. 3. 2026</div>
-        <div class="meta"><span class="t">Běžecká příprava</span></div>
-        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=70" alt="" />
-      </a>
-      <a class="g" href="galerie.html">
-        <span class="cat-tag">Děti</span>
-        <div class="date-stamp">5. 3. 2026</div>
-        <div class="meta"><span class="t">Děti na laně</span></div>
-        <img src="https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=900&q=70" alt="" />
-      </a>
-      <a class="g" href="galerie.html">
-        <span class="cat-tag">Trénink</span>
-        <div class="date-stamp">14. 1. 2026</div>
-        <div class="meta"><span class="t">Hravý trénink</span></div>
-        <img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?auto=format&fit=crop&w=900&q=70" alt="" />
-      </a>
-      <a class="g" href="galerie.html">
-        <span class="cat-tag">Děti</span>
-        <div class="date-stamp">10. 12. 2025</div>
-        <div class="meta"><span class="t">Zimní trénink</span></div>
-        <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=900&q=70" alt="" />
-      </a>
-    </div>
-  </div>
-</section>
 
 <div id="footer-mount"></div>
-<script src="assets/shared.js?v=1776861924530"></script>
+<script src="assets/shared.js"></script>
 <script>SE.mount('trainings');</script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>

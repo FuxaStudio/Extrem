@@ -4,9 +4,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/png" href="assets/Images/logo.png" />
+  <meta name="description" content="Svídnický Extrém — překážkový sport pro celou rodinu ve Svídnici, Pardubický kraj. Tréninky, závody a akce pro děti i dospělé." />
+  <link rel="icon" type="image/png" href="assets/Images/logo2.jpeg" />
   <title>Svídnický Extrém — Překážkový sport pro všechny</title>
-  <link rel="stylesheet" href="assets/shared.css?v=1776862203011" />
+  <link rel="stylesheet" href="assets/shared.css" />
   <style>
     /* =========== HERO =========== */
     .hero {
@@ -30,7 +31,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=2400&q=75');
+      background-image: url('https://drive.google.com/uc?export=view&id=1Y8HwUj91u65jLOh3fCrOh698Eml1pScX');
       background-size: cover;
       background-position: center 30%;
       filter: grayscale(0.15) contrast(1.05);
@@ -107,13 +108,13 @@
     }
 
     .hero-ctas .btn-primary {
-      color: var(--ink);
+      color: #fff;
       font-weight: 800;
       transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
     }
     .hero-ctas .btn-primary::before { display: none; }
     .hero-ctas .btn-primary:hover {
-      color: var(--ink);
+      color: #fff;
       transform: translateY(-2px);
       filter: brightness(1.12);
       box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45);
@@ -467,7 +468,7 @@
 
     .ov-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
@@ -601,6 +602,53 @@
       }
     }
 
+    /* =========== GP-GRID VIDEO =========== */
+    .gp-grid .g video {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .9s cubic-bezier(.2, .7, .2, 1);
+      pointer-events: none;
+    }
+    .gp-grid .g:hover video { transform: scale(1.06); }
+    .gp-grid .g .g-play {
+      position: absolute; inset: 0; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(10,10,10,0.28);
+      transition: background .3s;
+    }
+    .gp-grid .g:hover .g-play { background: rgba(10,10,10,0.15); }
+    .gp-grid .g .g-play svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); transition: transform .3s; }
+    .gp-grid .g:hover .g-play svg { transform: scale(1.12); }
+    .gp-grid .g .cat-tag,
+    .gp-grid .g .date-stamp,
+    .gp-grid .g .meta { z-index: 2; }
+
+    /* =========== VIDEO LIGHTBOX =========== */
+    #gp-vlb {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(10,10,10,0.96);
+      align-items: center; justify-content: center;
+    }
+    #gp-vlb.open { display: flex; }
+    #gp-vlb iframe {
+      width: 92vw; height: min(86vh, calc(92vw * 9/16));
+      border: none;
+      border-radius: 2px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+    }
+    #gp-vlb-close {
+      position: fixed; top: 20px; right: 28px;
+      font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      background: none; border: none; cursor: pointer;
+      transition: color .2s; z-index: 10000;
+    }
+    #gp-vlb-close:hover { color: var(--paper); }
+    #gp-vlb-title {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      white-space: nowrap;
+    }
 
   </style>
 </head>
@@ -662,21 +710,20 @@
           <div class="eyebrow">01 / Nejbližší akce</div>
           <h2>Odpočet do startu.</h2>
         </div>
-        <div class="index">02 akce · jaro + léto 2026</div>
       </div>
 
       <div class="count-grid">
         <article class="count-card reveal">
           <div class="bg-img"
-            style="background-image:url('https://images.unsplash.com/photo-1530143311094-34d807799e8f?auto=format&fit=crop&w=1400&q=60')">
+            style="background-image:url('https://drive.google.com/uc?export=view&id=1ZghbFcNtw4h0mBDCaU2wbzlZ3823IcpB')">
           </div>
           <div>
-            <div class="kind">Závod · 8. ročník</div>
+            <div class="kind">Závod</div>
             <h3>Svídnický<br>Extrém<br><span style="color:var(--accent)">2026</span></h3>
-            <div class="date-line">15. června 2026 · 10:00</div>
+            <div class="date-line">24. října 2026 · 10:00</div>
           </div>
           <div>
-            <div class="countdown" data-countdown="2026-06-15T10:00:00">
+            <div class="countdown" data-countdown="2026-10-24T10:00:00">
               <div class="unit">
                 <div class="v" data-d>00</div>
                 <div class="l">Dnů</div>
@@ -703,15 +750,15 @@
 
         <article class="count-card light reveal">
           <div class="bg-img"
-            style="background-image:url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=1400&q=60')">
+            style="background-image:url('https://drive.google.com/uc?export=view&id=15mCPcIwTAYRGWmoMkeNfEHlVSOXkf5Fb')">
           </div>
           <div>
             <div class="kind" style="color:var(--ink-60);">Letní akce pro celou ves</div>
             <h3>Vítání<br>prázdnin</h3>
-            <div class="date-line" style="color:var(--ink-80)">29. června 2026 · 14:00</div>
+            <div class="date-line" style="color:var(--ink-80)">21. června 2026 · 14:00</div>
           </div>
           <div>
-            <div class="countdown" data-countdown="2026-06-29T14:00:00">
+            <div class="countdown" data-countdown="2026-06-21T14:00:00">
               <div class="unit">
                 <div class="v" data-d>00</div>
                 <div class="l">Dnů</div>
@@ -730,7 +777,7 @@
               </div>
             </div>
             <div class="cta-row">
-              <div class="mono" style="color: var(--ink-60);">Hřiště Svídnice · zdarma</div>
+              <div class="mono" style="color: var(--ink-60);">zdarma</div>
               <a href="akce.html" class="reg">Podrobnosti</a>
             </div>
           </div>
@@ -745,50 +792,40 @@
       <div class="section-head">
         <div>
           <div class="eyebrow">02 / Co u nás děláme</div>
-          <h2>Čtyři pilíře.</h2>
+          <h2>Tři pilíře.</h2>
         </div>
-        <div class="index">Tréninky · Závody · Akce · Tábory</div>
+        <div class="index">Tréninky · Závody · Akce</div>
       </div>
 
       <div class="ov-grid">
         <a class="ov-card reveal" href="treninky.html">
-          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=70"
+          <img src="https://drive.google.com/uc?export=view&id=1p2pSV9ZzJ58hLQnQ16_0jo207JZFk7HC"
             alt="Tréninky" />
           <div class="num">01 / Tréninky</div>
           <div class="arr">↗</div>
           <div class="foot">
             <h3>Tréninky</h3>
-            <p>Po / St / Pá. Děti i dospělí, všechny úrovně.</p>
+            <p>Každé pondělí a středu. Děti i dospělí, všechny úrovně.</p>
           </div>
         </a>
         <a class="ov-card reveal" href="zavody.html">
-          <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=900&q=70"
+          <img src="https://drive.google.com/uc?export=view&id=1ZghbFcNtw4h0mBDCaU2wbzlZ3823IcpB"
             alt="Závody" />
           <div class="num">02 / Závody</div>
           <div class="arr">↗</div>
           <div class="foot">
             <h3>Závody</h3>
-            <p>Šest startů v sezoně. Terén, překážky, bláto.</p>
+            <p>1× ročně. Terén, překážky, bláto.</p>
           </div>
         </a>
         <a class="ov-card reveal" href="akce.html">
-          <img src="https://images.unsplash.com/photo-1533162507191-d90c625b2640?auto=format&fit=crop&w=900&q=70"
+          <img src="https://drive.google.com/uc?export=view&id=1-kTi1Xi2G6wPvgnBY3dciw5EbYK0tOmR"
             alt="Akce" />
           <div class="num">03 / Akce</div>
           <div class="arr">↗</div>
           <div class="foot">
             <h3>Akce</h3>
-            <p>Vítání prázdnin, výlety, komunitní dny.</p>
-          </div>
-        </a>
-        <a class="ov-card reveal" href="akce.html#tabory">
-          <img src="https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?auto=format&fit=crop&w=900&q=70"
-            alt="Tábory" />
-          <div class="num">04 / Tábory</div>
-          <div class="arr">↗</div>
-          <div class="foot">
-            <h3>Tábory</h3>
-            <p>Letní příměstské i pobytové. Turnusy 7–14 dní.</p>
+            <p>Vítání prázdnin, výlety, komunitní dny a letní tábory.</p>
           </div>
         </a>
       </div>
@@ -807,48 +844,87 @@
       </div>
 
       <div class="gp-grid reveal">
+        <!-- Vítání prázdnin 2025 — reálná fotka, velký slot -->
         <a class="g" href="galerie-detail.html">
+          <span class="cat-tag">Akce</span>
+          <div class="date-stamp">22. 6. 2025</div>
+          <div class="meta"><span class="t">Vítání prázdnin 2025</span></div>
+          <img src="https://drive.google.com/uc?export=view&id=1SigHJA1tE2He5eztIRgBWbxPYJ4xY78g" alt="Vítání prázdnin 2025" />
+        </a>
+        <!-- Svídnický Extrém 2025 — reálné video -->
+        <div class="g gp-video" data-driveid="1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD" data-title="Svídnický Extrém 2025">
+          <img src="https://drive.google.com/uc?export=view&id=1-QIwWJOzABrwIk5Y7w9bUBSj3hQwJ5-x" alt="Svídnický Extrém 2025" style="width:100%;height:100%;object-fit:cover;"/>
+          <div class="g-play">
+            <svg width="48" height="48" viewBox="0 0 52 52" fill="none">
+              <circle cx="26" cy="26" r="26" fill="rgba(245,243,238,0.18)"/>
+              <polygon points="21,17 38,26 21,35" fill="#fff"/>
+            </svg>
+          </div>
           <span class="cat-tag">Závod</span>
-          <div class="date-stamp">15. 6. 2025</div>
-          <div class="meta"><span class="t">Svídnický Extrém 2025</span></div>
-          <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=1200&q=70"
-            alt="" />
+          <div class="date-stamp">2025</div>
+          <div class="meta"><span class="t">Svídnický Extrém</span></div>
+        </div>
+        <!-- Tábor — reálná fotka -->
+        <a class="g" href="galerie-tabor.html">
+          <span class="cat-tag">Tábor</span>
+          <div class="meta"><span class="t">Tábor</span></div>
+          <img src="https://drive.google.com/uc?export=view&id=1FxJwqDDXluwSnJ3hiXyPPwYUNGewyPCi" alt="Tábor" />
         </a>
-        <a class="g" href="galerie-detail.html">
-          <span class="cat-tag">Trénink - Děti</span>
-          <div class="date-stamp">18. 3. 2026</div>
-          <div class="meta"><span class="t">Děti na laně</span></div>
-          <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=70"
-            alt="" />
+        <!-- Tréninky — reálná fotka -->
+        <a class="g" href="galerie-trenink.html">
+          <span class="cat-tag">Tréninky</span>
+          <div class="meta"><span class="t">Tréninky</span></div>
+          <img src="https://drive.google.com/uc?export=view&id=1A1ZD8qOEprySjGJ30J6MSkvtb_xd0VX7" alt="Tréninky" />
         </a>
-        <a class="g" href="galerie-detail.html">
-          <span class="cat-tag">Akce</span>
-          <div class="date-stamp">10. 7. 2025</div>
-          <div class="meta"><span class="t">Tábor Chýnice</span></div>
-          <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=900&q=70"
-            alt="" />
-        </a>
-        <a class="g" href="galerie-detail.html">
-          <span class="cat-tag">Akce</span>
-          <div class="date-stamp">29. 6. 2025</div>
-          <div class="meta"><span class="t">Vítání prázdnin</span></div>
-          <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=900&q=70" alt="" />
-        </a>
-        <a class="g" href="galerie-detail.html">
-          <span class="cat-tag">Trénink - Děti</span>
-          <div class="date-stamp">14. 1. 2026</div>
-          <div class="meta"><span class="t">Hravý trénink</span></div>
-          <img src="https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=900&q=70"
-            alt="" />
+        <!-- Děti — Extrém — statická fotka -->
+        <a class="g" href="galerie-deti.html">
+          <span class="cat-tag">Děti</span>
+          <div class="meta"><span class="t">Děti — Extrém</span></div>
+          <img src="https://drive.google.com/uc?export=view&id=1JA19b6dlUbpLOtoAMs4pwetFjjNsTP2y" alt="Děti — Extrém" />
         </a>
       </div>
     </div>
   </section>
 
+  <!-- Video lightbox -->
+  <div id="gp-vlb">
+    <button id="gp-vlb-close">✕ Zavřít</button>
+    <iframe id="gp-vlb-iframe" allowfullscreen></iframe>
+    <div id="gp-vlb-title"></div>
+  </div>
+
   <div id="footer-mount"></div>
 
-  <script src="assets/shared.js?v=1776861924530"></script>
+  <script src="assets/shared.js"></script>
   <script>SE.mount('home');</script>
+  <script>
+    const vlb = document.getElementById('gp-vlb');
+    const vlbIframe = document.getElementById('gp-vlb-iframe');
+    const vlbTitle = document.getElementById('gp-vlb-title');
+
+    function openVlb(driveId, title) {
+      vlbIframe.src = `https://drive.google.com/file/d/${driveId}/preview`;
+      vlbTitle.textContent = title;
+      vlb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeVlb() {
+      vlb.classList.remove('open');
+      vlbIframe.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.gp-grid .gp-video').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => openVlb(card.dataset.driveid, card.dataset.title));
+    });
+
+    document.getElementById('gp-vlb-close').addEventListener('click', closeVlb);
+    vlb.addEventListener('click', e => { if (e.target === vlb) closeVlb(); });
+    document.addEventListener('keydown', e => {
+      if (vlb.classList.contains('open') && e.key === 'Escape') closeVlb();
+    });
+  </script>
 
 </body>
 

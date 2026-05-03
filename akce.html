@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<link rel="icon" type="image/png" href="assets/Images/logo.png"/>
+  <meta name="description" content="Akce Svídnický Extrém — nadcházející události, tábory a sezónní akce překážkového sportu ve Svídnici." />
+<link rel="icon" type="image/png" href="assets/Images/logo2.jpeg"/>
 <title>Akce — Svídnický Extrém</title>
-<link rel="stylesheet" href="assets/shared.css?v=1776862203011"/>
+<link rel="stylesheet" href="assets/shared.css"/>
 <style>
 
 
@@ -19,7 +20,7 @@
   .feat-card-l h2 { font-family: var(--display); font-weight: 800; font-size: clamp(60px, 7.5vw, 116px); line-height: 1.02; text-transform: uppercase; letter-spacing: -0.025em; margin: 20px 0 0; }
   .feat-card-l h2 span { color: var(--accent); }
   .feat-lede { font-size: 17px; line-height: 1.62; color: rgba(245,243,238,0.75); margin-top: 28px; max-width: 36ch; }
-  .feat-badge { background: var(--accent); color: var(--ink); width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--display); font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; text-align: center; line-height: 1.2; transform: rotate(8deg); box-shadow: 0 8px 24px rgba(0,0,0,0.3); position: absolute; top: 24px; right: 24px; z-index: 3; }
+  .feat-badge { background: var(--accent); color: #fff; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--display); font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; text-align: center; line-height: 1.2; transform: rotate(8deg); box-shadow: 0 8px 24px rgba(0,0,0,0.3); position: absolute; top: 24px; right: 24px; z-index: 3; }
 
   /* Karta 2: foto + kdy/kde */
   .feat-card-r { position: relative; display:flex; flex-direction: column; overflow: hidden; border-radius: 0 2px 2px 0; min-height: 520px; }
@@ -76,8 +77,6 @@
     .prog-grid { grid-template-columns: 1fr 1fr; }
     .feat-grid { grid-template-columns: 1fr; }
     .program { padding: 72px 0; }
-    .trips { padding: 72px 0; }
-    .camps { padding: 72px 0; }
     .feature { padding: 64px 0; }
     .sch-head { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 32px; }
   }
@@ -86,14 +85,7 @@
     .prog-grid .slot { min-height: auto; padding: 24px 20px; }
     .feat-pillars { grid-template-columns: 1fr 1fr; }
     .program { padding: 56px 0; }
-    .trips { padding: 56px 0; }
-    .camps { padding: 56px 0; }
     .feature { padding: 48px 0; }
-    .camp { padding: 24px 18px; gap: 14px; }
-    .camp h3 { font-size: 30px; margin-top: 4px; }
-    .camp .dates { font-size: 16px; }
-    .camp .rows .r { padding: 10px 0; }
-    .camp .price .amt { font-size: 28px; }
   }
   @media (max-width: 480px) {
     /* feat-meta: 3 sloupce jsou moc těsné — přepínáme na řádkový layout */
@@ -101,24 +93,39 @@
     .feat-where { flex-direction: row; justify-content: space-between; align-items: center; border-right: none; border-top: 1px solid rgba(245,243,238,0.12); padding: 14px 16px; }
     .feat-where:first-child { border-top: none; }
     .feat-where .fi-v { text-align: right; font-size: clamp(13px, 3.5vw, 16px); }
-    /* camp: cena + tlačítko se nevejdou vedle sebe na malém telefonu */
-    .camp .price { flex-direction: column; align-items: center; gap: 14px; text-align: center; }
-    .camp .price .amt { font-size: 32px; }
   }
 
   /* TRIPS */
-  .trips { padding: 120px 0; border-top: 1px solid var(--line); }
-  .trip-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .trip { display:flex; flex-direction: column; gap: 16px; }
-  .trip .img { aspect-ratio: 4/3; background: #222; overflow: hidden; border-radius: 2px; position: relative; }
-  .trip .img img { width:100%; height:100%; object-fit: cover; transition: transform .8s ease; }
-  .trip:hover .img img { transform: scale(1.04); }
-  .trip .img .when { position: absolute; left: 16px; top: 16px; background: var(--paper); color: var(--ink); font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; padding: 6px 10px; }
-  .trip h3 { font-family: var(--display); font-weight: 800; font-size: 28px; text-transform: uppercase; line-height: 1; letter-spacing: -0.005em; }
-  .trip p { color: var(--ink-80); font-size: 14px; line-height: 1.5; }
-  .trip .meta { display:flex; gap: 8px; }
-  @media (max-width: 900px){ .trip-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 600px){ .trip-grid { grid-template-columns: 1fr; } }
+  .trips { border-top: 1px solid var(--line); overflow: hidden; }
+  .trips-bg-wrap { position: relative; min-height: 560px; display: flex; align-items: stretch; }
+  .trips-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 38%; filter: grayscale(25%) brightness(0.4); z-index: 0; transition: transform 14s ease; }
+  .trips:hover .trips-bg { transform: scale(1.05); }
+  .trips-ov { position: absolute; inset: 0; z-index: 1; background: linear-gradient(110deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.68) 52%, rgba(10,10,10,0.22) 100%); }
+  .trips-bg-wrap .container { position: relative; z-index: 2; padding-top: 108px; padding-bottom: 108px; }
+  .trips-inner { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 64px; }
+  .trips-content { display: flex; flex-direction: column; }
+  .trips-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .trips-title { font-family: var(--display); font-weight: 800; font-size: clamp(60px, 7.5vw, 116px); line-height: 1.0; text-transform: uppercase; letter-spacing: -0.025em; color: var(--paper); margin-bottom: 32px; }
+  .trips-title span { color: var(--accent); }
+  .trips-rule { width: 100%; height: 1px; background: rgba(245,243,238,0.15); border: none; margin: 0 0 32px; }
+  .trips-texts { display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
+  .trips-texts p { font-size: 16px; line-height: 1.68; color: rgba(245,243,238,0.72); margin: 0; max-width: 52ch; }
+  .trips-deco { user-select: none; pointer-events: none; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; }
+  .trips-deco-num { font-family: var(--display); font-weight: 800; font-size: clamp(80px, 12vw, 176px); line-height: 0.85; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1px rgba(245,243,238,0.13); }
+  .trips-deco-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,243,238,0.28); margin-top: 14px; }
+  .trips .btn-primary::before { display: none; }
+  .trips .btn-primary { transition: transform .2s ease, color .2s ease, box-shadow .2s ease, filter .2s ease; }
+  .trips .btn-primary:hover { color: var(--ink); transform: translateY(-2px); filter: brightness(1.12); box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45); }
+  @media (max-width: 1000px) {
+    .trips-inner { grid-template-columns: 1fr; }
+    .trips-deco { display: none; }
+    .trips-bg-wrap .container { padding-top: 72px; padding-bottom: 72px; }
+  }
+  @media (max-width: 600px) {
+    .trips-bg-wrap .container { padding-top: 56px; padding-bottom: 56px; }
+    .trips-title { font-size: clamp(48px, 12vw, 80px); }
+    .trips-texts p { font-size: 15px; }
+  }
 
   /* HERO */
   .page-header-ak { padding: 0; border-bottom: 1px solid var(--line); }
@@ -159,51 +166,7 @@
   }
 
   /* CAMPS */
-  .camps { padding: 120px 0; background: var(--paper-2); border-block: 1px solid var(--line); }
-  .camp-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
-  .camp { background: var(--paper); border: 1px solid var(--line); padding: 40px; display:flex; flex-direction: column; gap: 24px; position: relative; border-radius: 2px; }
-  .camp.dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .camp .type { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
-  .camp h3 { font-family: var(--display); font-weight: 800; font-size: 48px; line-height: 1.05; text-transform: uppercase; letter-spacing: -0.01em; margin-top: 14px; }
-  .camp h3 span { color: var(--accent); }
-  .camp .dates { font-family: var(--display); font-weight: 600; font-size: 22px; text-transform: uppercase; letter-spacing: 0.02em; }
-  .camp .rows { display:flex; flex-direction: column; }
-  .camp .rows .r { display:flex; justify-content: space-between; padding: 14px 0; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
-  .camp.dark .rows .r { border-top-color: rgba(245,243,238,0.15); }
-  .camp .rows .r strong { font-family: var(--display); font-weight: 600; font-size: 15px; text-transform: uppercase; color: var(--ink); letter-spacing: 0.02em; text-align: right; }
-  .camp.dark .rows .r strong { color: var(--paper); }
-  .camp .rows .r span:first-child { color: var(--ink-60); }
-  .camp.dark .rows .r span:first-child { color: rgba(245,243,238,0.5); }
-  .camp .price { display:flex; justify-content: space-between; align-items:end; padding-top: 8px; }
-  .camp .price .amt { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 1; }
-  .camp .price .per { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-60); margin-top: 4px; }
-  .camp.dark .price .per { color: rgba(245,243,238,0.5); }
-  @media (max-width: 900px){
-    .camp-grid { grid-template-columns: 1fr; }
-    .camp { padding: 32px 28px; gap: 18px; }
-    .camp h3 { font-size: 38px; }
-    .camp .dates { font-size: 18px; }
-    .camp .price .amt { font-size: 32px; }
-    .camp .price { flex-direction: column; align-items: center; gap: 12px; text-align: center; }
-  }
-
-  .camps .btn-primary::before { display: none; }
-  .camps .btn-primary {
-    transition: transform .2s ease, color .2s ease, box-shadow .2s ease, filter .2s ease;
-  }
-  .camps .btn-primary:hover {
-    color: var(--ink);
-    transform: translateY(-2px);
-    filter: brightness(1.12);
-    box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45);
-  }
-  .camps .btn-dark {
-    transition: transform .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
-  }
-  .camps .btn-dark:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  }
+  .camps { overflow: hidden; }
 </style>
 </head>
 <body>
@@ -212,7 +175,7 @@
 
 <section class="page-header page-header-ak">
   <div class="ph-hero">
-    <img class="ph-bg" src="https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=2000&q=70" alt=""/>
+    <img class="ph-bg" src="https://drive.google.com/uc?export=view&id=1k5OderhCewp-1dAGSSytOcFpWhOTf_OY" alt=""/>
     <div class="ph-overlay"></div>
     <div class="container">
       <div class="ph-content">
@@ -225,7 +188,7 @@
         <div class="ph-meta-bottom">
           <div class="pmb-item">
             <span class="pmb-k">Tábory</span>
-            <span class="pmb-v">3 turnusy</span>
+            <span class="pmb-v">Každé léto</span>
           </div>
           <div class="pmb-item">
             <span class="pmb-k">Výlety</span>
@@ -233,7 +196,7 @@
           </div>
           <div class="pmb-item">
             <span class="pmb-k">Vítání prázdnin</span>
-            <span class="pmb-v">29. 6. 2026</span>
+            <span class="pmb-v">21. 6. 2026</span>
           </div>
         </div>
       </div>
@@ -253,7 +216,7 @@
           <h2>Vítání<br><span>prázdnin</span></h2>
           <p class="feat-lede">Dětské závody, rodičovský sprint, grilování, kapela, pěna. Celá ves přijde, nikdo neodejde v čistém tričku.</p>
         </div>
-        <div class="countdown" data-countdown="2026-06-29T14:00:00">
+        <div class="countdown" data-countdown="2026-06-21T14:00:00">
           <div class="unit"><div class="v" data-d>00</div><div class="l">Dnů</div></div>
           <div class="unit"><div class="v" data-h>00</div><div class="l">Hodin</div></div>
           <div class="unit"><div class="v" data-m>00</div><div class="l">Minut</div></div>
@@ -263,14 +226,14 @@
 
       <!-- Karta 2: Foto + kdy/kde/v kolik -->
       <div class="feat-card-r">
-        <img class="feat-bg" src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=2400&q=80" alt="Vítání prázdnin"/>
+        <img class="feat-bg" src="https://drive.google.com/uc?export=view&id=1SigHJA1tE2He5eztIRgBWbxPYJ4xY78g" alt="Vítání prázdnin 2025"/>
         <div class="feat-ov"></div>
         <div class="feat-badge">Vstup zdarma</div>
 
         <div class="feat-meta">
           <div class="feat-where">
             <div class="fi-k">Kdy</div>
-            <div class="fi-v">29. června</div>
+            <div class="fi-v">21. června</div>
           </div>
           <div class="feat-where">
             <div class="fi-k">Kde</div>
@@ -311,40 +274,21 @@
 
 <!-- TRIPS -->
 <section class="trips">
-  <div class="container">
-    <div class="sch-head">
-      <div>
-        <div class="eyebrow">03 / Výlety</div>
-        <h2>Za hranice Svídnice.</h2>
-      </div>
-    </div>
-    <div class="trip-grid reveal">
-      <div class="trip">
-        <div class="img">
-          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=70" alt=""/>
-          <div class="when">24. — 26. Kvě</div>
+  <div class="trips-bg-wrap">
+    <img class="trips-bg" src="https://drive.google.com/uc?export=view&id=10FzrLj8ERkKN8pOveTsu1aVWq2Tp4Ses" alt="Výlety do přírody"/>
+    <div class="trips-ov"></div>
+    <div class="container">
+      <div class="trips-inner">
+        <div class="trips-content reveal">
+          <div class="trips-eyebrow">03 / Výlety</div>
+          <h2 class="trips-title">Za hranice<br><span>Svídnice.</span></h2>
+          <hr class="trips-rule">
+          <div class="trips-texts">
+            <p>Několikrát do roka pořádáme společné výlety do přírody — jednodenní i víkendové. Vydáváme se do hor, na skály i do lesů. Výlety jsou otevřené členům oddílu všech věkových kategorií.</p>
+            <p>Aktuální informace o připravovaných výletech, termínech a přihlašování průběžně zveřejňujeme na našem Facebooku.</p>
+          </div>
+          <a href="https://www.facebook.com/p/Sv%C3%ADdnick%C3%BD-Extr%C3%A9m-100063560024130/" target="_blank" rel="noopener" class="btn btn-primary">Facebook Svídnický Extrém <span class="arr">→</span></a>
         </div>
-        <h3>Krkonoše</h3>
-        <p>Víkend v horách. Sněžka, Obří důl, lanové překážky v Peci.</p>
-        <div class="meta"><span class="tag"><span class="dot"></span>Dospělí</span><span class="tag">3 dny</span></div>
-      </div>
-      <div class="trip">
-        <div class="img">
-          <img src="https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=900&q=70" alt=""/>
-          <div class="when">12. Dub</div>
-        </div>
-        <h3>Český ráj</h3>
-        <p>Jednodenní výjezd na Prachovské skály. Trailový běh a feráty.</p>
-        <div class="meta"><span class="tag"><span class="dot"></span>Všichni</span><span class="tag">1 den</span></div>
-      </div>
-      <div class="trip">
-        <div class="img">
-          <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=70" alt=""/>
-          <div class="when">05. — 07. Zář</div>
-        </div>
-        <h3>Beskydy</h3>
-        <p>Podzimní trek. Lysá hora, chata Javorník, trénink v terénu.</p>
-        <div class="meta"><span class="tag"><span class="dot"></span>Mládež + dospělí</span><span class="tag">3 dny</span></div>
       </div>
     </div>
   </div>
@@ -352,64 +296,27 @@
 
 <!-- CAMPS -->
 <section class="camps" id="tabory">
-  <div class="container">
-    <div class="sch-head">
-      <div>
-        <div class="eyebrow">04 / Tábory</div>
-        <h2>Léto plné pohybu.</h2>
-      </div>
-    </div>
-    <div class="camp-grid">
-      <div class="camp reveal" style="background:#f5f4ee; border-color:#e8e6dd;">
-        <div><div class="type">Turnus I. · Příměstský</div><h3>Základna<br><span>Svídnice.</span></h3></div>
-        <div class="dates">06. — 10. července</div>
-        <div class="rows">
-          <div class="r"><span>Věk</span><strong>6 — 11 let</strong></div>
-          <div class="r"><span>Kapacita</span><strong>24 dětí</strong></div>
-          <div class="r"><span>Program</span><strong>Denně 8 — 17 h</strong></div>
-          <div class="r"><span>Strava</span><strong>Oběd + 2× svačina</strong></div>
+  <div class="trips-bg-wrap">
+    <img class="trips-bg" src="https://drive.google.com/uc?export=view&id=1FxJwqDDXluwSnJ3hiXyPPwYUNGewyPCi" alt="Tábory Svídnický Extrém"/>
+    <div class="trips-ov"></div>
+    <div class="container">
+      <div class="trips-inner">
+        <div class="trips-content reveal">
+          <div class="trips-eyebrow">04 / Tábory</div>
+          <h2 class="trips-title">Pod stanem<br><span>každé léto.</span></h2>
+          <hr class="trips-rule">
+          <div class="trips-texts">
+            <p>Každé léto vyrážíme s vybranými dětmi z oddílu na tábor. Dny plné pohybu, přírody, táboráku a kamaráde, na které se nezapomíná.</p>
+            <p>Tábory jsou soukromou akcí oddílu — děti vybíráme osobně. Veřejné přihlašování neprobíhá.</p>
+          </div>
         </div>
-        <div class="price"><div><div class="amt">3 500 Kč</div><div class="per">/ dítě / týden</div></div><a href="kontakt.html?tema=tabor#kontakt-formular" class="btn btn-dark">Přihlásit <span class="arr">→</span></a></div>
-      </div>
-      <div class="camp dark reveal" style="background:#0f1520;">
-        <div><div class="type">Turnus II. · Pobytový</div><h3>Pod stanem<br><span>na Chýnici.</span></h3></div>
-        <div class="dates">20. — 27. července</div>
-        <div class="rows">
-          <div class="r"><span>Věk</span><strong>10 — 15 let</strong></div>
-          <div class="r"><span>Kapacita</span><strong>32 dětí</strong></div>
-          <div class="r"><span>Program</span><strong>Celotáborová hra</strong></div>
-          <div class="r"><span>Strava</span><strong>5× denně</strong></div>
-        </div>
-        <div class="price"><div><div class="amt" style="color: var(--accent);">Zdarma</div><div class="per">/ děti + mládež členů</div></div><a href="kontakt.html?tema=tabor#kontakt-formular" class="btn btn-primary">Přihlásit <span class="arr">→</span></a></div>
-      </div>
-      <div class="camp reveal" style="background:#eef4ec; border-color:#d6e8d3;">
-        <div><div class="type">Turnus III. · Rodinný</div><h3>Rodina<br><span>v terénu.</span></h3></div>
-        <div class="dates">17. — 23. srpna</div>
-        <div class="rows">
-          <div class="r"><span>Věk</span><strong>Celé rodiny</strong></div>
-          <div class="r"><span>Ubytování</span><strong>Chatky · vlastní vaření</strong></div>
-          <div class="r"><span>Program</span><strong>Volitelný · s trenéry</strong></div>
-          <div class="r"><span>Místo</span><strong>Jizerské hory</strong></div>
-        </div>
-        <div class="price"><div><div class="amt" style="color: var(--accent);">Zdarma</div><div class="per">/ týden</div></div><a href="kontakt.html?tema=tabor#kontakt-formular" class="btn btn-dark">Přihlásit <span class="arr">→</span></a></div>
-      </div>
-      <div class="camp reveal" style="background:#fdf3e3; border-color:#f0ddb8;">
-        <div><div class="type">Turnus IV. · Soustředění</div><h3>Závodní<br><span>příprava.</span></h3></div>
-        <div class="dates">24. — 30. srpna</div>
-        <div class="rows">
-          <div class="r"><span>Věk</span><strong>15+ · závodníci</strong></div>
-          <div class="r"><span>Kapacita</span><strong>20 míst</strong></div>
-          <div class="r"><span>Program</span><strong>2× denně trénink</strong></div>
-          <div class="r"><span>Zakončení</span><strong>Interní závod</strong></div>
-        </div>
-        <div class="price"><div><div class="amt" style="color: var(--accent);">Zdarma</div><div class="per">/ turnus</div></div><a href="kontakt.html?tema=tabor#kontakt-formular" class="btn btn-dark">Přihlásit <span class="arr">→</span></a></div>
       </div>
     </div>
   </div>
 </section>
 
 <div id="footer-mount"></div>
-<script src="assets/shared.js?v=1776861924530"></script>
+<script src="assets/shared.js"></script>
 <script>SE.mount('events');</script>
 </body>
 </html>

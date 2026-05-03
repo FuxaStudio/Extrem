@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<link rel="icon" type="image/png" href="assets/Images/logo.png"/>
+  <meta name="description" content="Závody Svídnický Extrém — závodní program, výsledky a fotky z překážkových závodů ve Svídnici." />
+<link rel="icon" type="image/png" href="assets/Images/logo2.jpeg"/>
 <title>Závod — Svídnický Extrém</title>
-<link rel="stylesheet" href="assets/shared.css?v=1776862203011"/>
+<link rel="stylesheet" href="assets/shared.css"/>
 <style>
 
 
@@ -85,12 +86,12 @@
   }
   .rhf-actions { display: flex; gap: 16px; flex-wrap: wrap; }
   .rhf-actions .btn-primary {
-    color: var(--ink); font-weight: 800;
+    color: #fff; font-weight: 800;
     transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
   }
   .rhf-actions .btn-primary::before { display: none; }
   .rhf-actions .btn-primary:hover {
-    color: var(--ink);
+    color: #fff;
     transform: translateY(-2px);
     filter: brightness(1.12);
     box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45);
@@ -173,7 +174,7 @@
   }
   .reg-grid .btn-primary::before { display: none; }
   .reg-grid .btn-primary:hover {
-    color: var(--ink);
+    color: #fff;
     transform: translateY(-2px);
     filter: brightness(1.12);
     box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45);
@@ -201,6 +202,71 @@
     .race-photos .sch-head h2 { line-height: 1.15; letter-spacing: 0; }
   }
 
+  /* 4-video grid: tall left + 2 top-right + 1 wide bottom-right */
+  .race-photos .gp-grid {
+    grid-template-columns: 1.1fr 1fr 1fr;
+    grid-template-rows: 280px 280px;
+  }
+  .race-photos .gp-grid .g:nth-child(1) { grid-row: 1 / 3; }
+  .race-photos .gp-grid .g:nth-child(4) { grid-column: 2 / 4; }
+
+  @media (max-width: 900px) {
+    .race-photos .gp-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 200px 200px 200px;
+    }
+    .race-photos .gp-grid .g:nth-child(1) { grid-row: 1 / 2; grid-column: 1 / 3; }
+    .race-photos .gp-grid .g:nth-child(4) { grid-column: auto; }
+  }
+  @media (max-width: 600px) {
+    .race-photos .gp-grid { grid-template-columns: 1fr; grid-template-rows: none; gap: 12px; }
+    .race-photos .gp-grid .g { height: 240px; }
+    .race-photos .gp-grid .g:nth-child(1),
+    .race-photos .gp-grid .g:nth-child(4) { grid-row: auto; grid-column: auto; }
+  }
+
+  /* video cards */
+  .gp-grid .g video {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .9s cubic-bezier(.2, .7, .2, 1);
+    pointer-events: none;
+  }
+  .gp-grid .g:hover video { transform: scale(1.06); }
+  .gp-grid .g .g-play {
+    position: absolute; inset: 0; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(10,10,10,0.28); transition: background .3s;
+  }
+  .gp-grid .g:hover .g-play { background: rgba(10,10,10,0.15); }
+  .gp-grid .g .g-play svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); transition: transform .3s; }
+  .gp-grid .g:hover .g-play svg { transform: scale(1.12); }
+  .gp-grid .g .cat-tag, .gp-grid .g .date-stamp, .gp-grid .g .meta { z-index: 2; }
+
+  /* lightbox */
+  #rp-vlb {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(10,10,10,0.96);
+    align-items: center; justify-content: center;
+  }
+  #rp-vlb.open { display: flex; }
+  #rp-vlb iframe {
+    width: 92vw; height: min(86vh, calc(92vw * 9/16));
+    border: none; border-radius: 2px; box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+  }
+  #rp-vlb-close {
+    position: fixed; top: 20px; right: 28px;
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+    background: none; border: none; cursor: pointer;
+    transition: color .2s; z-index: 10000;
+  }
+  #rp-vlb-close:hover { color: var(--paper); }
+  #rp-vlb-title {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4); white-space: nowrap;
+  }
+
 </style>
 </head>
 <body>
@@ -211,7 +277,7 @@
 <section class="race-hero-full">
   <div class="rhf-bg">
     <img
-      src="https://images.unsplash.com/photo-1530143311094-34d807799e8f?auto=format&fit=crop&w=2400&q=80"
+      src="https://drive.google.com/uc?export=view&id=1-QIwWJOzABrwIk5Y7w9bUBSj3hQwJ5-x"
       alt="Závodníci na Svídnickém Extrému"
     />
     <div class="rhf-overlay"></div>
@@ -222,7 +288,7 @@
       <h1 class="rhf-title">Svídnický<br><span>Extrém.</span></h1>
       <p class="rhf-lede">Jeden závod, jeden den v roce, jedna parta. Překážky z dubových klád, bláto ze svídnických luk, finiš na hřišti.</p>
 
-      <div class="rhf-countdown" data-countdown="2026-06-15T10:00:00">
+      <div class="rhf-countdown" data-countdown="2026-10-24T10:00:00">
         <div class="unit"><div class="v" data-d>00</div><div class="l">Dnů</div></div>
         <div class="unit"><div class="v" data-h>00</div><div class="l">Hodin</div></div>
         <div class="unit"><div class="v" data-m>00</div><div class="l">Minut</div></div>
@@ -230,8 +296,8 @@
       </div>
 
       <div class="rhf-actions">
-        <a href="kontakt.html?tema=zavod#kontakt-formular" class="btn btn-primary">Přihlásit se <span class="arr">→</span></a>
-        <a href="kontakt.html?tema=ostatni#kontakt-formular" class="btn btn-ghost-light">Mám otázku</a>
+        <a href="kontakt.html#zavod" class="btn btn-primary">Přihlásit se <span class="arr">→</span></a>
+        <a href="kontakt.html#zavod" class="btn btn-ghost-light">Mám otázku</a>
       </div>
     </div>
   </div>
@@ -250,7 +316,7 @@
         <div class="eyebrow">01 / O závodě</div>
         <h2>Trasa, překážky,<br>bláto.</h2>
       </div>
-      <div class="mono mono-hide-mobile" style="color: var(--ink-60);">Jednou do roka · každý červen</div>
+      <div class="mono mono-hide-mobile" style="color: var(--ink-60);">Jednou do roka · každý říjen</div>
     </div>
     <div class="facts-grid reveal">
       <div class="fact">
@@ -266,7 +332,7 @@
       <div class="fact">
         <div class="n">2</div>
         <div class="l">Kategorie</div>
-        <div class="d">Hobby (pro každého) a Elite (s časomírou).</div>
+        <div class="d">Muži a ženy.</div>
       </div>
       <div class="fact">
         <div class="n">≈300</div>
@@ -285,16 +351,15 @@
         <div class="eyebrow">02 / Registrace</div>
         <h2>Jedno startovné,<br>vše v ceně.</h2>
         <p class="lede">V ceně je startovní číslo, chip, tričko, medaile do cíle, občerstvení na trati, teplý oběd po závodě a kilo bláta zdarma. Registrujte se předem, na místě kapacita nezaručená.</p>
-        <p class="lede" style="margin-top: 16px;">Děti do 15 let běží v rámci Dětského Extrému zdarma (v doprovodu rodiče).</p>
-        <div style="margin-top: 40px; display:flex; gap: 16px; flex-wrap: wrap;">
-          <a href="kontakt.html?tema=zavod#kontakt-formular" class="btn btn-primary">Přihlásit se <span class="arr">→</span></a>
-          <a href="kontakt.html?tema=ostatni#kontakt-formular" class="btn btn-ghost">Mám otázku</a>
+<div style="margin-top: 40px; display:flex; gap: 16px; flex-wrap: wrap;">
+          <a href="kontakt.html#zavod" class="btn btn-primary">Přihlásit se <span class="arr">→</span></a>
+          <a href="kontakt.html#zavod" class="btn btn-ghost">Mám otázku</a>
         </div>
       </div>
       <div class="price-card reveal">
         <div>
           <div class="amt-row">
-            <div class="amt">800</div>
+            <div class="amt">750</div>
             <div class="cur">Kč</div>
           </div>
         </div>
@@ -321,42 +386,95 @@
     </div>
 
     <div class="gp-grid reveal">
-      <a class="g" href="galerie.html">
+      <div class="g rp-video" data-driveid="1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD" data-title="Svídnický Extrém 2025">
+        <img src="https://drive.google.com/uc?export=view&id=1-QIwWJOzABrwIk5Y7w9bUBSj3hQwJ5-x" alt="Svídnický Extrém 2025" style="width:100%;height:100%;object-fit:cover;"/>
+        <div class="g-play">
+          <svg width="48" height="48" viewBox="0 0 52 52" fill="none">
+            <circle cx="26" cy="26" r="26" fill="rgba(245,243,238,0.18)"/>
+            <polygon points="21,17 38,26 21,35" fill="#fff"/>
+          </svg>
+        </div>
         <span class="cat-tag">Závod</span>
-        <div class="date-stamp">15. 6. 2025</div>
-        <div class="meta"><span class="t">Finiš na hlavní trati</span></div>
-        <img src="https://images.unsplash.com/photo-1530143311094-34d807799e8f?auto=format&fit=crop&w=1200&q=70" alt="" />
-      </a>
-      <a class="g" href="galerie.html">
+        <div class="date-stamp">2025</div>
+        <div class="meta"><span class="t">Svídnický Extrém</span></div>
+      </div>
+      <div class="g rp-video" data-driveid="19EdnI1ToHe4tZUi8ASXjCZ-SEecgA3Xt" data-title="Extrém 2024">
+        <img src="https://drive.google.com/uc?export=view&id=1-QIwWJOzABrwIk5Y7w9bUBSj3hQwJ5-x" alt="Extrém 2024" style="width:100%;height:100%;object-fit:cover;"/>
+        <div class="g-play">
+          <svg width="48" height="48" viewBox="0 0 52 52" fill="none">
+            <circle cx="26" cy="26" r="26" fill="rgba(245,243,238,0.18)"/>
+            <polygon points="21,17 38,26 21,35" fill="#fff"/>
+          </svg>
+        </div>
         <span class="cat-tag">Závod</span>
-        <div class="date-stamp">15. 6. 2025</div>
-        <div class="meta"><span class="t">Lezecká stěna</span></div>
-        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=900&q=70" alt="" />
-      </a>
-      <a class="g" href="galerie.html">
+        <div class="date-stamp">2024</div>
+        <div class="meta"><span class="t">Svídnický Extrém</span></div>
+      </div>
+      <div class="g rp-video" data-driveid="1Pari3VR6KzaO-ABjy7e_DhR-YPmGZMzI" data-title="Svídnický Extrém 2022">
+        <img src="https://drive.google.com/uc?export=view&id=1-QIwWJOzABrwIk5Y7w9bUBSj3hQwJ5-x" alt="Svídnický Extrém 2022" style="width:100%;height:100%;object-fit:cover;"/>
+        <div class="g-play">
+          <svg width="48" height="48" viewBox="0 0 52 52" fill="none">
+            <circle cx="26" cy="26" r="26" fill="rgba(245,243,238,0.18)"/>
+            <polygon points="21,17 38,26 21,35" fill="#fff"/>
+          </svg>
+        </div>
         <span class="cat-tag">Závod</span>
-        <div class="date-stamp">15. 6. 2025</div>
-        <div class="meta"><span class="t">Start závodu</span></div>
-        <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=900&q=70" alt="" />
-      </a>
-      <a class="g" href="galerie.html">
+        <div class="date-stamp">2022</div>
+        <div class="meta"><span class="t">Svídnický Extrém</span></div>
+      </div>
+      <div class="g rp-video" data-driveid="1EwBdbDuBMzB_0uMIcF9bIEP2I5COiJsq" data-title="Závod — záběry 2025">
+        <img src="https://drive.google.com/uc?export=view&id=1ZghbFcNtw4h0mBDCaU2wbzlZ3823IcpB" alt="Závod — záběry 2025" style="width:100%;height:100%;object-fit:cover;"/>
+        <div class="g-play">
+          <svg width="48" height="48" viewBox="0 0 52 52" fill="none">
+            <circle cx="26" cy="26" r="26" fill="rgba(245,243,238,0.18)"/>
+            <polygon points="21,17 38,26 21,35" fill="#fff"/>
+          </svg>
+        </div>
         <span class="cat-tag">Závod</span>
-        <div class="date-stamp">15. 6. 2025</div>
-        <div class="meta"><span class="t">Blátivý crawl</span></div>
-        <img src="https://images.unsplash.com/photo-1533681904393-9ab6eee7e408?auto=format&fit=crop&w=900&q=70" alt="" />
-      </a>
-      <a class="g" href="galerie.html">
-        <span class="cat-tag">Závod</span>
-        <div class="date-stamp">15. 6. 2025</div>
-        <div class="meta"><span class="t">Medaile a oslavy</span></div>
-        <img src="https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=900&q=70" alt="" />
-      </a>
+        <div class="date-stamp">2025</div>
+        <div class="meta"><span class="t">Svídnický Extrém</span></div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- Video lightbox -->
+<div id="rp-vlb">
+  <button id="rp-vlb-close">✕ Zavřít</button>
+  <iframe id="rp-vlb-iframe" allowfullscreen></iframe>
+  <div id="rp-vlb-title"></div>
+</div>
+
 <div id="footer-mount"></div>
-<script src="assets/shared.js?v=1776861924530"></script>
+<script src="assets/shared.js"></script>
 <script>SE.mount('races');</script>
+<script>
+  const vlb = document.getElementById('rp-vlb');
+  const vlbIframe = document.getElementById('rp-vlb-iframe');
+  const vlbTitle = document.getElementById('rp-vlb-title');
+
+  function openVlb(driveId, title) {
+    vlbIframe.src = `https://drive.google.com/file/d/${driveId}/preview`;
+    vlbTitle.textContent = title;
+    vlb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeVlb() {
+    vlb.classList.remove('open');
+    vlbIframe.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.gp-grid .rp-video').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => openVlb(card.dataset.driveid, card.dataset.title));
+  });
+
+  document.getElementById('rp-vlb-close').addEventListener('click', closeVlb);
+  vlb.addEventListener('click', e => { if (e.target === vlb) closeVlb(); });
+  document.addEventListener('keydown', e => {
+    if (vlb.classList.contains('open') && e.key === 'Escape') closeVlb();
+  });
+</script>
 </body>
 </html>

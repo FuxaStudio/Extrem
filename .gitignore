@@ -1,1 +1,15 @@
+# Mediální soubory (spravovány odděleně — příliš velké pro Git)
+assets/Images/fotky extrem/
+
+# Interní soubory
 .claude/
+docs/superpowers/
+
+# OS soubory
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor soubory
+*.swp
+*.swo

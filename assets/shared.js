@@ -19,16 +19,32 @@
     ).join('');
 
     return `
+    <svg id="se-crack-defs" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none">
+      <defs>
+        <filter id="wordmark-crack" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+          <feTurbulence type="turbulence" baseFrequency="0.11 0.14" numOctaves="2" seed="9" result="noise"/>
+          <feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+          <feComponentTransfer in="gray" result="cells">
+            <feFuncR type="discrete" tableValues="0 1 1 1 1 1 1 1 1 1"/>
+            <feFuncG type="discrete" tableValues="0 1 1 1 1 1 1 1 1 1"/>
+            <feFuncB type="discrete" tableValues="0 1 1 1 1 1 1 1 1 1"/>
+          </feComponentTransfer>
+          <feColorMatrix type="matrix" in="cells" result="cellMask"
+            values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.68 0 0 0 0.32"/>
+          <feComposite in="SourceGraphic" in2="cellMask" operator="in"/>
+        </filter>
+      </defs>
+    </svg>
     <nav class="nav" id="site-nav">
       <div class="container nav-inner">
         <a class="nav-logo" href="index.html">
-          <img class="se-logo" src="assets/Images/logo.png" alt="Svídnický Extrém" style="height: 90px; width: auto; max-width: 350px; display: block; object-fit: contain; flex-shrink: 0; margin: -16px 0;">
+          <img class="se-logo" src="assets/Images/logo2.jpeg" alt="Svídnický Extrém" style="height: 64px; width: auto; max-width: 320px; display: block; object-fit: contain; flex-shrink: 0;">
           <span class="wordmark">Svídnický Extrém</span>
         </a>
         <div class="nav-links">
           ${linksHTML}
         </div>
-        <a class="nav-cta" href="treninky.html">
+        <a class="nav-cta" href="kontakt.html#zavod">
           Přidej se <span class="arr">→</span>
         </a>
         <button class="nav-burger" id="nav-burger" aria-label="Otevřít menu" aria-expanded="false">
@@ -40,7 +56,7 @@
       <div class="mobile-links">
         ${mobileLinksHTML}
       </div>
-      <a href="treninky.html" class="btn btn-primary mobile-cta">Přidej se <span class="arr">→</span></a>
+      <a href="kontakt.html#zavod" class="btn btn-primary mobile-cta">Přidej se <span class="arr">→</span></a>
       <div class="mobile-meta">
         <span>Svídnický Extrém</span>
         <span>Svídnice · Pardubický kraj</span>
@@ -53,36 +69,42 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-hero">
-          <div class="footer-big">Běž. Skoč. Přelez.<br>A<span>/</span> zase znova.</div>
-          <a href="treninky.html" class="btn btn-primary">Přijď na trénink <span class="arr">→</span></a>
+          <div class="footer-big">Běž. Skoč. Přelez. A<span>/</span> zase znova.</div>
         </div>
         <div class="footer-grid">
           <div>
             <h4>Kontakt</h4>
             <ul style="font-family:var(--body); font-size:15px; text-transform:none; letter-spacing:0;">
               <li style="font-family:var(--body);">Svídnice, 538 24, Pardubický kraj</li>
-              <li style="font-family:var(--body);">info@svidnicky-extrem.cz</li>
-              <li style="font-family:var(--body);">+420 777 000 000</li>
+              <li style="font-family:var(--body);">svidnickyextrem@seznam.cz</li>
+              <li style="font-family:var(--body);">+420 777 052 023</li>
             </ul>
           </div>
           <div>
             <h4>Stránky</h4>
             <ul>
+              <li><a href="index.html">Domů</a></li>
               <li><a href="treninky.html">Tréninky</a></li>
-              <li><a href="zavody.html">Závod</a></li>
+              <li><a href="zavody.html">Závody</a></li>
               <li><a href="akce.html">Akce</a></li>
               <li><a href="galerie.html">Galerie</a></li>
               <li><a href="kontakt.html">Kontakt</a></li>
             </ul>
           </div>
           <div>
-            <h4>Sledujte</h4>
-            <a href="https://www.facebook.com/p/Sv%C3%ADdnick%C3%BD-Extr%C3%A9m-100063560024130/" target="_blank" rel="noopener">Facebook</a>
+            <h4>Sledujte nás</h4>
+            <a href="https://www.facebook.com/p/Sv%C3%ADdnick%C3%BD-Extr%C3%A9m-100063560024130/" target="_blank" rel="noopener" class="footer-fb">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.883v2.272h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+              </svg>
+              Facebook
+            </a>
+            <p style="margin-top:12px; font-family:var(--body); font-size:13px; color:rgba(245,243,238,0.45); line-height:1.5;">Novinky, fotky<br>a výsledky závodů.</p>
           </div>
         </div>
         <div class="footer-bottom">
           <div>© 2026 Svídnický Extrém, všechna práva vyhrazena</div>
-          <div>Designed by <a href="https://fuxastudio.cz/" target="_blank" rel="noopener" style="color: var(--paper); border-bottom: 1px solid rgba(245,243,238,0.4); padding-bottom: 1px; transition: color .2s, border-color .2s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--paper)';this.style.borderColor='rgba(245,243,238,0.4)'">FuxaStudio</a></div>
+          <div>Designed by <a href="https://fuxastudio.cz/" target="_blank" rel="noopener" class="footer-credit">FuxaStudio</a></div>
         </div>
       </div>
     </footer>`;

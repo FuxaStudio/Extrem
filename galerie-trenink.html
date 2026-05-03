@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content="Vítání prázdnin ve Svídnici — fotogalerie z akce Svídnický Extrém." />
+  <meta name="description" content="Tréninky — fotogalerie z překážkových tréninků Svídnický Extrém." />
 <link rel="icon" type="image/png" href="assets/Images/logo2.jpeg"/>
-<title>Vítání prázdnin 2025 — Fotogalerie — Svídnický Extrém</title>
+<title>Tréninky — Galerie — Svídnický Extrém</title>
 <link rel="stylesheet" href="assets/shared.css"/>
 <style>
 
   .detail-hero {
     position: relative;
-    min-height: min(55vh, 520px);
+    min-height: min(50vh, 480px);
     background: var(--ink);
     display: flex; flex-direction: column; justify-content: center;
     overflow: hidden;
@@ -19,8 +19,8 @@
   .detail-hero::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: url('https://drive.google.com/uc?export=view&id=1SigHJA1tE2He5eztIRgBWbxPYJ4xY78g');
-    background-size: cover; background-position: center 35%;
+    background-image: url('https://drive.google.com/uc?export=view&id=1Y8HwUj91u65jLOh3fCrOh698Eml1pScX');
+    background-size: cover; background-position: center 40%;
     filter: grayscale(0.15) contrast(1.05);
     transform: scale(1.02);
   }
@@ -58,12 +58,12 @@
     margin: 0 0 20px;
     color: var(--paper);
   }
-  .detail-hero .event-date {
+  .detail-hero .event-sub {
     font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em;
     text-transform: uppercase; color: rgba(255,255,255,0.5);
   }
 
-  /* ========== PHOTO GRID ========== */
+  /* ========== FOTO GRID ========== */
   .foto-section { padding: 72px 0 120px; }
   .foto-head {
     display: flex; justify-content: space-between; align-items: center;
@@ -79,8 +79,8 @@
 
   .foto-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
   }
   .foto-grid .f {
     overflow: hidden;
@@ -88,7 +88,7 @@
     border-radius: 2px;
     position: relative;
     cursor: pointer;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 9;
   }
   .foto-grid .f img {
     width: 100%; height: 100%; object-fit: cover;
@@ -97,10 +97,10 @@
   }
   .foto-grid .f:hover img { transform: scale(1.07); filter: grayscale(0%); }
 
-  /* lightbox */
+  /* ========== LIGHTBOX ========== */
   #lb {
     display: none; position: fixed; inset: 0; z-index: 9999;
-    background: rgba(10,10,10,0.95);
+    background: rgba(10,10,10,0.96);
     align-items: center; justify-content: center;
     flex-direction: column;
   }
@@ -116,7 +116,7 @@
     font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em;
     text-transform: uppercase; color: rgba(255,255,255,0.5);
     background: none; border: none; cursor: pointer;
-    transition: color .2s;
+    transition: color .2s; z-index: 10000;
   }
   #lb-close:hover { color: var(--paper); }
   #lb-prev, #lb-next {
@@ -138,7 +138,7 @@
     .foto-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 520px) {
-    .foto-grid { grid-template-columns: 1fr; gap: 6px; }
+    .foto-grid { grid-template-columns: 1fr; gap: 8px; }
   }
 
 </style>
@@ -153,8 +153,8 @@
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
       Zpět na galerii
     </a>
-    <h1>Vítání<br>prázdnin</h1>
-    <div class="event-date">22. června 2025 &mdash; Svídnice</div>
+    <h1>Tréninky</h1>
+    <div class="event-sub">Svídnický Extrém &mdash; Fotogalerie</div>
   </div>
 </section>
 
@@ -162,7 +162,7 @@
   <div class="container">
     <div class="foto-head">
       <span class="eyebrow">Fotogalerie</span>
-      <span class="count" id="photo-count"></span>
+      <span class="count">7 fotografií</span>
     </div>
     <div class="foto-grid" id="foto-grid"></div>
   </div>
@@ -182,60 +182,53 @@
 <script>
 SE.mount('gallery');
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw_0fUi-nEI9Na_B3E9aW2pGrt9GZk4L1Hb_pFsApWzqRLPA6o3w0yLYSKVHYbM82B3/exec';
+const GD = id => `https://drive.google.com/uc?export=view&id=${id}`;
 
-async function loadPhotos() {
-  const grid = document.getElementById('foto-grid');
-  try {
-    const res = await fetch(SCRIPT_URL);
-    if (!res.ok) throw new Error('Script error');
-    const ids = await res.json();
-    const total = ids.length;
-    document.getElementById('photo-count').textContent = total + ' fotografií';
+const PHOTOS = [
+  GD('1A1ZD8qOEprySjGJ30J6MSkvtb_xd0VX7'),
+  GD('1p2pSV9ZzJ58hLQnQ16_0jo207JZFk7HC'),
+  GD('1n8jJ-rhE6-j1oics9qznvNGWfJql_Bb2'),
+  GD('1Y8HwUj91u65jLOh3fCrOh698Eml1pScX'),
+  GD('10FzrLj8ERkKN8pOveTsu1aVWq2Tp4Ses'),
+  GD('1W9HWy_SlM5CAHcjJtZPZ9_YPvLecG1Iw'),
+  GD('13nYnzARN7znfU579Jg59zh_SibHkiPye'),
+];
 
-    const srcs = ids.map(id => `https://drive.google.com/uc?export=view&id=${id}`);
-    grid.innerHTML = srcs.map((src, idx) =>
-      `<div class="f" data-idx="${idx}"><img src="${src}" alt="Vítání prázdnin 2025 — foto ${idx+1}" loading="lazy"/></div>`
-    ).join('');
+const grid = document.getElementById('foto-grid');
+grid.innerHTML = PHOTOS.map((src, idx) =>
+  `<div class="f" data-idx="${idx}"><img src="${src}" alt="Trénink — foto ${idx + 1}" loading="lazy"/></div>`
+).join('');
 
-    setupLightbox(srcs, total);
-  } catch(e) {
-    grid.innerHTML = `<p style="color:rgba(245,243,238,0.5);font-family:var(--mono);grid-column:1/-1;text-align:center;padding:40px 0;">Fotografie se nepodařilo načíst.</p>`;
-  }
+const lb = document.getElementById('lb');
+const lbImg = document.getElementById('lb-img');
+const lbCounter = document.getElementById('lb-counter');
+let current = 0;
+
+function openLb(idx) {
+  current = idx;
+  lbImg.src = PHOTOS[idx];
+  lbCounter.textContent = (idx + 1) + ' / ' + PHOTOS.length;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
+function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+function prev() { openLb((current - 1 + PHOTOS.length) % PHOTOS.length); }
+function next() { openLb((current + 1) % PHOTOS.length); }
 
-function setupLightbox(srcs, total) {
-  const lb = document.getElementById('lb');
-  const lbImg = document.getElementById('lb-img');
-  const lbCounter = document.getElementById('lb-counter');
-  let current = 0;
-  function openLb(idx) {
-    current = idx;
-    lbImg.src = srcs[idx];
-    lbCounter.textContent = (idx + 1) + ' / ' + total;
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; }
-  function prev() { openLb((current - 1 + total) % total); }
-  function next() { openLb((current + 1) % total); }
-  document.getElementById('foto-grid').addEventListener('click', e => {
-    const f = e.target.closest('.f');
-    if (f) openLb(+f.dataset.idx);
-  });
-  document.getElementById('lb-close').addEventListener('click', closeLb);
-  document.getElementById('lb-prev').addEventListener('click', prev);
-  document.getElementById('lb-next').addEventListener('click', next);
-  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
-  document.addEventListener('keydown', e => {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'ArrowLeft') prev();
-    if (e.key === 'ArrowRight') next();
-    if (e.key === 'Escape') closeLb();
-  });
-}
-
-loadPhotos();
+grid.addEventListener('click', e => {
+  const f = e.target.closest('.f');
+  if (f) openLb(+f.dataset.idx);
+});
+document.getElementById('lb-close').addEventListener('click', closeLb);
+document.getElementById('lb-prev').addEventListener('click', prev);
+document.getElementById('lb-next').addEventListener('click', next);
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') prev();
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'Escape') closeLb();
+});
 </script>
 </body>
 </html>
