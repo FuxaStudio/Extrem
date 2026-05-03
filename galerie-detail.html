@@ -184,25 +184,181 @@
 <script>
 SE.mount('gallery');
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw_0fUi-nEI9Na_B3E9aW2pGrt9GZk4L1Hb_pFsApWzqRLPA6o3w0yLYSKVHYbM82B3/exec';
-
 const BATCH = 40;
-const CACHE_KEY = 'vitani-ids';
-const CACHE_TTL = 24 * 60 * 60 * 1000;
 
-function getCached() {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const { ts, ids } = JSON.parse(raw);
-    if (Date.now() - ts > CACHE_TTL) return null;
-    return ids;
-  } catch { return null; }
-}
-
-function setCached(ids) {
-  try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), ids })); } catch {}
-}
+const PHOTO_IDS = [
+  '1TDt_LVBxFkKGw1upch93sc_FPoIe6Ik_',
+  '1oocynhmtE1EOo8LE2CTx1qmMOH6RVuKP',
+  '1jvDukGWfgIUBHORVVe9gQX4sjhvRwsZ6',
+  '1RdQYbIWY1cQmsVBRjBNBJA5O6rBkrqCO',
+  '1WbckXhI3ZarPtfkG0hcymMe17KnlDxTM',
+  '1MN3v-ewfkhPZJoKKXSkxt0z3L1Eu3s5e',
+  '1caMld0HvX6A5ybFav6CpeCP6w1xXGQPM',
+  '1s5i9lTEOebC4rMsFEHTzjtavD9OAOeKT',
+  '1pmJL3B3Az0g_l_MYq-2jt5jL4CCkyX4o',
+  '1rZjMU6Lv_Fd3u1BJD6Os43fje8E3rh8Z',
+  '11VjUksrAw6iZ9j42RZ9sI8JXzAXBmDUd',
+  '1VDVwZiSbtgWZ3Lg269x4iexvJcKN_5dY',
+  '1GwKMrlmKwTgYGBoxhsiGdzZAm8bahA09',
+  '1nTOTeEEJroZ77wRxtdn6msuD3bPVQrBy',
+  '1K6zGhtOij-LljMok_lN-amI7ZWxFZ0td',
+  '1qyL5rTx1A_1Xqp1ZiqR2f__BuQpmxjmL',
+  '1k60a3__ZtpckzrlTyMjEO9-7_nzOd4ze',
+  '1dmzDMusK68M3tIlP_8JDlCprzjsjs27A',
+  '1QeXAqK14JF7IAmfnBSwWMWxReBmuQDQG',
+  '15BNHK4yIARaTLgbD-iVvxJZPCRazYaZf',
+  '11AaH8CwzRO_RSI4EFaDKLAEKZuJ2lGy-',
+  '1DDZxn5NUllfqVl2xHqDVElHgutgbU0dd',
+  '1_FQZfkPL9bhYeyU3RTYpIrXwBipi8-t1',
+  '1BCVoD6Mpt-88Hz3C1cpdjx0eBE_tVv-T',
+  '1SKMvQcch8rZThV299Be2FNRXm5iPMjmC',
+  '16gKpycWKv4FpC5FliwRkl4POoeZO41hS',
+  '1B4M3X_W6QgH8TwefUcy_C3C9Q_HE_ngm',
+  '1wdQ7xxFOSfgKYVKaOLHFKzXM48jM4Bsf',
+  '1dGbMmjB2SBjULKTQ835R5gkoON1ZCLPy',
+  '1snWc4L5GrnqN9eEwAUbB5umsKx7pIxqV',
+  '1pO03iF7AqpO_cWMNwtabOlVEVUfy9OJa',
+  '1zn6JJgUku_SjEGQxLjYMthzpFqedYIwy',
+  '1hk8VqGTMqzMG4fUUzvIE3m6tr2rP2xkP',
+  '1syAPSRPJuVo9R3wggpPuFOabgl05yytf',
+  '1eA6Fu0nqEv1pbBKE_ObojvJQNuV3Hphl',
+  '1uzr5sSygj9Zm-HjoKeJdWLYBZYRmD9_n',
+  '17kvtxEfff_rdB3Hh3lHeDw9FD369Ivb8',
+  '1CFb8giJ_4mkMLF3DTK9lOXmH7DZCv-VR',
+  '1VWXeijDBhBCzo0RRG_4LxPei09BaqjH-',
+  '1jyG0WyOvCuOpwDM7y6DhOXD_R_Z-9wwq',
+  '1a3ERcUvW3r_axzFuE0dC-UHkeztrcHlL',
+  '1_WOY3Kr6jYIJrjx7oqBR2ZRLYF_Ro1KO',
+  '14U--j3ZvpsOjV7mF8VPU2Tmo4HgDUZem',
+  '1sr_fGU6XSk2kBBE2A5tdKwcxVzKJuKEK',
+  '15ee-GcAr-IaxnmHiULkXgr-hX_w1Gj3M',
+  '1EHQZ0UoSPR-29OzleC7ulBWNQu7L0xR1',
+  '14QnAKYmkppeQ53oU0wMrIfowmfPoGK7Z',
+  '1VQPy5ZVt4nXILj_AegK2oyKppr0aWxxn',
+  '1fv5OsX8KbLdJd2FTsigw8Zyt9bNgxMuA',
+  '1pjWYhIEU1EICCxcURh_oSX6Om4BKrhKN',
+  '1MXRbwW1htwcc9FljFEmaFqU959hn5DZo',
+  '1Fhyy-TTp8NL2cnkbo9y7K73lZcLk4jIZ',
+  '1U3UAQuQeEKYLkEEMHHXiaHVr8RRb4Qh0',
+  '19UimmbPfhVFZaJ8Qx5hymExoLnQMJUQQ',
+  '1610dec5OL30K363VumTn3Xc_OgkVYtVe',
+  '13ZVNPw4krhsN1S-k-N4x8iaZof262PjH',
+  '1TmCdm7sOTAKJIaAZuepCApuqpldwJ4Gg',
+  '1pT8LyM570H1AcHaqg9hmL3FjReKMoSVB',
+  '1ItCePEUahxNTdbVbm5gUIBDZ9j1WGNek',
+  '1y2YgHpAWMrcVX6elnvXW8mkJK6M3UdRF',
+  '1n4rv7VC2EUNYq3Ge4-O5n1jZgCxXWqSX',
+  '1vnCBr7ogTTsOTYv3TbSD6vilZ8WSxq5w',
+  '1XS7WPnKJyCtUrRuKXzal3JuS4eysIVko',
+  '11ygApccT846FWjI9POe6Kz2OSkK30Vg9',
+  '1AvYZKPFY7mmY9o_XOydslRnbKGGfWfYN',
+  '1RHvL9N-Ghrx3fErJuJxaW8Hk1ryNX-g3',
+  '1k5OderhCewp-1dAGSSytOcFpWhOTf_OY',
+  '1i29KO14dMHgZNxe7spvdoVNjMjxWwZ9o',
+  '1QDixtrNt_qlowGuQMLMN6cHUoTF9eZNZ',
+  '1bOOQqSul8QH5ZLpER3mf7cPC_bviWcpe',
+  '1XqCxZ7arY4y0P4V6K-T_NjR7fYF9QpUW',
+  '1BAYYtSK_5FAJTpBFsBSnWCViwgddqYRx',
+  '1qb_so_5fnX3GAZYftzdyfO-U6pNioraI',
+  '1GR5x7DCi3mPt-YmaVFS25GQ6tZlyU4lx',
+  '1K1_dkcOuG_adB3HT2Qp1I-4FYjxZryOK',
+  '147E7u0Vo4HWCYYnYoZVxcEPSE38crO7y',
+  '1jMn4FGQH2XIpp5AtYaGa-F_m8noSj2j9',
+  '1OVyH9iYf6cHhlXLH-tiF4Rw0yI4FD8KP',
+  '1ZshHLhE63fbreRjMztMAP8JZNj0hzKL1',
+  '1wA-r6m9t06BvBaNaGRvaRIuQIkRIJA8u',
+  '1vG-mR6jhYO6PUJ9AvQL1ClrDMQ6p9i8l',
+  '10kRzJBaA28H6ddoyJz4nHpnLjZVV1gBJ',
+  '136HKVGyKUQ7KsEwWgFox9gUHWyTM2QR0',
+  '1fgqJODS9yWyF4F5sl4_HUrd9RWp8zmSI',
+  '1kkxdSBlDQZ5FJEcz1EgeS5w48UiNL_4r',
+  '1WoBvfblfq46pco-mlcFLAmOvxoEhXXFH',
+  '1kWC9MEnc9t4kKv7gzpPTmkuavEM-mPNy',
+  '1YB4BYfQV-PuJzvbqWa6_NmOA2P9d4Zn4',
+  '1H7s8b7aDN6ue0GtxGFzOTZEJwkMbty4O',
+  '1fDZUUX2tbZG_xfCvS-nV69XPe_hWUpuN',
+  '1aROTrkv9t306Wt9QKeaEnjpOK3eYNFBM',
+  '1FtFLAT4-eFzf4FggvyBVeTLkM9FtYW1O',
+  '1ZNdYGt8-OLfcacSSWL07MRPg4bE2-pfU',
+  '1mdrhbZ5Z61U_2oEWj9O8_f68wzpC9ahV',
+  '1uurwdWS_iMmO8JCp6kP61Ejr_QPluofX',
+  '1KdMFrM2tZojWyeLtiMSUtQTvnc0FP3--',
+  '14UsFqLC9mKzFPOF0n0GteIv0Db4BeFk3',
+  '1NccnhMo37gwMMgf01iZ0QGh-iv_ZRnHE',
+  '1-XA2leVw6sWhR0U2IhZVqXXvSsu7hpj7',
+  '1IwGxFewBbH6x8nAZ6Zr3QunofmLC4CAD',
+  '1LTy0YPffE4pf4bc1lS1IYMxW5OCnBlxk',
+  '1l3hBVq0sNIYLcgY6c43hFmIUGRFSRuwu',
+  '1-AIIy17kYXYtEPJCA19sQ_ugrD2K0EI2',
+  '17nKu2JmaNvWA8cUTNUld0CLt9kwBPys1',
+  '1GL6aoMyDk0c1IdUl7xaqsvhjETkMSmJM',
+  '1tWJE-lP2xASF7ejKTy1wdfls0PskwMSA',
+  '1UtDZUMIYnfFgRYiCgmyllak7WfoukJTf',
+  '19ZdZ2F-vDSywEPHE8jKPQehn3Xslu3DE',
+  '1UtiYK2FqQ1ilfq533i_I2wo3jkUZ6fWM',
+  '19dCiZWuWxNpe7EaCl2fiSP5mJ1F5hgFE',
+  '11QgCx2K97ttDTqsoqWnV7XQUipC6QW9Q',
+  '16JqzZJoKA_FQ33LqTlCk8JkrLunIJz7W',
+  '1tNndBlzvcSdAIkmFTvcegNSj7wpKPmDK',
+  '1cX26nNDTQji3qVv9DhNI2YY20TCaDbUG',
+  '1n_kl2BVZWEAht2jXkXc7xTe6dzHKlBkN',
+  '19zFUHg-Gy_2yUahSaPsgs35Zjr10k61g',
+  '1Hxm1uSSnWSsKek-kwDtxI52hw9Zz8VpT',
+  '1f_k6IGpkf2o8AGLzWacsRqjr8_46hC2n',
+  '1sSKfFju_9n-4Pt3WOkNg3-uVhUmTVA8t',
+  '1bsyGg606fI0HAYkdbd19II5ME2zaOFsS',
+  '1Um22yPzpUE2xA84zn-CQWswsysqwd8dC',
+  '1z6hv7MBscEIYmDE_GsQwADH77r1anrRr',
+  '1heQJAHZaoE2DQRjx5KSdz7c9H6nCrbEE',
+  '1l_rQZKC-zp8LRpr9MS8zRN67m20dS5xX',
+  '1Gr-WwrVleKno3GIoafDgR3NaxlAFpkxD',
+  '1Lhu20cJbpCBlFqpmCzOZr8jkxgatT_nJ',
+  '1qjw-9xNk4X8KBO_8979M9cobFCua8FX2',
+  '1EwU6RY4wek6tXynHzHu4qNyN3jTCgqkW',
+  '1fFHYOiL7cBYRiZGLdpkN5CbcDLoErIVj',
+  '1Ef-dIkPj4RQ2tXLTLRsHOXgfCedC62IG',
+  '1SigHJA1tE2He5eztIRgBWbxPYJ4xY78g',
+  '1fZJt6nKJ93RD-xL63KEVBmPSIa5E_YnO',
+  '1wu6srzQZ9Kbn5QrUhWSkSCGQN5AHBK1n',
+  '1O9csyNyioX0ihZ1nowNdJpH-P2HUUYCW',
+  '1J2c8niF20x_Y6dMws5TA8A-x3T2Hk6pL',
+  '1im0wVLRk4m21s4KD2VQVnuAsADWymeJO',
+  '17D2_B1cdsnuDRoQjh-jIbepL-kkJOnQe',
+  '1cTjOhQKRCBmjJ9KEbuX10yXUHNXKtmfV',
+  '1TNLIotjTyXeGe4EKeXAg6cvK8gfk5Fvh',
+  '1B6BRrU_Rawl2mPKLefT5zCaWs91BW12d',
+  '1iUVrATTBN6QBLwCoUljzu8RWNU4cOejz',
+  '1ngQeCJq8l3BkUL2KjiSY2l4FtOBhEUNS',
+  '19AD7WquR5NDGN4ZUhmRpiug-7P-OOJUH',
+  '19mmG_23EQxG0Mw4mPhGgftV48C_2o52G',
+  '1RmgSdxZ0vNN7Jm8NU2g6wegUkpnK50fV',
+  '1K9InxKg3X7xaqpIwIm6fHAK33pVMlXPN',
+  '1DXe2xzNzEhYmbuMlTaCN46xp7I_lnZS8',
+  '10UIkZOOgI6aPgY5JTDXf4ucvxu7JVvOp',
+  '1wJWxBvlQRdcGkGLXl7vZbpgL9cDSn4ki',
+  '1lKTV-8vo4Y0VI5fdB9-CYeaklQeZYeL7',
+  '1btwqBai1stWjPyqviuGsAZOwpYVVDd5T',
+  '1zfEsJbgFubvDnzKSfRAX2ZTbFzjY-RiT',
+  '1JjhcJXiP4giUD92na4MJty5suMxVbjfU',
+  '1tmKgXFdI4njQuQs_tBtYLbBXhV124SLt',
+  '1UV8i0otA5lWKuw2_HTeFkk_43Rqmg_zR',
+  '1n9UqzA6AV88ftrI7Kz7j_K0WgpRdIPIW',
+  '1MUlXBNs8o5IGH3zN31W_y1EG13t9D0TE',
+  '1LGmgyieHO7QaFrYewLpvLk4J_ntufoe6',
+  '1OjtFOSkLSfDGEt67hfWwAkQyjJhhODvx',
+  '1O7967nbaNPn_EVI0P8G84UYqO-cOPQaF',
+  '1b0IRV7_oCmbV8tKVUSiApWbtJA73SqCY',
+  '108PRCUjUXk-3eSJFspKoiaN8eknn9Akr',
+  '1aHWfOAErpFzn-4V6U-D3VUJoQTShBF-W',
+  '1NshXTv8rr1EBEJPVxU2O0T9aKHD8mZUs',
+  '1r15g0NOBkTQZmPNrcnJHWDinswXAcXJD',
+  '13ZBB8lzlBjGK5f7fm570Iv-_bAZhrRKt',
+  '1IqdS00BU4U2t-WmzzwsTALzRL-OZsdR_',
+  '1gtueX2sBUqinNyRRGals-m2FBb4wIJ3A',
+  '1713u1RtewEYNEEg-qqhMyMkBIbg8XeNC',
+  '1cNmMHo9TgVn9kKon4ceatUfK-LxxdFd-',
+  '1UwyCsEmew5RNYHbk_yIKFQ4ZqIUUY_VQ',
+];
 
 function renderPhotos(ids) {
   const grid = document.getElementById('foto-grid');
@@ -241,31 +397,6 @@ function renderPhotos(ids) {
   obs.observe(sentinel);
 }
 
-async function loadPhotos() {
-  const grid = document.getElementById('foto-grid');
-
-  const cached = getCached();
-  if (cached) {
-    renderPhotos(cached);
-    return;
-  }
-
-  grid.innerHTML = `<div style="grid-column:1/-1;display:flex;justify-content:center;padding:60px 0;">
-    <div style="width:40px;height:40px;border:3px solid rgba(245,243,238,0.15);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;"></div>
-  </div>`;
-
-  try {
-    const res = await fetch(SCRIPT_URL);
-    if (!res.ok) throw new Error('Script error');
-    const ids = await res.json();
-    setCached(ids);
-    grid.innerHTML = '';
-    renderPhotos(ids);
-  } catch(e) {
-    grid.innerHTML = `<p style="color:rgba(245,243,238,0.5);font-family:var(--mono);grid-column:1/-1;text-align:center;padding:40px 0;">Fotografie se nepodařilo načíst.</p>`;
-  }
-}
-
 function setupLightbox(srcs, total) {
   const lb = document.getElementById('lb');
   const lbImg = document.getElementById('lb-img');
@@ -297,7 +428,7 @@ function setupLightbox(srcs, total) {
   });
 }
 
-loadPhotos();
+renderPhotos(PHOTO_IDS);
 </script>
 </body>
 </html>
