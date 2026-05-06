@@ -443,6 +443,13 @@ img { display: block; max-width: 100%; }
   font-size: clamp(40px, 6vw, 80px); line-height: 0.9;
   text-transform: uppercase; letter-spacing: -0.015em;
 }
+.sch-head .index {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
 
 
 /* ======= PAGE HEADER — HERO VARIANT ======= */

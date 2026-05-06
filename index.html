@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="assets/Images/logo2.jpeg" />
   <title>Svídnický Extrém — Překážkový sport pro všechny</title>
   <link rel="stylesheet" href="assets/shared.css" />
-  <link rel="preload" as="image" href="assets/Images/hero.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/Images/index-hero.jpeg" fetchpriority="high" />
   <style>
     /* =========== HERO =========== */
     .hero {
@@ -32,7 +32,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background-image: url('assets/Images/hero.jpg');
+      background-image: url('assets/Images/index-hero.jpeg');
       background-size: cover;
       background-position: center 30%;
       filter: grayscale(0.15) contrast(1.05);
@@ -235,32 +235,6 @@
       background: var(--paper-2);
     }
 
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      margin-bottom: 48px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 24px;
-    }
-
-    .section-head h2 {
-      font-family: var(--display);
-      font-weight: 800;
-      font-size: clamp(40px, 6vw, 80px);
-      line-height: 0.9;
-      text-transform: uppercase;
-      letter-spacing: -0.015em;
-    }
-
-    .section-head .index {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-60);
-    }
-
     .count-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -444,18 +418,18 @@
     }
 
     @media (max-width: 640px) {
-      .countdowns .section-head .index,
-      .overview .section-head .index {
+      .countdowns .sch-head .index,
+      .overview .sch-head .index {
         display: none;
       }
 
-      .gallery-preview .section-head {
+      .gallery-preview .sch-head {
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
       }
 
-      .gallery-preview .section-head h2 {
+      .gallery-preview .sch-head h2 {
         line-height: 1.15;
         letter-spacing: 0;
       }
@@ -591,13 +565,13 @@
     }
 
     @media (max-width: 640px) {
-      .gallery-preview .section-head {
+      .gallery-preview .sch-head {
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
       }
 
-      .gallery-preview .section-head h2 {
+      .gallery-preview .sch-head h2 {
         line-height: 1.15;
         letter-spacing: 0;
       }
@@ -685,11 +659,9 @@
         </h1>
 
         <div class="hero-bottom">
-          <div>
-            <div class="hero-ctas">
-              <a href="zavody.html" class="btn btn-primary">Svídnický Extrém</a>
-              <a href="treninky.html" class="btn btn-ghost">Tréninky</a>
-            </div>
+          <div class="hero-ctas">
+            <a href="zavody.html" class="btn btn-primary">Svídnický Extrém</a>
+            <a href="treninky.html" class="btn btn-ghost">Tréninky</a>
           </div>
         </div>
       </div>
@@ -707,7 +679,6 @@
       <span class="out">Děti 6+</span><span class="dot"></span>
       <span>Extrém</span><span class="dot"></span>
       <span class="out">Bláto</span><span class="dot"></span>
-      <!-- duplicate for loop -->
       <span>Překážky</span><span class="dot"></span>
       <span class="out">Běh</span><span class="dot"></span>
       <span>Síla</span><span class="dot"></span>
@@ -722,7 +693,7 @@
   <!-- =============== COUNTDOWNS =============== -->
   <section class="countdowns">
     <div class="container">
-      <div class="section-head">
+      <div class="sch-head">
         <div>
           <div class="eyebrow">01 / Nejbližší akce</div>
           <h2>Odpočet do startu.</h2>
@@ -806,7 +777,7 @@
   <!-- =============== OVERVIEW =============== -->
   <section class="overview">
     <div class="container">
-      <div class="section-head">
+      <div class="sch-head">
         <div>
           <div class="eyebrow">02 / Co u nás děláme</div>
           <h2>Tři pilíře.</h2>
@@ -852,7 +823,7 @@
   <!-- =============== GALLERY PREVIEW =============== -->
   <section class="gallery-preview">
     <div class="container">
-      <div class="section-head">
+      <div class="sch-head">
         <div>
           <div class="eyebrow">03 / Z posledních akcí</div>
           <h2>Bláto, pot a úsměvy.</h2>
@@ -861,14 +832,12 @@
       </div>
 
       <div class="gp-grid reveal">
-        <!-- Vítání prázdnin 2025 — reálná fotka, velký slot -->
         <a class="g" href="galerie-detail.html">
           <span class="cat-tag">Akce</span>
           <div class="date-stamp">22. 6. 2025</div>
           <div class="meta"><span class="t">Vítání prázdnin 2025</span></div>
           <img src="https://drive.google.com/thumbnail?id=1SigHJA1tE2He5eztIRgBWbxPYJ4xY78g&sz=w2000" alt="Vítání prázdnin 2025" />
         </a>
-        <!-- Svídnický Extrém 2025 — reálné video -->
         <div class="g gp-video" data-driveid="1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD" data-title="Svídnický Extrém 2025">
           <img src="https://drive.google.com/thumbnail?id=1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD&sz=w2000" alt="Svídnický Extrém 2025" style="width:100%;height:100%;object-fit:cover;"/>
           <div class="g-play">
@@ -881,19 +850,16 @@
           <div class="date-stamp">2025</div>
           <div class="meta"><span class="t">Svídnický Extrém</span></div>
         </div>
-        <!-- Tábor — reálná fotka -->
         <a class="g" href="galerie-tabor.html">
           <span class="cat-tag">Tábor</span>
           <div class="meta"><span class="t">Tábor</span></div>
           <img src="https://drive.google.com/thumbnail?id=1FxJwqDDXluwSnJ3hiXyPPwYUNGewyPCi&sz=w2000" alt="Tábor" />
         </a>
-        <!-- Tréninky — reálná fotka -->
         <a class="g" href="galerie-trenink.html">
           <span class="cat-tag">Tréninky</span>
           <div class="meta"><span class="t">Tréninky</span></div>
           <img src="https://drive.google.com/thumbnail?id=1A1ZD8qOEprySjGJ30J6MSkvtb_xd0VX7&sz=w2000" alt="Tréninky" />
         </a>
-        <!-- Děti — Extrém — statická fotka -->
         <a class="g" href="galerie-deti.html">
           <span class="cat-tag">Děti</span>
           <div class="meta"><span class="t">Děti — Extrém</span></div>
