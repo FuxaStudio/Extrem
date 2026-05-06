@@ -261,6 +261,11 @@ img { display: block; max-width: 100%; }
 .btn .arr { transition: transform .2s ease; }
 .btn:hover .arr { transform: translateX(4px); }
 
+/* lift+glow hover for primary buttons on dark backgrounds */
+.btn-fire { transition: transform .2s ease, filter .2s ease, box-shadow .2s ease; }
+.btn-fire::before { display: none; }
+.btn-fire:hover { color: #fff; transform: translateY(-2px); filter: brightness(1.12); box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45); }
+
 /* ======= FOOTER ======= */
 .footer {
   background: var(--ink); color: var(--paper);
@@ -284,19 +289,7 @@ img { display: block; max-width: 100%; }
   margin-bottom: 64px;
   flex-wrap: wrap;
 }
-.footer-hero .btn-primary {
-  flex-shrink: 0;
-  color: #fff;
-  font-weight: 800;
-  transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
-}
-.footer-hero .btn-primary::before { display: none; }
-.footer-hero .btn-primary:hover {
-  color: #fff;
-  transform: translateY(-2px);
-  filter: brightness(1.12);
-  box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45);
-}
+.footer-hero .btn-primary { flex-shrink: 0; color: #fff; font-weight: 800; }
 .footer-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr auto;
