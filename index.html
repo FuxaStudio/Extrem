@@ -577,26 +577,6 @@
       }
     }
 
-    /* =========== GP-GRID VIDEO =========== */
-    .gp-grid .g video {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform .9s cubic-bezier(.2, .7, .2, 1);
-      pointer-events: none;
-    }
-    .gp-grid .g:hover video { transform: scale(1.06); }
-    .gp-grid .g .g-play {
-      position: absolute; inset: 0; z-index: 1;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(10,10,10,0.28);
-      transition: background .3s;
-    }
-    .gp-grid .g:hover .g-play { background: rgba(10,10,10,0.15); }
-    .gp-grid .g .g-play svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); transition: transform .3s; }
-    .gp-grid .g:hover .g-play svg { transform: scale(1.12); }
-    .gp-grid .g .cat-tag,
-    .gp-grid .g .date-stamp,
-    .gp-grid .g .meta { z-index: 2; }
-
     /* =========== VIDEO LIGHTBOX =========== */
     #gp-vlb {
       display: none;
