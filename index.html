@@ -565,49 +565,6 @@
       }
     }
 
-    /* =========== VIDEO LIGHTBOX =========== */
-    #gp-vlb {
-      display: none;
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      width: 100%; height: 100%;
-      z-index: 9999;
-      background: rgba(10,10,10,0.96);
-      align-items: center; justify-content: center;
-      overscroll-behavior: contain;
-    }
-    #gp-vlb.open { display: flex; }
-    #gp-vlb iframe {
-      width: 92vw; height: min(82vh, calc(92vw * 9 / 16));
-      border: none; border-radius: 2px;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.8);
-    }
-    #gp-vlb-close {
-      position: fixed; top: 20px; right: 28px;
-      font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em;
-      text-transform: uppercase; color: rgba(255,255,255,0.5);
-      background: none; border: none; cursor: pointer;
-      transition: color .2s; z-index: 10000;
-      padding: 10px; min-width: 44px; min-height: 44px;
-      display: flex; align-items: center; justify-content: flex-end;
-    }
-    #gp-vlb-close:hover { color: var(--paper); }
-    #gp-vlb-title {
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
-      text-transform: uppercase; color: rgba(255,255,255,0.4);
-      white-space: nowrap; max-width: 90vw;
-      overflow: hidden; text-overflow: ellipsis;
-    }
-    @media (max-width: 900px) {
-      #gp-vlb {
-        flex-direction: column; align-items: stretch; justify-content: flex-start;
-        padding-top: 44px; padding-bottom: env(safe-area-inset-bottom, 20px);
-        box-sizing: border-box;
-      }
-      #gp-vlb iframe { width: 100%; flex: 1; min-height: 0; border-radius: 0; box-shadow: none; }
-      #gp-vlb-title { display: none; }
-      #gp-vlb-close { top: 12px; right: 12px; }
-    }
 
   </style>
 </head>
@@ -806,7 +763,7 @@
           <div class="meta"><span class="t">Vítání prázdnin 2025</span></div>
           <img src="https://drive.google.com/thumbnail?id=1SigHJA1tE2He5eztIRgBWbxPYJ4xY78g&sz=w2000" alt="Vítání prázdnin 2025" />
         </a>
-        <div class="g gp-video" data-driveid="1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD" data-title="Svídnický Extrém 2025">
+        <div class="g drive-video" data-driveid="1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD" data-title="Svídnický Extrém 2025">
           <img src="https://drive.google.com/thumbnail?id=1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD&sz=w2000" alt="Svídnický Extrém 2025" style="width:100%;height:100%;object-fit:cover;"/>
           <div class="g-play">
             <svg width="48" height="48" viewBox="0 0 52 52" fill="none">
@@ -837,56 +794,10 @@
     </div>
   </section>
 
-  <!-- Video lightbox -->
-  <div id="gp-vlb">
-    <button id="gp-vlb-close">✕ Zavřít</button>
-    <iframe id="gp-vlb-iframe" allowfullscreen></iframe>
-    <div id="gp-vlb-title"></div>
-  </div>
-
   <div id="footer-mount"></div>
 
   <script src="assets/shared.js"></script>
   <script>SE.mount('home');</script>
-  <script>
-    const vlb = document.getElementById('gp-vlb');
-    const vlbIframe = document.getElementById('gp-vlb-iframe');
-    const vlbTitle = document.getElementById('gp-vlb-title');
-
-    let _vlbScrollY = 0;
-    function openVlb(driveId, title) {
-      vlbIframe.src = `https://drive.google.com/file/d/${driveId}/preview`;
-      vlbTitle.textContent = title;
-      vlb.classList.add('open');
-      _vlbScrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${_vlbScrollY}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.overflow = 'hidden';
-    }
-    function closeVlb() {
-      vlb.classList.remove('open');
-      vlbIframe.src = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.overflow = '';
-      window.scrollTo(0, _vlbScrollY);
-    }
-
-    document.querySelectorAll('.gp-grid .gp-video').forEach(card => {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', () => openVlb(card.dataset.driveid, card.dataset.title));
-    });
-
-    document.getElementById('gp-vlb-close').addEventListener('click', closeVlb);
-    vlb.addEventListener('click', e => { if (e.target === vlb) closeVlb(); });
-    document.addEventListener('keydown', e => {
-      if (vlb.classList.contains('open') && e.key === 'Escape') closeVlb();
-    });
-  </script>
 
 </body>
 

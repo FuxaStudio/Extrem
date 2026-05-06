@@ -182,6 +182,58 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
   }
 
+  function renderVlb() {
+    return '<div id="se-vlb">' +
+      '<button id="se-vlb-close">✕ Zavřít</button>' +
+      '<iframe id="se-vlb-iframe" allowfullscreen></iframe>' +
+      '<div id="se-vlb-title"></div>' +
+      '</div>';
+  }
+
+  function initVideoLightbox() {
+    document.body.insertAdjacentHTML('beforeend', renderVlb());
+    const vlb = document.getElementById('se-vlb');
+    const vlbIframe = document.getElementById('se-vlb-iframe');
+    const vlbTitle = document.getElementById('se-vlb-title');
+    let _scrollY = 0;
+
+    function openVlb(driveId, title) {
+      vlbIframe.src = 'https://drive.google.com/file/d/' + driveId + '/preview';
+      vlbTitle.textContent = title;
+      vlb.classList.add('open');
+      _scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + _scrollY + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeVlb() {
+      vlb.classList.remove('open');
+      vlbIframe.src = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, _scrollY);
+    }
+
+    document.querySelectorAll('.drive-video').forEach(function(card) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function() {
+        openVlb(card.dataset.driveid, card.dataset.title);
+      });
+    });
+
+    document.getElementById('se-vlb-close').addEventListener('click', closeVlb);
+    vlb.addEventListener('click', function(e) { if (e.target === vlb) closeVlb(); });
+    document.addEventListener('keydown', function(e) {
+      if (vlb.classList.contains('open') && e.key === 'Escape') closeVlb();
+    });
+  }
+
   // Mount entry points
   window.SE = {
     mount(active){
@@ -197,6 +249,7 @@
       initReveal();
       initCountdowns();
       initNav();
+      initVideoLightbox();
     }
   };
 })();

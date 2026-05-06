@@ -205,48 +205,6 @@
     .race-photos .gp-grid .g:nth-child(4) { grid-row: auto; grid-column: auto; }
   }
 
-  /* lightbox */
-  #rp-vlb {
-    display: none;
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    width: 100%; height: 100%;
-    z-index: 9999;
-    background: rgba(10,10,10,0.96);
-    align-items: center; justify-content: center;
-    overscroll-behavior: contain;
-  }
-  #rp-vlb.open { display: flex; }
-  #rp-vlb iframe {
-    width: 92vw; height: min(82vh, calc(92vw * 9 / 16));
-    border: none; border-radius: 2px; box-shadow: 0 24px 80px rgba(0,0,0,0.8);
-  }
-  #rp-vlb-close {
-    position: fixed; top: 20px; right: 28px;
-    font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em;
-    text-transform: uppercase; color: rgba(255,255,255,0.5);
-    background: none; border: none; cursor: pointer;
-    transition: color .2s; z-index: 10000;
-    padding: 10px; min-width: 44px; min-height: 44px;
-    display: flex; align-items: center; justify-content: flex-end;
-  }
-  #rp-vlb-close:hover { color: var(--paper); }
-  #rp-vlb-title {
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: rgba(255,255,255,0.4);
-    white-space: nowrap; max-width: 90vw;
-    overflow: hidden; text-overflow: ellipsis;
-  }
-  @media (max-width: 900px) {
-    #rp-vlb {
-      flex-direction: column; align-items: stretch; justify-content: flex-start;
-      padding-top: 44px; padding-bottom: env(safe-area-inset-bottom, 20px);
-      box-sizing: border-box;
-    }
-    #rp-vlb iframe { width: 100%; flex: 1; min-height: 0; border-radius: 0; box-shadow: none; }
-    #rp-vlb-title { display: none; }
-    #rp-vlb-close { top: 12px; right: 12px; }
-  }
 
 </style>
 </head>
@@ -368,7 +326,7 @@
     </div>
 
     <div class="gp-grid reveal">
-      <div class="g rp-video" data-driveid="1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD" data-title="Svídnický Extrém 2025">
+      <div class="g drive-video" data-driveid="1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD" data-title="Svídnický Extrém 2025">
         <img src="https://drive.google.com/thumbnail?id=1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD&sz=w2000" alt="Svídnický Extrém 2025" style="width:100%;height:100%;object-fit:cover;"/>
         <div class="g-play">
           <svg width="48" height="48" viewBox="0 0 52 52" fill="none">
@@ -380,7 +338,7 @@
         <div class="date-stamp">2025</div>
         <div class="meta"><span class="t">Svídnický Extrém</span></div>
       </div>
-      <div class="g rp-video" data-driveid="19EdnI1ToHe4tZUi8ASXjCZ-SEecgA3Xt" data-title="Extrém 2024">
+      <div class="g drive-video" data-driveid="19EdnI1ToHe4tZUi8ASXjCZ-SEecgA3Xt" data-title="Extrém 2024">
         <img src="https://drive.google.com/thumbnail?id=19EdnI1ToHe4tZUi8ASXjCZ-SEecgA3Xt&sz=w2000" alt="Extrém 2024" style="width:100%;height:100%;object-fit:cover;"/>
         <div class="g-play">
           <svg width="48" height="48" viewBox="0 0 52 52" fill="none">
@@ -392,7 +350,7 @@
         <div class="date-stamp">2024</div>
         <div class="meta"><span class="t">Svídnický Extrém</span></div>
       </div>
-      <div class="g rp-video" data-driveid="1Pari3VR6KzaO-ABjy7e_DhR-YPmGZMzI" data-title="Svídnický Extrém 2022">
+      <div class="g drive-video" data-driveid="1Pari3VR6KzaO-ABjy7e_DhR-YPmGZMzI" data-title="Svídnický Extrém 2022">
         <img src="https://drive.google.com/thumbnail?id=1Pari3VR6KzaO-ABjy7e_DhR-YPmGZMzI&sz=w2000" alt="Svídnický Extrém 2022" style="width:100%;height:100%;object-fit:cover;"/>
         <div class="g-play">
           <svg width="48" height="48" viewBox="0 0 52 52" fill="none">
@@ -404,7 +362,7 @@
         <div class="date-stamp">2022</div>
         <div class="meta"><span class="t">Svídnický Extrém</span></div>
       </div>
-      <div class="g rp-video" data-driveid="1EwBdbDuBMzB_0uMIcF9bIEP2I5COiJsq" data-title="Závod — záběry 2025">
+      <div class="g drive-video" data-driveid="1EwBdbDuBMzB_0uMIcF9bIEP2I5COiJsq" data-title="Závod — záběry 2025">
         <img src="https://drive.google.com/thumbnail?id=1ZghbFcNtw4h0mBDCaU2wbzlZ3823IcpB&sz=w2000" alt="Závod — záběry 2025" style="width:100%;height:100%;object-fit:cover;"/>
         <div class="g-play">
           <svg width="48" height="48" viewBox="0 0 52 52" fill="none">
@@ -420,54 +378,8 @@
   </div>
 </section>
 
-<!-- Video lightbox -->
-<div id="rp-vlb">
-  <button id="rp-vlb-close">✕ Zavřít</button>
-  <iframe id="rp-vlb-iframe" allowfullscreen></iframe>
-  <div id="rp-vlb-title"></div>
-</div>
-
 <div id="footer-mount"></div>
 <script src="assets/shared.js"></script>
 <script>SE.mount('races');</script>
-<script>
-  const vlb = document.getElementById('rp-vlb');
-  const vlbIframe = document.getElementById('rp-vlb-iframe');
-  const vlbTitle = document.getElementById('rp-vlb-title');
-
-  let _vlbScrollY = 0;
-  function openVlb(driveId, title) {
-    vlbIframe.src = `https://drive.google.com/file/d/${driveId}/preview`;
-    vlbTitle.textContent = title;
-    vlb.classList.add('open');
-    _vlbScrollY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${_vlbScrollY}px`;
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.overflow = 'hidden';
-  }
-  function closeVlb() {
-    vlb.classList.remove('open');
-    vlbIframe.src = '';
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
-    document.body.style.overflow = '';
-    window.scrollTo(0, _vlbScrollY);
-  }
-
-  document.querySelectorAll('.gp-grid .rp-video').forEach(card => {
-    card.style.cursor = 'pointer';
-    card.addEventListener('click', () => openVlb(card.dataset.driveid, card.dataset.title));
-  });
-
-  document.getElementById('rp-vlb-close').addEventListener('click', closeVlb);
-  vlb.addEventListener('click', e => { if (e.target === vlb) closeVlb(); });
-  document.addEventListener('keydown', e => {
-    if (vlb.classList.contains('open') && e.key === 'Escape') closeVlb();
-  });
-</script>
 </body>
 </html>
