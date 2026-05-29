@@ -1,4 +1,4 @@
-// Shared nav + footer + utilities for Svídnický Extrém
+﻿// Shared nav + footer + utilities for Svídnický Extrém
 (function(){
 
 
@@ -38,7 +38,7 @@
     <nav class="nav" id="site-nav">
       <div class="container nav-inner">
         <a class="nav-logo" href="index.html">
-          <img class="se-logo" src="assets/Images/logo2.jpeg" alt="Svídnický Extrém" style="height: 64px; width: auto; max-width: 320px; display: block; object-fit: contain; flex-shrink: 0;">
+          <img class="se-logo" src="assets/Images/logo2.webp" alt="Svídnický Extrém" style="height: 64px; width: auto; max-width: 320px; display: block; object-fit: contain; flex-shrink: 0;">
           <span class="wordmark">Svídnický Extrém</span>
         </a>
         <div class="nav-links">
@@ -77,7 +77,6 @@
             <ul style="font-family:var(--body); font-size:15px; text-transform:none; letter-spacing:0;">
               <li style="font-family:var(--body);">Svídnice, 538 24, Pardubický kraj</li>
               <li style="font-family:var(--body);">svidnickyextrem@seznam.cz</li>
-              <li style="font-family:var(--body);">+420 777 052 023</li>
             </ul>
           </div>
           <div>
@@ -179,7 +178,7 @@
       burger.classList.contains('open') ? closeMenu() : openMenu();
     });
     mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && burger.classList.contains('open')) closeMenu(); });
   }
 
   function renderVlb() {
@@ -191,6 +190,7 @@
   }
 
   function initVideoLightbox() {
+    if (!document.querySelector('.drive-video')) return;
     document.body.insertAdjacentHTML('beforeend', renderVlb());
     const vlb = document.getElementById('se-vlb');
     const vlbIframe = document.getElementById('se-vlb-iframe');

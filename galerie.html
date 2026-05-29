@@ -4,7 +4,15 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="description" content="Galerie Svídnický Extrém — fotky a videa ze závodů, letního tábora, dětských tréninků a závodů." />
-<link rel="icon" type="image/png" href="assets/Images/logo2.jpeg"/>
+  <link rel="canonical" href="https://svidnickyextrem.cz/galerie.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://svidnickyextrem.cz/galerie.html" />
+  <meta property="og:title" content="Galerie — Svídnický Extrém" />
+  <meta property="og:description" content="Galerie Svídnický Extrém — fotky a videa ze závodů, letního tábora, dětských tréninků a závodů." />
+  <meta property="og:image" content="https://svidnickyextrem.cz/assets/Images/og-Extrem.jpg" />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta property="og:site_name" content="Svídnický Extrém" />
+<link rel="icon" type="image/webp" href="assets/Images/logo2.webp"/>
 <title>Galerie — Svídnický Extrém</title>
 <link rel="stylesheet" href="assets/shared.css"/>
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1522866348293-55be2c6caa1f?auto=format&fit=crop&w=1920&q=80" fetchpriority="high"/>
@@ -214,8 +222,8 @@ const GD = id => `https://drive.google.com/thumbnail?id=${id}&sz=w2000`;
 const GV = id => `https://drive.google.com/file/d/${id}/preview`;
 
 const ITEMS = [
-  {type:'local', src:'assets/Images/hero-galerie.jpg', cat:'akce', title:'Vítání prázdnin 2025', date:'22. 6. 2025', link:'galerie-detail.html', tag:'Vítání prázdnin', eager:true},
-  {type:'local', src:'assets/Images/hero-treninky.jpg', cat:'trenink', title:'Tréninky', date:'', link:'galerie-trenink.html', tag:'Tréninky', eager:true},
+  {type:'local', src:'assets/Images/hero-galerie.webp', cat:'akce', title:'Vítání prázdnin 2025', date:'22. 6. 2025', link:'galerie-detail.html', tag:'Vítání prázdnin', eager:true},
+  {type:'local', src:'assets/Images/hero-treninky.webp', cat:'trenink', title:'Tréninky', date:'', link:'galerie-trenink.html', tag:'Tréninky', eager:true},
   {type:'video', driveId:'1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD', poster:GD('1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD'), cat:'zavody', title:'Svídnický Extrém 2025', date:'2025', tag:'Svídnický Extrém'},
   {type:'video', driveId:'19EdnI1ToHe4tZUi8ASXjCZ-SEecgA3Xt', poster:GD('19EdnI1ToHe4tZUi8ASXjCZ-SEecgA3Xt'), cat:'zavody', title:'Extrém 2024', date:'2024', tag:'Svídnický Extrém'},
   {type:'video', driveId:'1Pari3VR6KzaO-ABjy7e_DhR-YPmGZMzI', poster:GD('1Pari3VR6KzaO-ABjy7e_DhR-YPmGZMzI'), cat:'zavody', title:'Svídnický Extrém 2022', date:'2022', tag:'Svídnický Extrém'},
@@ -225,11 +233,11 @@ const ITEMS = [
   {type:'local', src:GD('1JA19b6dlUbpLOtoAMs4pwetFjjNsTP2y'), cat:'deti', title:'Děti — Extrém', date:'', link:'galerie-deti.html', tag:'Děti — Extrém'},
 ];
 
-const CATS = {all:'Vše', 'trenink-dospeli':'Trénink - Dospělí', 'trenink-deti':'Trénink - Děti', zavody:'Závod', akce:'Akce', deti:'Děti', trenink:'Tréninky'};
+const CATS = {all:'Vše', zavody:'Závod', akce:'Akce', deti:'Děti', trenink:'Tréninky'};
 
 function renderItem(im) {
   if (im.type === 'video') {
-    const inner = `<img src="${im.poster}" alt="${im.title}" ${im.eager ? 'fetchpriority="high"' : 'loading="lazy"'} style="width:100%;height:100%;object-fit:cover;"/>
+    const inner = `<img src="${im.poster}" alt="${im.title}" ${im.eager ? 'fetchpriority="high"' : 'loading="lazy"'}/>
       <div class="g-play">
         <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
           <circle cx="26" cy="26" r="26" fill="rgba(245,243,238,0.18)"/>
@@ -239,21 +247,18 @@ function renderItem(im) {
       <div class="cat-tag">${CATS[im.cat]}</div>
       ${im.date ? `<div class="date-stamp">${im.date}</div>` : ''}
       <div class="meta"><span class="t">${im.tag || im.title}</span></div>`;
-    if (im.link) {
-      return `<a class="g ${im.size||''}" data-cat="${im.cat}" href="${im.link}" data-driveid="${im.driveId}">${inner}</a>`;
-    }
-    return `<div class="g ${im.size||''}" data-cat="${im.cat}" data-driveid="${im.driveId}">${inner}</div>`;
+    return `<div class="g" data-cat="${im.cat}" data-driveid="${im.driveId}">${inner}</div>`;
   }
   const imgSrc = im.src;
   if (im.link) {
-    return `<a class="g ${im.size||''}" data-cat="${im.cat}" href="${im.link}">
+    return `<a class="g" data-cat="${im.cat}" href="${im.link}">
       <img src="${imgSrc}" alt="${im.title}" ${im.eager ? 'fetchpriority="high"' : 'loading="lazy"'}/>
       <div class="cat-tag">${CATS[im.cat]}</div>
       ${im.date ? `<div class="date-stamp">${im.date}</div>` : ''}
       <div class="meta"><span class="t">${im.tag || im.title}</span></div>
     </a>`;
   }
-  return `<div class="g ${im.size||''}" data-cat="${im.cat}">
+  return `<div class="g" data-cat="${im.cat}">
     <img src="${imgSrc}" alt="${im.title}" ${im.eager ? 'fetchpriority="high"' : 'loading="lazy"'}/>
     <div class="cat-tag">${CATS[im.cat]}</div>
     <div class="date-stamp">${im.date}</div>

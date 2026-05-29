@@ -4,10 +4,18 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="description" content="Tréninky Svídnický Extrém — pravidelné překážkové tréninky úterý a pátek (dospělí) a ve středu (děti) ve Svídnici. Přidej se k nám!" />
-<link rel="icon" type="image/png" href="assets/Images/logo2.jpeg"/>
+  <link rel="canonical" href="https://svidnickyextrem.cz/treninky.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://svidnickyextrem.cz/treninky.html" />
+  <meta property="og:title" content="Tréninky — Svídnický Extrém" />
+  <meta property="og:description" content="Tréninky Svídnický Extrém — pravidelné překážkové tréninky úterý a pátek (dospělí) a ve středu (děti) ve Svídnici. Přidej se k nám!" />
+  <meta property="og:image" content="https://svidnickyextrem.cz/assets/Images/og-Extrem.jpg" />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta property="og:site_name" content="Svídnický Extrém" />
+<link rel="icon" type="image/webp" href="assets/Images/logo2.webp"/>
 <title>Tréninky — Svídnický Extrém</title>
 <link rel="stylesheet" href="assets/shared.css"/>
-<link rel="preload" as="image" href="assets/Images/hero-treninky.jpg" fetchpriority="high"/>
+<link rel="preload" as="image" href="assets/Images/hero-treninky.webp" fetchpriority="high"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
   .intro { padding: 96px 0; border-bottom: 1px solid var(--line); }
@@ -46,10 +54,6 @@
     font-size: 22px;
   }
 
-  .ph-h1-wrap {
-    flex: 1;
-    display: flex; align-items: center; justify-content: center;
-  }
   .page-header-tr h1 {
     display: flex; flex-direction: column; align-items: center;
     font-family: var(--display); font-weight: 800;
@@ -110,7 +114,6 @@
 
   /* SCHEDULE */
   .schedule { padding: 120px 0; background: var(--paper-2); border-bottom: 1px solid var(--line); }
-  .section-head { display:flex; justify-content: space-between; align-items:end; margin-bottom: 48px; border-bottom: 1px solid var(--line); padding-bottom: 24px; }
   .days { display:grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--line); border: 1px solid var(--line); }
   .day { background: var(--paper); padding: 48px; min-height: 440px; display:flex; flex-direction:column; justify-content: space-between; }
   .day.today { background: var(--ink); color: var(--paper); }
@@ -297,7 +300,7 @@
 <!-- HEADER -->
 <section class="page-header page-header-tr">
   <div class="ph-hero">
-    <img class="ph-bg" src="assets/Images/hero-treninky.jpg" alt="" fetchpriority="high"/>
+    <img class="ph-bg" src="assets/Images/hero-treninky.webp" alt="" fetchpriority="high"/>
     <div class="ph-overlay"></div>
     <div class="ph-sticker">Zdarma</div>
     <div class="container">

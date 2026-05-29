@@ -1,5 +1,7 @@
 # Mediální soubory (spravovány odděleně — příliš velké pro Git)
 assets/Images/fotky extrem/
+assets/Images/index-hero.jpeg
+assets/Images/zavody-hero.jpeg
 
 # Interní soubory
 .claude/

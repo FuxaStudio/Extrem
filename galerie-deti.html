@@ -4,10 +4,18 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="description" content="Extrém Děti — fotogalerie z dětských překážkových závodů Svídnický Extrém." />
-<link rel="icon" type="image/png" href="assets/Images/logo2.jpeg"/>
+  <link rel="canonical" href="https://svidnickyextrem.cz/galerie-deti.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://svidnickyextrem.cz/galerie-deti.html" />
+  <meta property="og:title" content="Děti — Extrém — Galerie — Svídnický Extrém" />
+  <meta property="og:description" content="Extrém Děti — fotogalerie z dětských překážkových závodů Svídnický Extrém." />
+  <meta property="og:image" content="https://svidnickyextrem.cz/assets/Images/og-Extrem.jpg" />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta property="og:site_name" content="Svídnický Extrém" />
+<link rel="icon" type="image/webp" href="assets/Images/logo2.webp"/>
 <title>Děti — Extrém — Galerie — Svídnický Extrém</title>
 <link rel="stylesheet" href="assets/shared.css"/>
-<link rel="preload" as="image" href="assets/Images/hero-deti.jpg" fetchpriority="high"/>
+<link rel="preload" as="image" href="assets/Images/hero-deti.webp" fetchpriority="high"/>
 <style>
 
   .detail-hero {
@@ -20,7 +28,7 @@
   .detail-hero::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: url('assets/Images/hero-deti.jpg');
+    background-image: url('assets/Images/hero-deti.webp');
     background-size: cover; background-position: center 35%;
     filter: grayscale(0.15) contrast(1.05);
     transform: scale(1.02);
@@ -188,7 +196,7 @@
   <div class="container">
     <div class="video-head">
       <span class="eyebrow">Videogalerie</span>
-      <span class="count">5 videí</span>
+      <span class="count">7 videí</span>
     </div>
     <div class="video-grid" id="vgrid"></div>
   </div>
@@ -215,6 +223,8 @@ const VIDEOS = [
   { driveId:'12yUPRLR8e5zAOWsrPJCtAy8qXZNFVcgw', title:'Děti — Extrém 3' },
   { driveId:'17oK9RgG5r_FwhB6IJWAGfvE1ZaH_5AV6', title:'Děti — Extrém 4' },
   { driveId:'1FpiahEJK3OJECHA5o4y9yuA3eP_JN_p1', title:'Děti — Extrém 5' },
+  { driveId:'1tkWXT71lkw_SYGf75GK2jqaJosJW3831', title:'Děti — Trénink 1' },
+  { driveId:'1gIF1-5Uy6DjPaQCKyeID6DcO1OeZ6jTV', title:'Děti — Trénink 2' },
 ];
 const HERO = GD('1JA19b6dlUbpLOtoAMs4pwetFjjNsTP2y');
 

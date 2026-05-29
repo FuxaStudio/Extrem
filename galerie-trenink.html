@@ -4,10 +4,18 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="description" content="Tréninky — fotogalerie z překážkových tréninků Svídnický Extrém." />
-<link rel="icon" type="image/png" href="assets/Images/logo2.jpeg"/>
+  <link rel="canonical" href="https://svidnickyextrem.cz/galerie-trenink.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://svidnickyextrem.cz/galerie-trenink.html" />
+  <meta property="og:title" content="Tréninky — Galerie — Svídnický Extrém" />
+  <meta property="og:description" content="Tréninky — fotogalerie z překážkových tréninků Svídnický Extrém." />
+  <meta property="og:image" content="https://svidnickyextrem.cz/assets/Images/og-Extrem.jpg" />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta property="og:site_name" content="Svídnický Extrém" />
+<link rel="icon" type="image/webp" href="assets/Images/logo2.webp"/>
 <title>Tréninky — Galerie — Svídnický Extrém</title>
 <link rel="stylesheet" href="assets/shared.css"/>
-<link rel="preload" as="image" href="assets/Images/hero.jpg" fetchpriority="high"/>
+<link rel="preload" as="image" href="assets/Images/hero.webp" fetchpriority="high"/>
 <style>
 
   .detail-hero {
@@ -20,7 +28,7 @@
   .detail-hero::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: url('assets/Images/hero.jpg');
+    background-image: url('assets/Images/hero.webp');
     background-size: cover; background-position: center 40%;
     filter: grayscale(0.15) contrast(1.05);
     transform: scale(1.02);
@@ -142,6 +150,52 @@
     .foto-grid { grid-template-columns: 1fr; gap: 8px; }
   }
 
+  .g-play {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(10,10,10,0.28); transition: background .3s;
+  }
+  .foto-grid .f:hover .g-play { background: rgba(10,10,10,0.15); }
+  .g-play svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); transition: transform .3s; }
+  .foto-grid .f:hover .g-play svg { transform: scale(1.12); }
+
+  /* ========== VIDEO LIGHTBOX ========== */
+  #vlb {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%; height: 100%; z-index: 9999;
+    background: rgba(10,10,10,0.96);
+    align-items: center; justify-content: center;
+    overscroll-behavior: contain;
+  }
+  #vlb.open { display: flex; }
+  #vlb iframe {
+    width: 92vw; height: min(82vh, calc(92vw * 9 / 16));
+    border: none; border-radius: 2px; box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+  }
+  #vlb-close {
+    position: fixed; top: 20px; right: 28px;
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+    background: none; border: none; cursor: pointer;
+    transition: color .2s; z-index: 10000;
+    padding: 10px; min-width: 44px; min-height: 44px;
+    display: flex; align-items: center; justify-content: flex-end;
+  }
+  #vlb-close:hover { color: var(--paper); }
+  #vlb-title {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+    white-space: nowrap; max-width: 90vw;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  @media (max-width: 900px) {
+    #vlb { flex-direction: column; align-items: stretch; justify-content: flex-start; padding-top: 44px; padding-bottom: env(safe-area-inset-bottom, 20px); box-sizing: border-box; }
+    #vlb iframe { width: 100%; flex: 1; min-height: 0; border-radius: 0; box-shadow: none; }
+    #vlb-title { display: none; }
+    #vlb-close { top: 12px; right: 12px; }
+  }
+
 </style>
 </head>
 <body>
@@ -163,7 +217,7 @@
   <div class="container">
     <div class="foto-head">
       <span class="eyebrow">Fotogalerie</span>
-      <span class="count">7 fotografií</span>
+      <span class="count">7 fotografií &amp; 2 videa</span>
     </div>
     <div class="foto-grid" id="foto-grid"></div>
   </div>
@@ -178,12 +232,20 @@
   <div id="lb-counter"></div>
 </div>
 
+<!-- Video Lightbox -->
+<div id="vlb">
+  <button id="vlb-close">✕ Zavřít</button>
+  <iframe id="vlb-iframe" allowfullscreen></iframe>
+  <div id="vlb-title"></div>
+</div>
+
 <div id="footer-mount"></div>
 <script src="assets/shared.js"></script>
 <script>
 SE.mount('gallery');
 
 const GD = id => `https://drive.google.com/thumbnail?id=${id}&sz=w2000`;
+const GV = id => `https://drive.google.com/file/d/${id}/preview`;
 
 const PHOTOS = [
   GD('1A1ZD8qOEprySjGJ30J6MSkvtb_xd0VX7'),
@@ -195,10 +257,26 @@ const PHOTOS = [
   GD('13nYnzARN7znfU579Jg59zh_SibHkiPye'),
 ];
 
+const VIDEOS = [
+  { driveId:'1AesuWg3cQX7WOtMgqNt48H4hTk0oXAZX', title:'Tréninky — Dospělí 1' },
+  { driveId:'1LGp44f1uUHody5IKgw6uPU7R0J-7dhUQ', title:'Tréninky — Dospělí 2' },
+];
+
 const grid = document.getElementById('foto-grid');
-grid.innerHTML = PHOTOS.map((src, idx) =>
-  `<div class="f" data-idx="${idx}"><img src="${src}" alt="Trénink — foto ${idx + 1}" loading="lazy"/></div>`
-).join('');
+grid.innerHTML =
+  PHOTOS.map((src, idx) =>
+    `<div class="f" data-idx="${idx}"><img src="${src}" alt="Trénink — foto ${idx + 1}" loading="lazy"/></div>`
+  ).join('') +
+  VIDEOS.map((v, i) => `
+  <div class="f" data-vidx="${i}">
+    <img src="${GD(v.driveId)}" alt="${v.title}" loading="lazy"/>
+    <div class="g-play">
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+        <circle cx="26" cy="26" r="26" fill="rgba(245,243,238,0.18)"/>
+        <polygon points="21,17 38,26 21,35" fill="#fff"/>
+      </svg>
+    </div>
+  </div>`).join('');
 
 const lb = document.getElementById('lb');
 const lbImg = document.getElementById('lb-img');
@@ -218,7 +296,9 @@ function next() { openLb((current + 1) % PHOTOS.length); }
 
 grid.addEventListener('click', e => {
   const f = e.target.closest('.f');
-  if (f) openLb(+f.dataset.idx);
+  if (!f) return;
+  if (f.dataset.vidx !== undefined) openVlb(VIDEOS[+f.dataset.vidx].driveId, VIDEOS[+f.dataset.vidx].title);
+  else openLb(+f.dataset.idx);
 });
 document.getElementById('lb-close').addEventListener('click', closeLb);
 document.getElementById('lb-prev').addEventListener('click', prev);
@@ -229,6 +309,39 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') prev();
   if (e.key === 'ArrowRight') next();
   if (e.key === 'Escape') closeLb();
+});
+
+const vlb = document.getElementById('vlb');
+const vlbIframe = document.getElementById('vlb-iframe');
+const vlbTitle = document.getElementById('vlb-title');
+
+let _vlbScrollY = 0;
+function openVlb(driveId, title) {
+  vlbIframe.src = GV(driveId);
+  vlbTitle.textContent = title;
+  vlb.classList.add('open');
+  _vlbScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${_vlbScrollY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.overflow = 'hidden';
+}
+function closeVlb() {
+  vlb.classList.remove('open');
+  vlbIframe.src = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.overflow = '';
+  window.scrollTo(0, _vlbScrollY);
+}
+
+document.getElementById('vlb-close').addEventListener('click', closeVlb);
+vlb.addEventListener('click', e => { if (e.target === vlb) closeVlb(); });
+document.addEventListener('keydown', e => {
+  if (vlb.classList.contains('open') && e.key === 'Escape') closeVlb();
 });
 </script>
 </body>

@@ -11,7 +11,7 @@
   --paper-2: #ecebe4;
   --line: #d8d5cd;
   --accent: #c41515;
---display: 'Barlow Condensed', 'Oswald', 'Arial Narrow', sans-serif;
+  --display: 'Barlow Condensed', 'Oswald', 'Arial Narrow', sans-serif;
   --body: 'Inter', -apple-system, system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
 }
