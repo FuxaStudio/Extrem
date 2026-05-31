@@ -133,36 +133,27 @@
     .feat-where .fi-v { text-align: right; font-size: clamp(13px, 3.5vw, 16px); }
   }
 
-  /* TRIPS */
-  .trips { border-top: 1px solid var(--line); overflow: hidden; }
-  .trips-bg-wrap { position: relative; min-height: 560px; display: flex; align-items: stretch; }
-  .trips-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 38%; filter: grayscale(25%) brightness(0.4); z-index: 0; transition: transform 14s ease; }
-  .trips:hover .trips-bg { transform: scale(1.05); }
-  .trips-ov { position: absolute; inset: 0; z-index: 1; background: linear-gradient(110deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.68) 52%, rgba(10,10,10,0.22) 100%); }
-  .trips-bg-wrap .container { position: relative; z-index: 2; padding-top: 108px; padding-bottom: 108px; }
-  .trips-inner { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 64px; }
-  .trips-content { display: flex; flex-direction: column; }
-  .trips-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
-  .trips-title { font-family: var(--display); font-weight: 800; font-size: clamp(60px, 7.5vw, 116px); line-height: 1.0; text-transform: uppercase; letter-spacing: -0.025em; color: var(--paper); margin-bottom: 32px; }
-  .trips-title span { color: var(--accent); }
-  .trips-rule { width: 100%; height: 1px; background: rgba(245,243,238,0.15); border: none; margin: 0 0 32px; }
-  .trips-texts { display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
-  .trips-texts p { font-size: 16px; line-height: 1.68; color: rgba(245,243,238,0.72); margin: 0; max-width: 52ch; }
-  .trips-deco { user-select: none; pointer-events: none; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; }
-  .trips-deco-num { font-family: var(--display); font-weight: 800; font-size: clamp(80px, 12vw, 176px); line-height: 0.85; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1px rgba(245,243,238,0.13); }
-  .trips-deco-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,243,238,0.28); margin-top: 14px; }
-  .trips .btn-primary::before { display: none; }
-  .trips .btn-primary { transition: transform .2s ease, color .2s ease, box-shadow .2s ease, filter .2s ease; }
-  .trips .btn-primary:hover { color: var(--ink); transform: translateY(-2px); filter: brightness(1.12); box-shadow: 0 6px 20px rgba(255, 77, 31, 0.45); }
-  @media (max-width: 1000px) {
-    .trips-inner { grid-template-columns: 1fr; }
-    .trips-deco { display: none; }
-    .trips-bg-wrap .container { padding-top: 72px; padding-bottom: 72px; }
+  /* SPLIT SECTIONS (03/Výlety, 04/Tábory) */
+  .split-sec { border-top: 1px solid var(--line); padding: 96px 0; overflow: hidden; }
+  .split-sec--alt { background: var(--paper-2); }
+  .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .split-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .split-title { font-family: var(--display); font-weight: 800; font-size: clamp(52px, 6.5vw, 96px); line-height: 1.0; text-transform: uppercase; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 32px; }
+  .split-title span { color: var(--accent); }
+  .split-rule { width: 100%; height: 1px; background: var(--line); border: none; margin: 0 0 32px; }
+  .split-texts { display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
+  .split-texts p { font-size: 16px; line-height: 1.68; color: var(--ink-60); margin: 0; max-width: 52ch; }
+  .split-photo { position: relative; overflow: hidden; }
+  .split-photo img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+  @media (max-width: 900px) {
+    .split-grid { grid-template-columns: 1fr; gap: 40px; }
+    .split-sec { padding: 64px 0; }
   }
   @media (max-width: 600px) {
-    .trips-bg-wrap .container { padding-top: 56px; padding-bottom: 56px; }
-    .trips-title { font-size: clamp(48px, 12vw, 80px); }
-    .trips-texts p { font-size: 15px; }
+    .split-sec { padding: 48px 0; }
+    .split-title { font-size: clamp(42px, 11vw, 72px); }
+    .split-texts p { font-size: 15px; }
+    .split-content .btn { white-space: nowrap; padding: 13px 20px; font-size: 14px; }
   }
 
   /* HERO */
@@ -203,8 +194,7 @@
     margin-top: 14px;
   }
 
-  /* CAMPS */
-  .camps { overflow: hidden; }
+  /* CAMPS handled by .split-sec */
 </style>
 </head>
 <body>
@@ -312,43 +302,41 @@
 </section>
 
 <!-- TRIPS -->
-<section class="trips">
-  <div class="trips-bg-wrap">
-    <img class="trips-bg" src="https://drive.google.com/thumbnail?id=10FzrLj8ERkKN8pOveTsu1aVWq2Tp4Ses&sz=w2000" alt="Výlety do přírody"/>
-    <div class="trips-ov"></div>
-    <div class="container">
-      <div class="trips-inner">
-        <div class="trips-content reveal">
-          <div class="trips-eyebrow">03 / Výlety</div>
-          <h2 class="trips-title">Za hranice<br><span>Svídnice.</span></h2>
-          <hr class="trips-rule">
-          <div class="trips-texts">
-            <p>Několikrát do roka pořádáme společné výlety do přírody — jednodenní i víkendové. Vydáváme se do hor, na skály i do lesů. Výlety jsou otevřené členům oddílu všech věkových kategorií.</p>
-            <p>Aktuální informace o připravovaných výletech, termínech a přihlašování průběžně zveřejňujeme na našem Facebooku.</p>
-          </div>
-          <a href="https://www.facebook.com/p/Sv%C3%ADdnick%C3%BD-Extr%C3%A9m-100063560024130/" target="_blank" rel="noopener" class="btn btn-primary">Facebook Svídnický Extrém <span class="arr">→</span></a>
+<section class="split-sec">
+  <div class="container">
+    <div class="split-grid reveal">
+      <div class="split-content">
+        <div class="split-eyebrow">03 / Výlety</div>
+        <h2 class="split-title">Za hranice<br><span>Svídnice.</span></h2>
+        <hr class="split-rule">
+        <div class="split-texts">
+          <p>Několikrát do roka pořádáme společné výlety do přírody — jednodenní i víkendové. Vydáváme se do hor, na skály i do lesů. Výlety jsou otevřené členům oddílu všech věkových kategorií.</p>
+          <p>Aktuální informace o připravovaných výletech, termínech a přihlašování průběžně zveřejňujeme na našem Facebooku.</p>
         </div>
+        <a href="https://www.facebook.com/p/Sv%C3%ADdnick%C3%BD-Extr%C3%A9m-100063560024130/" target="_blank" rel="noopener" class="btn btn-primary btn-fire">Facebook Svídnický Extrém <span class="arr">→</span></a>
+      </div>
+      <div class="split-photo">
+        <img src="https://drive.google.com/thumbnail?id=10FzrLj8ERkKN8pOveTsu1aVWq2Tp4Ses&sz=w2000" alt="Výlety do přírody"/>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CAMPS -->
-<section class="camps" id="tabory">
-  <div class="trips-bg-wrap">
-    <img class="trips-bg" src="https://drive.google.com/thumbnail?id=1FxJwqDDXluwSnJ3hiXyPPwYUNGewyPCi&sz=w2000" alt="Tábory Svídnický Extrém"/>
-    <div class="trips-ov"></div>
-    <div class="container">
-      <div class="trips-inner">
-        <div class="trips-content reveal">
-          <div class="trips-eyebrow">04 / Tábory</div>
-          <h2 class="trips-title">Pod stanem<br><span>každé léto.</span></h2>
-          <hr class="trips-rule">
-          <div class="trips-texts">
-            <p>Každé léto vyrážíme s vybranými dětmi z oddílu na tábor. Dny plné pohybu, přírody, táboráku a kamaráde, na které se nezapomíná.</p>
-            <p>Tábory jsou soukromou akcí oddílu — děti vybíráme osobně. Veřejné přihlašování neprobíhá.</p>
-          </div>
+<section class="split-sec split-sec--alt" id="tabory">
+  <div class="container">
+    <div class="split-grid reveal">
+      <div class="split-content">
+        <div class="split-eyebrow">04 / Tábory</div>
+        <h2 class="split-title">Pod stanem<br><span>každé léto.</span></h2>
+        <hr class="split-rule">
+        <div class="split-texts">
+          <p>Každé léto vyrážíme s vybranými dětmi z oddílu na tábor. Dny plné pohybu, přírody, táboráku a kamaráde, na které se nezapomíná.</p>
+          <p>Tábory jsou soukromou akcí oddílu — děti vybíráme osobně. Veřejné přihlašování neprobíhá.</p>
         </div>
+      </div>
+      <div class="split-photo">
+        <img src="https://drive.google.com/thumbnail?id=1FxJwqDDXluwSnJ3hiXyPPwYUNGewyPCi&sz=w2000" alt="Tábory Svídnický Extrém"/>
       </div>
     </div>
   </div>
