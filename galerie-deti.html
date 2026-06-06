@@ -225,13 +225,16 @@ const VIDEOS = [
   { driveId:'1FpiahEJK3OJECHA5o4y9yuA3eP_JN_p1', title:'Děti — Extrém 5' },
   { driveId:'1tkWXT71lkw_SYGf75GK2jqaJosJW3831', title:'Děti — Trénink 1' },
   { driveId:'1gIF1-5Uy6DjPaQCKyeID6DcO1OeZ6jTV', title:'Děti — Trénink 2' },
+  { ytId:'I9q9LVmvLrw', title:'Děti — Extrém 6' },
+  { ytId:'JDyEqU1Pf7g', title:'Děti — Extrém 7' },
+  { ytId:'P7XGAD5Zb3s', title:'Děti — Extrém 8' },
 ];
 const HERO = GD('1JA19b6dlUbpLOtoAMs4pwetFjjNsTP2y');
 
 const vgrid = document.getElementById('vgrid');
 vgrid.innerHTML = VIDEOS.map((v, i) => `
   <div class="v ${v.size || ''}" data-idx="${i}">
-    <img src="${GD(v.driveId)}" alt="${v.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;"/>
+    <img src="${v.ytId ? `https://img.youtube.com/vi/${v.ytId}/hqdefault.jpg` : GD(v.driveId)}" alt="${v.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;"/>
     <div class="g-play">
       <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
         <circle cx="26" cy="26" r="26" fill="rgba(245,243,238,0.18)"/>
@@ -245,8 +248,8 @@ const vlbIframe = document.getElementById('vlb-iframe');
 const vlbTitle = document.getElementById('vlb-title');
 
 let _vlbScrollY = 0;
-function openVlb(driveId, title) {
-  vlbIframe.src = GV(driveId);
+function openVlb(id, title, isYt) {
+  vlbIframe.src = isYt ? `https://www.youtube.com/embed/${id}?autoplay=1` : GV(id);
   vlbTitle.textContent = title;
   vlb.classList.add('open');
   _vlbScrollY = window.scrollY;
@@ -269,7 +272,8 @@ function closeVlb() {
 
 vgrid.querySelectorAll('.v').forEach(card => {
   const idx = +card.dataset.idx;
-  card.addEventListener('click', () => openVlb(VIDEOS[idx].driveId, VIDEOS[idx].title));
+  const v = VIDEOS[idx];
+  card.addEventListener('click', () => openVlb(v.ytId || v.driveId, v.title, !!v.ytId));
 });
 
 document.getElementById('vlb-close').addEventListener('click', closeVlb);

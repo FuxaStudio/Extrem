@@ -224,10 +224,10 @@ const GV = id => `https://drive.google.com/file/d/${id}/preview`;
 const ITEMS = [
   {type:'local', src:'assets/Images/hero-galerie.webp', cat:'akce', title:'Vítání prázdnin 2025', date:'22. 6. 2025', link:'galerie-detail.html', tag:'Vítání prázdnin', eager:true},
   {type:'local', src:'assets/Images/hero-treninky.webp', cat:'trenink', title:'Tréninky', date:'', link:'galerie-trenink.html', tag:'Tréninky', eager:true},
-  {type:'video', driveId:'1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD', poster:GD('1IBOmaRZVYZ8LGd8fLyeWCmkzFg0tBHmD'), cat:'zavody', title:'Svídnický Extrém 2025', date:'2025', tag:'Svídnický Extrém'},
-  {type:'video', driveId:'19EdnI1ToHe4tZUi8ASXjCZ-SEecgA3Xt', poster:GD('19EdnI1ToHe4tZUi8ASXjCZ-SEecgA3Xt'), cat:'zavody', title:'Extrém 2024', date:'2024', tag:'Svídnický Extrém'},
-  {type:'video', driveId:'1Pari3VR6KzaO-ABjy7e_DhR-YPmGZMzI', poster:GD('1Pari3VR6KzaO-ABjy7e_DhR-YPmGZMzI'), cat:'zavody', title:'Svídnický Extrém 2022', date:'2022', tag:'Svídnický Extrém'},
-  {type:'video', driveId:'1EwBdbDuBMzB_0uMIcF9bIEP2I5COiJsq', poster:GD('1ZghbFcNtw4h0mBDCaU2wbzlZ3823IcpB'), cat:'zavody', title:'Závod — záběry 2025', date:'2025', tag:'Svídnický Extrém'},
+  {type:'video', ytId:'hqM9mcXgTrY', poster:'https://img.youtube.com/vi/hqM9mcXgTrY/hqdefault.jpg', cat:'zavody', title:'Svídnický Extrém 2025', date:'2025', tag:'Svídnický Extrém'},
+  {type:'video', ytId:'eojtkoVR5OM', poster:'https://img.youtube.com/vi/eojtkoVR5OM/hqdefault.jpg', cat:'zavody', title:'Svídnický Extrém 2024', date:'2024', tag:'Svídnický Extrém'},
+  {type:'video', ytId:'HppHmBHNilE', poster:'https://img.youtube.com/vi/HppHmBHNilE/hqdefault.jpg', cat:'zavody', title:'Svídnický Extrém 2023', date:'2023', tag:'Svídnický Extrém'},
+  {type:'video', ytId:'7dbH8WvVnH4', poster:'https://img.youtube.com/vi/7dbH8WvVnH4/hqdefault.jpg', cat:'zavody', title:'Svídnický Extrém 2022', date:'2022', tag:'Svídnický Extrém'},
   {type:'video', driveId:'1846MJYDjJLj6IMlHAoN-CSC5X14sjosX', poster:GD('1846MJYDjJLj6IMlHAoN-CSC5X14sjosX'), cat:'akce', title:'Vánoční běh 2025', date:'2025', tag:'Vánoční běh'},
   {type:'local', src:GD('1FxJwqDDXluwSnJ3hiXyPPwYUNGewyPCi'), cat:'akce', title:'Tábor', date:'', link:'galerie-tabor.html', tag:'Tábor'},
   {type:'local', src:GD('1JA19b6dlUbpLOtoAMs4pwetFjjNsTP2y'), cat:'deti', title:'Děti — Extrém', date:'', link:'galerie-deti.html', tag:'Děti — Extrém'},
@@ -247,7 +247,8 @@ function renderItem(im) {
       <div class="cat-tag">${CATS[im.cat]}</div>
       ${im.date ? `<div class="date-stamp">${im.date}</div>` : ''}
       <div class="meta"><span class="t">${im.tag || im.title}</span></div>`;
-    return `<div class="g" data-cat="${im.cat}" data-driveid="${im.driveId}">${inner}</div>`;
+    const attr = im.ytId ? `data-ytid="${im.ytId}"` : `data-driveid="${im.driveId}"`;
+    return `<div class="g" data-cat="${im.cat}" ${attr}>${inner}</div>`;
   }
   const imgSrc = im.src;
   if (im.link) {
@@ -275,8 +276,8 @@ const vlbIframe = document.getElementById('vlb-iframe');
 const vlbTitle = document.getElementById('vlb-title');
 
 let _vlbScrollY = 0;
-function openVlb(driveId, title) {
-  vlbIframe.src = GV(driveId);
+function openVlb(id, title, isYt) {
+  vlbIframe.src = isYt ? `https://www.youtube.com/embed/${id}?autoplay=1` : GV(id);
   vlbTitle.textContent = title;
   vlb.classList.add('open');
   _vlbScrollY = window.scrollY;
@@ -297,11 +298,12 @@ function closeVlb() {
   window.scrollTo(0, _vlbScrollY);
 }
 
-g.querySelectorAll('.g[data-driveid]').forEach(card => {
-  if (card.tagName === 'A') return; // link karty navigují přímo
+g.querySelectorAll('.g[data-driveid], .g[data-ytid]').forEach(card => {
+  if (card.tagName === 'A') return;
+  const ytId = card.dataset.ytid;
   const driveId = card.dataset.driveid;
   const title = card.querySelector('.meta .t')?.textContent || '';
-  card.addEventListener('click', () => openVlb(driveId, title));
+  card.addEventListener('click', () => openVlb(ytId || driveId, title, !!ytId));
 });
 
 document.getElementById('vlb-close').addEventListener('click', closeVlb);

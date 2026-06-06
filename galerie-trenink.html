@@ -258,8 +258,8 @@ const PHOTOS = [
 ];
 
 const VIDEOS = [
-  { driveId:'1AesuWg3cQX7WOtMgqNt48H4hTk0oXAZX', title:'Tréninky — Dospělí 1' },
-  { driveId:'1LGp44f1uUHody5IKgw6uPU7R0J-7dhUQ', title:'Tréninky — Dospělí 2' },
+  { ytId:'GyX8y2zHvao', title:'Tréninky — Dospělí 1' },
+  { ytId:'v78aWS_bAbo', title:'Tréninky — Dospělí 2' },
 ];
 
 const grid = document.getElementById('foto-grid');
@@ -269,7 +269,7 @@ grid.innerHTML =
   ).join('') +
   VIDEOS.map((v, i) => `
   <div class="f" data-vidx="${i}">
-    <img src="${GD(v.driveId)}" alt="${v.title}" loading="lazy"/>
+    <img src="https://img.youtube.com/vi/${v.ytId}/hqdefault.jpg" alt="${v.title}" loading="lazy"/>
     <div class="g-play">
       <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
         <circle cx="26" cy="26" r="26" fill="rgba(245,243,238,0.18)"/>
@@ -297,7 +297,7 @@ function next() { openLb((current + 1) % PHOTOS.length); }
 grid.addEventListener('click', e => {
   const f = e.target.closest('.f');
   if (!f) return;
-  if (f.dataset.vidx !== undefined) openVlb(VIDEOS[+f.dataset.vidx].driveId, VIDEOS[+f.dataset.vidx].title);
+  if (f.dataset.vidx !== undefined) openVlb(VIDEOS[+f.dataset.vidx].ytId, VIDEOS[+f.dataset.vidx].title, true);
   else openLb(+f.dataset.idx);
 });
 document.getElementById('lb-close').addEventListener('click', closeLb);
@@ -316,8 +316,8 @@ const vlbIframe = document.getElementById('vlb-iframe');
 const vlbTitle = document.getElementById('vlb-title');
 
 let _vlbScrollY = 0;
-function openVlb(driveId, title) {
-  vlbIframe.src = GV(driveId);
+function openVlb(id, title, isYt) {
+  vlbIframe.src = isYt ? `https://www.youtube.com/embed/${id}?autoplay=1` : GV(id);
   vlbTitle.textContent = title;
   vlb.classList.add('open');
   _vlbScrollY = window.scrollY;
