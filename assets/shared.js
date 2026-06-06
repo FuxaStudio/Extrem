@@ -197,8 +197,10 @@
     const vlbTitle = document.getElementById('se-vlb-title');
     let _scrollY = 0;
 
-    function openVlb(driveId, title) {
-      vlbIframe.src = 'https://drive.google.com/file/d/' + driveId + '/preview';
+    function openVlb(driveId, title, ytId) {
+      vlbIframe.src = ytId
+        ? 'https://www.youtube.com/embed/' + ytId + '?autoplay=1'
+        : 'https://drive.google.com/file/d/' + driveId + '/preview';
       vlbTitle.textContent = title;
       vlb.classList.add('open');
       _scrollY = window.scrollY;
@@ -223,7 +225,7 @@
     document.querySelectorAll('.drive-video').forEach(function(card) {
       card.style.cursor = 'pointer';
       card.addEventListener('click', function() {
-        openVlb(card.dataset.driveid, card.dataset.title);
+        openVlb(card.dataset.driveid, card.dataset.title, card.dataset.ytid);
       });
     });
 
